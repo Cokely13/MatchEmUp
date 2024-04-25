@@ -7,12 +7,20 @@ import singleMovieReducer from './singleMovieStore'
 import singleActorReducer from './singleActorStore'
 import actorsReducer from './allActorsStore'
 import moviesReducer from './allMoviesStore'
+import singleQuarterbackReducer from './singleQuarterbackStore'
+import allQuarterbacksReducer from './allQuarterbacksStore'
+import allReceiversReducer from './allReceiverStore'
+import singleReceiverReducer from './singleReceiverStore'
 
 const reducer = combineReducers({ auth,
 singleActor: singleActorReducer,
 allActors: actorsReducer,
 allMovies: moviesReducer,
 singleMovie: singleMovieReducer,
+singleQuarterback: singleQuarterbackReducer,
+allQuarterbacks: allQuarterbacksReducer,
+allReceivers: allReceiversReducer,
+singleReceiver: singleReceiverReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
