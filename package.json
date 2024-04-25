@@ -1,7 +1,7 @@
 {
-  "name": "cinemaconnection",
+  "name": "matchemup",
   "version": "2.0.0",
-  "description": "Qb connection game",
+  "description": "matching game",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
