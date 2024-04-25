@@ -7,11 +7,10 @@ import Routes from './Routes'
 
 const App = () => {
   return (
-    <div className="app-container">
+    <div >
       <div className="title-container">
         <h1 className="title">MatchEmUp</h1>
       </div>
-      {/* <Navbar /> */}
       <Routes />
     </div>
   );

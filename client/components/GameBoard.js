@@ -260,7 +260,7 @@ const GameBoard = () => {
   };
 
   return (
-       <div  >
+       <div className="app-container" >
 
     <div style={{ textAlign: 'center', margin: '20px' }}>
         <Button variant="link" onClick={handleShow} style={{ color: 'black' }}>
