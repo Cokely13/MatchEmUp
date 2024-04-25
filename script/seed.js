@@ -81,6 +81,9 @@
 
 'use strict';
 
+
+'use strict';
+
 const fs = require('fs');
 const csv = require('csv-parser');
 const { db, models: { Actor, Movie, Quarterback, Receiver, User } } = require('../server/db');
@@ -111,6 +114,23 @@ async function seed() {
     await Movie.create({ name: movieName, actorId: actor.id });
   }
 
+  // Update actors with images from 'images.csv'
+  const actorImagesResults = await new Promise((resolve, reject) => {
+    const results = [];
+    fs.createReadStream('script/images.csv')
+      .pipe(csv())
+      .on('data', (data) => results.push(data))
+      .on('end', () => {
+        resolve(results);
+      })
+      .on('error', reject);
+  });
+
+  for (const result of actorImagesResults) {
+    const { Actor: actorName, Images: imagePath } = result;
+    await Actor.update({ imagePath }, { where: { name: actorName } });
+  }
+
   // Process quarterbacks and receivers from 'data.csv'
   const qbReceiverResults = await new Promise((resolve, reject) => {
     const results = [];
@@ -133,8 +153,25 @@ async function seed() {
     await Receiver.create({ name: receiverName, quarterbackId: qb.id });
   }
 
-  // Assume image update logic for both actors and quarterbacks remains similar to original scripts
-  // Add image path updates for actors and quarterbacks here...
+  // Update quarterbacks with hardcoded images
+  const quarterbackImages = {
+    'Brady': '/Brady.jpg',
+    'Rodgers': '/rodgers.jpg',
+    'Peyton': '/Peyton.jpg',
+    'Brees': '/brees.jpg',
+    'Favre': '/favre.jpg',
+    'Eli': '/eli.jpg',
+    'Ryan': '/Ryan.jpg',
+    'Marino': '/marino.jpg',
+    'Roethlisberger': '/Ben.jpg',
+    'Rivers': '/Rivers.jpg',
+    // Add other quarterbacks and their image paths as needed
+  };
+
+  for (const qbName in quarterbackImages) {
+    const imagePath = quarterbackImages[qbName];
+    await Quarterback.update({ imagePath }, { where: { name: qbName } });
+  }
 
   console.log('Seeded successfully');
 }
@@ -158,4 +195,3 @@ if (module === require.main) {
 }
 
 module.exports = seed;
-
