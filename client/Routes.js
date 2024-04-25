@@ -5,6 +5,8 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import Image from './components/Image';
 import {me} from './store'
+import GameBoard from './components/GameBoard';
+import GameBoardQb from './components/GameBoardQb';
 
 /**
  * COMPONENT
@@ -22,6 +24,8 @@ class Routes extends Component {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/image" component={Image} />
+            <Route path="/cinema" component={GameBoard} />
+            <Route path="/qb" component={GameBoardQb} />
             <Redirect to="/home" />
           </Switch>
       </div>

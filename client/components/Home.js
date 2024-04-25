@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import GameBoard from './GameBoard'
+import { Link } from 'react-router-dom';
+
 
 /**
  * COMPONENT
@@ -10,7 +11,12 @@ export const Home = props => {
 
   return (
     <div>
-    <GameBoard/>
+   <nav>
+        <ul>
+          <li><Link to="/cinema">Cinema</Link></li> {/* Link to /cinema */}
+          <li><Link to="/Qb">QB</Link></li>        {/* Link to /Qb */}
+        </ul>
+      </nav>
     </div>
   )
 }
