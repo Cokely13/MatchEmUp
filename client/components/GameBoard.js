@@ -11,7 +11,7 @@ import WrongModal from './WrongModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
-
+import { Link } from 'react-router-dom';
 
 
 // Individual word card component
@@ -267,7 +267,7 @@ const GameBoard = () => {
           <h3>How To Play</h3>
         </Button>
       </div>
-
+      <ul><Link to="/home">Home</Link></ul>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>
