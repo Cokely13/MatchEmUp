@@ -235,6 +235,7 @@ text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px 10px;
   font-size: 5px;
+  align-items: center;
   text-align: center;
   width: fit-content;
 }
@@ -318,6 +319,17 @@ text-align: center;
  /* Keep the background fixed as you scroll */
   /* Add other styles for your app container */
 }
+
+.homepage {
+
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ /* Keep the background fixed as you scroll */
+  /* Add other styles for your app container */
+}
+
 
 
 @media (max-width: 768px) {
