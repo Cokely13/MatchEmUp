@@ -22,6 +22,8 @@ export const Home = props => {
       history.push('/cinema'); // Redirect to /cinema
     } else if (selection === 'QB') {
       history.push('/qb'); // Redirect to /qb
+    } else if (selection === 'Music') {
+      history.push('/music'); // Redirect to /music
     } else if (selection === 'Random') {
       // Randomly choose between '/cinema' and '/qb'
       const randomPath = Math.random() < 0.5 ? '/cinema' : '/qb';
@@ -44,6 +46,7 @@ export const Home = props => {
             <option value="">Select...</option>
             <option value="Cinema">Cinema</option>
             <option value="QB">QB</option>
+            <option value="Music">Music</option>
             <option value="Random">Random</option>
           </select>
         </label>

@@ -7,6 +7,7 @@ import Image from './components/Image';
 import {me} from './store'
 import GameBoard from './components/GameBoard';
 import GameBoardQb from './components/GameBoardQb';
+import GameBoardMusic from './components/GameBoardMusic'
 
 /**
  * COMPONENT
@@ -26,6 +27,7 @@ class Routes extends Component {
             <Route path="/image" component={Image} />
             <Route path="/cinema" component={GameBoard} />
             <Route path="/qb" component={GameBoardQb} />
+            <Route path="/music" component={GameBoardMusic} />
             <Redirect to="/home" />
           </Switch>
       </div>

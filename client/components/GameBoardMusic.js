@@ -97,27 +97,27 @@ const GameBoardQb = () => {
 
 
 
-  const shuffleQBsAndWRs = () => {
+  const shuffleArtistsAndAlbums = () => {
     // Use allQuarterbacks from the redux store instead of the hardcoded qbs array
-    const shuffledQBs = [...allQuarterbacks].sort(() => 0.5 - Math.random());
+    const shuffledArtists = [...allArtists].sort(() => 0.5 - Math.random());
 
     // Select first 4 QBs
-    const selectedQBs = shuffledQBs.slice(0, 4);
+    const selectedArtists = shuffledArtists.slice(0, 4);
 
     // Extract and shuffle WRs from the selected QBs
-    const selectedWRs = selectedQBs.flatMap(qb =>
-      qb.receivers.sort(() => 0.5 - Math.random()).slice(0, 4)
+    const selectedAlbums = selectedArtists.flatMap(artist =>
+      artist.albums.sort(() => 0.5 - Math.random()).slice(0, 4)
     ).sort(() => 0.5 - Math.random());
 
-    setGameWords(selectedWRs.map(wr => wr.name));
+    setGameWords(selectedAlbums.map(album => album.title));
   };
 
   // Ensure this useEffect hook is called after your component is mounted and whenever allQuarterbacks changes
   useEffect(() => {
-    if (allQuarterbacks.length > 0) {
-      shuffleQBsAndWRs();
+    if (allArtists.length > 0) {
+      shuffleArtistsAndAlbums();
     }
-  }, [allQuarterbacks]);
+  }, [allArtists]);
 
 
 
@@ -157,43 +157,43 @@ const GameBoardQb = () => {
     setRow4(false);
     setSelectedWords(new Set());
     setShowConfetti(false)
-    shuffleQBsAndWRs();
+    shuffleArtistsAndAlbums();
   };
 
   const handleSubmit = () => {
     if (selectedWords.size === 4) {
       const selectedWordArray = Array.from(selectedWords);
 
-      const qbImages = [];
-      const matchingQBs = [];
+      const artistImages = [];
+      const matchingArtists = [];
 
       // Check if there is a quarterback that matches three out of four receivers
-      const isSameQB = allQuarterbacks.some((qb) => {
-        const matchingWRs = selectedWordArray.filter((wrName) =>
-          qb.receivers.some((receiver) => receiver.name === wrName)
+      const isSameArtist = allArtists.some((artist) => {
+        const matchingAlbums = selectedWordArray.filter((albumName) =>
+          artist.albums.some((album) => album.title === albumName)
         );
 
-        if (matchingWRs.length === 3) {
-          matchingQBs.push(qb.name);
+        if (matchingAlbums.length === 3) {
+          matchingArtists.push(artist.name);
         }
 
-        const allWrMatch = matchingWRs.length === 4;
+        const allAlbumsMatch = matchingAlbums.length === 4;
 
-        if (allWrMatch) {
-          qbImages.push(qb.imagePath); // Capture the QB's image path when a match is found
+        if (allAlbumsMatch) {
+          artistImages.push(artist.imagePath); // Capture the QB's image path when a match is found
         }
 
-        return allWrMatch;
+        return allAlbumsMatch;
       });
 
-      if (isSameQB) {
+      if (isSameArtist) {
         // Correctly guessed all WRs from the same QB
-        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((wrName, idx) => ({ name: wrName, qbImagePath: qbImages[idx] }))];
+        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((albumName, idx) => ({ name: albumName, artistImagePath: artistImages[idx] }))];
         setRow1(true)
         setSubmittedWords(newSubmittedWords);
         const images = [...picture]
 
-        images.push(qbImages)
+        images.push(artistImages)
         setPicture(images)
 
         if (submittedWords.length === 4){
@@ -211,7 +211,7 @@ const GameBoardQb = () => {
         }
 
         // Remove correctly guessed WRs from the game board
-        const remainingWords = gameWords.filter((wr) => !selectedWords.has(wr));
+        const remainingWords = gameWords.filter((album) => !selectedWords.has(album));
 
         setGameWords(remainingWords);
 
@@ -223,7 +223,7 @@ const GameBoardQb = () => {
           handleLoss(); // Show loss modal
         } else {
           // Check if there is only one quarterback matching three out of four receivers
-          if (matchingQBs.length === 1) {
+          if (matchingArtists.length === 1) {
             handleOneAway()
           } else {
             handleWrong()
