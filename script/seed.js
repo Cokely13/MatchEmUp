@@ -1,96 +1,61 @@
-
-
-// 'use strict';
-
-// const fs = require('fs');
-// const csv = require('csv-parser');
-// const { db, models: { Actor, Movie } } = require('../server/db');
-
-// async function seed() {
-//   await db.sync({ force: true }); // Clears db and matches models to tables
-//   console.log('db synced!');
-
-//   // Read actors and movies from cleaned.csv
-//   const results = await new Promise((resolve, reject) => {
-//     const results = [];
-//     fs.createReadStream('script/fixed.csv') // Ensure correct path
-//       .pipe(csv({
-//         mapHeaders: ({ header, index }) => index === 0 ? 'actor' : 'movie',
-//       }))
-//       .on('data', (data) => results.push([data.actor, data.movie]))
-//       .on('end', () => {
-//         resolve(results);
-//       })
-//       .on('error', reject);
-//   });
-
-//   // Process results after CSV read is complete
-//   for (const result of results) {
-//     const [actorName, movieName] = result;
-//     let actor = await Actor.findOne({ where: { name: actorName } });
-
-//     if (!actor) {
-//       actor = await Actor.create({ name: actorName });
-//     }
-
-//     await Movie.create({ name: movieName, actorId: actor.id });
-//   }
-
-//     const imageResults = await new Promise((resolve, reject) => {
-//     const results = [];
-//     fs.createReadStream('script/images.csv')
-//       .pipe(csv())
-//       .on('data', (data) => results.push(data))
-//       .on('end', () => {
-//         resolve(results);
-//       })
-//       .on('error', reject);
-//   });
-
-//   // Process results after CSV read is complete
-//   for (const result of imageResults) {
-//     const actorName = result.Actor;
-//     const imagePath = result.Images;
-
-//     // Find the actor by name and update the image path
-//     await Actor.update({ imagePath }, { where: { name: actorName } });
-//   }
-
-//   console.log(`Seeded successfully`);
-// }
-
-// async function runSeed() {
-//   console.log('Seeding...')
-//   try {
-//     await seed()
-//   } catch (err) {
-//     console.error(err)
-//     process.exitCode = 1
-//   } finally {
-//     console.log('Closing db connection')
-//     await db.close()
-//     console.log('Db connection closed')
-//   }
-// }
-
-// if (module === require.main) {
-//   runSeed()
-// }
-
-// module.exports = seed;
-
-'use strict';
-
-
 'use strict';
 
 const fs = require('fs');
 const csv = require('csv-parser');
-const { db, models: { Actor, Movie, Quarterback, Receiver, User } } = require('../server/db');
+const { db, models: { Actor, Movie, Quarterback, Receiver, User, Song, Album, Artist } } = require('../server/db');
 
 async function seed() {
   await db.sync({ force: true }); // Clears db and matches models to tables
   console.log('db synced!');
+
+  const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
+
+  // URL for fetching the top 10 artists
+  async function fetchTopArtists() {
+    const urlTopArtists = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=10`;
+    const response = await fetch(urlTopArtists);
+    const data = await response.json();
+    return data.artists.artist; // Returns an array of top 10 artists
+  }
+
+  // Function to fetch the top album of a given artist
+  async function fetchTopAlbums(artistName) {
+    const urlTopAlbums = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=${API_KEY}&artist=${encodeURIComponent(artistName)}&format=json&limit=1`;
+    const response = await fetch(urlTopAlbums);
+    const data = await response.json();
+    return data.topalbums.album[0]; // Returns the top album for the artist
+  }
+
+  // Function to fetch tracks for a given album using its MusicBrainz ID (mbid)
+  async function fetchAlbumTracks(albumMbid) {
+    const urlAlbumInfo = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${API_KEY}&mbid=${albumMbid}&format=json`;
+    const response = await fetch(urlAlbumInfo);
+    const data = await response.json();
+    return data.album.tracks.track; // Returns tracks of the album
+  }
+
+  // Main function to fetch popular albums and their tracks for top artists
+  async function fetchPopularAlbumsAndTracks() {
+    const artists = await fetchTopArtists();
+    const albumsTracks = await Promise.all(artists.map(async (artist) => {
+      const topAlbum = await fetchTopAlbums(artist.name);
+      const tracks = await fetchAlbumTracks(topAlbum.mbid);
+      return {
+        artist: artist.name,
+        album: topAlbum.name,
+        tracks: tracks.map(track => track.name)
+      };
+    }));
+    return albumsTracks;
+  }
+
+  // Calling the main function and handling the promise
+  fetchPopularAlbumsAndTracks().then(data => {
+    console.log(data); // Log the array of popular albums and their tracks
+  }).catch(error => {
+    console.error('Error fetching data:', error);
+  });
+
 
   // Process actors and movies from 'fixed.csv'
   const actorMovieResults = await new Promise((resolve, reject) => {
