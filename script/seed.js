@@ -8,9 +8,38 @@ async function seed() {
   await db.sync({ force: true }); // Clears db and matches models to tables
   console.log('db synced!');
 
+
+
   const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
 
-  // URL for fetching the top 10 artists
+  // Fetch and create artists, albums, and songs
+  async function fetchPopularAlbumsAndTracks() {
+    const artists = await fetchTopArtists();
+    for (const artistData of artists) {
+      const artist = await Artist.create({ name: artistData.name }); // Create artist
+      const topAlbumData = await fetchTopAlbums(artist.name);
+
+      if (!topAlbumData || !topAlbumData.name) {
+        console.log(`Skipping album creation for artist: ${artistData.name} due to missing data.`);
+        continue;  // Skip this iteration if no album data is found
+      }
+
+      const album = await Album.create({ // Create album
+        title: topAlbumData.name,
+        artistId: artist.id
+      });
+
+      const tracks = await fetchAlbumTracks(topAlbumData.mbid);
+      for (const trackData of tracks) {
+        await Song.create({ // Create song
+          name: trackData.name,
+          albumId: album.id
+        });
+      }
+    }
+  }
+
+  // Fetch the top 10 artists from Last.fm
   async function fetchTopArtists() {
     const urlTopArtists = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=10`;
     const response = await fetch(urlTopArtists);
@@ -18,43 +47,43 @@ async function seed() {
     return data.artists.artist; // Returns an array of top 10 artists
   }
 
-  // Function to fetch the top album of a given artist
+  // Fetch the top album of a given artist
   async function fetchTopAlbums(artistName) {
-    const urlTopAlbums = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=${API_KEY}&artist=${encodeURIComponent(artistName)}&format=json&limit=1`;
+    const urlTopAlbums = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=${API_KEY}&artist=${encodeURIComponent(artistName)}&format=json&limit=4`;
     const response = await fetch(urlTopAlbums);
     const data = await response.json();
-    return data.topalbums.album[0]; // Returns the top album for the artist
-  }
 
-  // Function to fetch tracks for a given album using its MusicBrainz ID (mbid)
-  async function fetchAlbumTracks(albumMbid) {
-    const urlAlbumInfo = `http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${API_KEY}&mbid=${albumMbid}&format=json`;
-    const response = await fetch(urlAlbumInfo);
-    const data = await response.json();
-    return data.album.tracks.track; // Returns tracks of the album
-  }
+    if (!data.topalbums || !data.topalbums.album.length) {
+      console.error(`No albums found for artist: ${artistName}`);
+      return [];  // Return an empty array if no albums are found
+    }
 
-  // Main function to fetch popular albums and their tracks for top artists
+    return data.topalbums.album; // Returns the top 4 albums for the artist
+}
+
+  // Fetch tracks for a given album using its MusicBrainz ID (mbid)
   async function fetchPopularAlbumsAndTracks() {
     const artists = await fetchTopArtists();
-    const albumsTracks = await Promise.all(artists.map(async (artist) => {
-      const topAlbum = await fetchTopAlbums(artist.name);
-      const tracks = await fetchAlbumTracks(topAlbum.mbid);
-      return {
-        artist: artist.name,
-        album: topAlbum.name,
-        tracks: tracks.map(track => track.name)
-      };
-    }));
-    return albumsTracks;
-  }
+    for (const artistData of artists) {
+        const artist = await Artist.create({ name: artistData.name }); // Create artist
 
-  // Calling the main function and handling the promise
-  fetchPopularAlbumsAndTracks().then(data => {
-    console.log(data); // Log the array of popular albums and their tracks
-  }).catch(error => {
-    console.error('Error fetching data:', error);
-  });
+        const topAlbumsData = await fetchTopAlbums(artist.name);
+        for (const albumData of topAlbumsData) {
+            if (!albumData || !albumData.name) {
+                console.log(`Skipping album creation for ${artistData.name} due to missing data.`);
+                continue; // Skip this iteration if no album data is found
+            }
+
+            await Album.create({ // Create album
+                title: albumData.name,
+                artistId: artist.id
+            });
+        }
+    }
+}
+
+  // Initiate fetching and creating process
+  await fetchPopularAlbumsAndTracks();
 
 
   // Process actors and movies from 'fixed.csv'

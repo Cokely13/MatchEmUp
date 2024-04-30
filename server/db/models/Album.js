@@ -3,7 +3,7 @@ const db = require('../db')
 
 
 const Album = db.define('album', {
-  name: {
+  title: {
     type: Sequelize.STRING,
     allowNull: false,
   },
