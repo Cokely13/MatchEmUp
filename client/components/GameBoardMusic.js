@@ -10,6 +10,7 @@ import OneAwayModal from './OneAwayModal';
 import WrongModal from './WrongModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFootballBall } from '@fortawesome/free-solid-svg-icons';
+import { faMusic } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
 
@@ -24,8 +25,8 @@ const WordCard = ({ word, onSelect, isSelected, image }) => {
   );
 };
 
-const footballIcons = Array.from({ length: 5 }, (_, index) => (
-  <FontAwesomeIcon key={index} icon={faFootballBall} style={{ marginRight: '5px' }} />
+const musicIcons = Array.from({ length: 5 }, (_, index) => (
+  <FontAwesomeIcon key={index} icon={faMusic} style={{ marginRight: '5px' }} />
 ));
 
 
@@ -249,7 +250,7 @@ const GameBoardQb = () => {
   };
 
   return (
-       <div className="qb-container">
+       <div className="music-container">
     <div style={{ textAlign: 'center', margin: '20px' }}>
         <Button variant="link" onClick={handleShow}>
           <h3>How To Play</h3>
@@ -361,7 +362,7 @@ const GameBoardQb = () => {
       </div>}
       {submittedWords.length === 16 || mistakes == 5 ?
       <div></div> : <h1 className="mistakes">
-      Mistakes remaining: {footballIcons.slice(0, 5 - mistakes)} </h1>}
+      Mistakes remaining: {musicIcons.slice(0, 5 - mistakes)} </h1>}
       </div>
     </div>
     <WinModal show={showWinModal} onHide={() => setShowWinModal(false)} />

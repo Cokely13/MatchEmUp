@@ -25,20 +25,16 @@ export const Home = props => {
     } else if (selection === 'Music') {
       history.push('/music'); // Redirect to /music
     } else if (selection === 'Random') {
-      // Randomly choose between '/cinema' and '/qb'
-      const randomPath = Math.random() < 0.5 ? '/cinema' : '/qb';
+      // Randomly choose between '/cinema', '/qb', and '/music'
+      const paths = ['/cinema', '/qb', '/music'];
+      const randomIndex = Math.floor(Math.random() * paths.length);
+      const randomPath = paths[randomIndex];
       history.push(randomPath);
-    }
+  }
   };
 
   return (
     <div>
-      <nav>
-        <ul>
-          <li><Link to="/cinema">Cinema</Link></li> {/* Link to /cinema */}
-          <li><Link to="/qb">QB</Link></li>        {/* Link to /qb */}
-        </ul>
-      </nav>
       <form onSubmit={handleSubmit}>
         <label>
           What Do You Want to Match?:
