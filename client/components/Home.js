@@ -34,23 +34,22 @@ export const Home = props => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          What Do You Want to Match?:
-          <select value={selection} onChange={handleDropdownChange}>
-            <option value="">Select...</option>
-            <option value="Cinema">Cinema</option>
-            <option value="QB">QB</option>
-            <option value="Music">Music</option>
-            <option value="Random">Random</option>
-          </select>
-        </label>
-        <button type="submit">Go</button>
+    <div className="homepage">
+      <form onSubmit={handleSubmit} className="match-form">
+        <div className="match-heading">What Do You Want to Match?</div>
+        <select value={selection} onChange={handleDropdownChange} className="match-select">
+          <option value="">Select...</option>
+          <option value="Cinema">Cinema</option>
+          <option value="QB">QB</option>
+          <option value="Music">Music</option>
+          <option value="Random">Random</option>
+        </select>
+        <button type="submit" className="match-button">Go</button>
       </form>
     </div>
   );
 }
+
 
 /**
  * CONTAINER

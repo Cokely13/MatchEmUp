@@ -337,13 +337,50 @@ text-align: center;
 }
 
 .homepage {
-
-  text-align: center;
+  background-image: url('arcade.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
- /* Keep the background fixed as you scroll */
-  /* Add other styles for your app container */
+  text-align: center;
+}
+
+.match-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Creates space between form elements */
+}
+
+.match-heading {
+  margin-bottom: 20px; /* Space above the form heading */
+  font-size: 24px; /* Larger text for heading */
+  color: #FFF; /* White text color */
+}
+
+.match-select, .match-button {
+  width: 200px; /* Equal width for select and button */
+  padding: 10px; /* Padding for better touch area */
+  font-size: 16px; /* Larger font size for readability */
+}
+
+.match-button {
+  cursor: pointer; /* Cursor indicates button can be clicked */
+  background-color: #007BFF; /* A nice blue color for the button */
+  color: white; /* White text on the button */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.match-select {
+  border: 2px solid #CCC; /* Slightly darker border for the dropdown */
+  border-radius: 5px; /* Rounded corners for the dropdown */
+  text-align: center;
 }
 
 
