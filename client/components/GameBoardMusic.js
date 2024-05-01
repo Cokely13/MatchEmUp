@@ -253,10 +253,10 @@ const GameBoardQb = () => {
        <div className="music-container">
     <div style={{ textAlign: 'center', margin: '20px' }}>
         <Button variant="link" onClick={handleShow}>
-          <h3>How To Play</h3>
+        <h3 style={{ color: 'white' }}>How To Play</h3>
         </Button>
       </div>
-      <ul><Link to="/home">Home</Link></ul>
+      <Link to="/home" style={{ color: 'white' }}>Home</Link>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>
