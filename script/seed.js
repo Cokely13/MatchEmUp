@@ -82,9 +82,29 @@ async function seed() {
     }
 }
 
+async function updateArtistImages() {
+  const artistImages = {
+      'Taylor Swift': '/Taylor.jpg',
+      'The Weeknd': '/Weeknd.jpg',
+      'Kanye West': '/Kanye.jpg',
+      'Drake': '/Drake.jpg',
+      'Lana Del Rey': '/Lana.jpg',
+      'Kendrick Lamar': '/Kendrick.jpg',
+      'Ariana Grande': '/Ariana.jpg',
+      'Tyler, the Creator': '/Tyler.jpg',
+      'Beyoncé': '/Beyonce.jpg',
+      'Rihanna': '/Rihanna.jpg',
+  };
+
+  for (const artistName in artistImages) {
+      const imagePath = artistImages[artistName];
+      await Artist.update({ imagePath: imagePath }, { where: { name: artistName } });
+  }
+}
+
   // Initiate fetching and creating process
   await fetchPopularAlbumsAndTracks();
-
+  await updateArtistImages();
 
   // Process actors and movies from 'fixed.csv'
   const actorMovieResults = await new Promise((resolve, reject) => {
