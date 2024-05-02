@@ -229,7 +229,7 @@ text-align: center;
 
 .title-container {
   display: inline-block;
-  background-color: grey;
+  background-color: black;
   border-radius: 10px;
   padding: 10px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -345,7 +345,7 @@ text-align: center;
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   flex-direction: column;
   text-align: center;
 }
@@ -372,7 +372,7 @@ text-align: center;
 .match-button {
   cursor: pointer; /* Cursor indicates button can be clicked */
   background-color: #007BFF; /* A nice blue color for the button */
-  color: white; /* White text on the button */
+  color: black; /* White text on the button */
   border: none; /* No border */
   border-radius: 5px; /* Rounded corners */
 }

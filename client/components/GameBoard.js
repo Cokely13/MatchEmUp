@@ -267,7 +267,7 @@ const GameBoard = () => {
           <h3>How To Play</h3>
         </Button>
       </div>
-      <ul><Link to="/home">Home</Link></ul>
+      <Link style={{ color: 'black' }} to="/home">Home</Link>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>
