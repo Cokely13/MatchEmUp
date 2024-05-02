@@ -65,7 +65,6 @@ const GameBoard = () => {
   const handleShow = () => {
     setPicture(allActors[0].imagePath)
     setShowHowToPlayModal(true)
-    console.log("pictures", picture)
   }
 
     const handleTest = () =>{
