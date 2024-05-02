@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const csv = require('csv-parser');
-const { db, models: { Actor, Movie, Quarterback, Receiver, User, Song, Album, Artist } } = require('../server/db');
+const { db, models: { Actor, Movie, Quarterback, Receiver, User, Song, Album, Artist, NbaPlayer, NbaTeam } } = require('../server/db');
 
 async function seed() {
   await db.sync({ force: true }); // Clears db and matches models to tables
@@ -189,6 +189,37 @@ async function updateArtistImages() {
 
   console.log('Seeded successfully');
 }
+
+const teams = {};
+
+fs.createReadStream('script/bball.csv')
+  .pipe(csv())
+  .on('data', async (row) => {
+    // Destructure the row into respective fields
+    const { Name, Image, Team, Year } = row;
+
+    // Create or find the team
+    if (!teams[Team]) {
+      teams[Team] = await NbaTeam.create({
+        team: Team,
+        year: Year,
+      });
+    }
+
+    // Create the player and associate with the team
+    const player = await NbaPlayer.create({
+      name: Name,
+      imagePath: Image,
+      nbateamId: teams[Team].id
+    });
+  })
+  .on('end', () => {
+    console.log('CSV file successfully processed');
+    console.log('Seeding completed');
+  })
+  .on('error', (err) => {
+    console.error('Error while reading CSV:', err);
+  });
 
 async function runSeed() {
   console.log('Seeding...')

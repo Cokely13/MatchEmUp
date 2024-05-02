@@ -3,7 +3,7 @@ const db = require('../db')
 
 
 const NbaTeam = db.define('nbateam', {
-  name: {
+  team: {
     type: Sequelize.STRING,
     allowNull: false,
   },
