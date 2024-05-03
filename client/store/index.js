@@ -13,6 +13,10 @@ import allReceiversReducer from './allReceiverStore'
 import singleReceiverReducer from './singleReceiverStore'
 import allArtistsReducer from './allArtistsStore'
 import allAlbumsReducer from './allAlbumsStore'
+import singleFranchiseReducer from './singleFranchiseStore'
+import singlePlayerReducer from './singlePlayerStore'
+import franchisesReducer from './allFranchisesStore'
+import playersReducer from './allPlayersStore'
 
 const reducer = combineReducers({ auth,
 singleActor: singleActorReducer,
@@ -24,7 +28,11 @@ allQuarterbacks: allQuarterbacksReducer,
 allReceivers: allReceiversReducer,
 singleReceiver: singleReceiverReducer,
 allArtists: allArtistsReducer,
-allAlbums: allAlbumsReducer
+allAlbums: allAlbumsReducer,
+allFranchises: franchisesReducer,
+singleFranchise: singleFranchiseReducer,
+allPlayers: playersReducer
+singlePlayer: singlePlayerReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

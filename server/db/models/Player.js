@@ -2,20 +2,16 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 
-const NbaTeam = db.define('nbateam', {
-  team: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  year: {
+const Player = db.define('player', {
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
   imagePath: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     defaultValue: "/Generic.png"
   },
 });
 
 
-module.exports = NbaTeam
+module.exports = Player

@@ -10,16 +10,16 @@ const Movie = require('./models/Movie')
 const Quarterback = require('./models/Quarterback')
 const Receiver = require('./models/Receiver')
 const Song= require('./models/Song')
-const NbaPlayer = require('./models/NbaPlayer')
-const NbaTeam = require('./models/NbaTeam')
+const Player = require('./models/Player')
+const Franchise = require('./models/Franchise')
 
 //associations could go here!
 Actor.hasMany(Movie);
 Movie.belongsTo(Actor);
 Quarterback.hasMany(Receiver);
 Receiver.belongsTo(Quarterback);
-NbaTeam.hasMany(NbaPlayer);
-NbaPlayer.belongsTo(NbaTeam);
+Franchise.hasMany(Player);
+Player.belongsTo(Franchise);
 
 Artist.hasMany(Album, { foreignKey: 'artistId' });
 Album.belongsTo(Artist, { foreignKey: 'artistId' });
@@ -38,7 +38,7 @@ module.exports = {
     Song,
     Album,
     Artist,
-    NbaPlayer,
-    NbaTeam
+    Player,
+    Franchise
   },
 }

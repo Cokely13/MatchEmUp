@@ -1,11 +1,11 @@
 const router = require('express').Router()
-const { models: { NbaPlayer, NbaTeam }} = require('../db')
+const { models: { Player, Franchise }} = require('../db')
 module.exports = router
 
 
 router.get('/', async (req, res, next) => {
   try {
-    const votes = await NbaPlayer.findAll( {include: [ NbaTeam]}
+    const votes = await Player.findAll( {include: [ Franchise]}
     );
     res.json(votes);
   } catch (err) {
@@ -16,7 +16,7 @@ router.get('/', async (req, res, next) => {
 //POST: add a new Vote
 router.post("/", async (req, res, next) => {
   try {
-    res.status(201).send(await NbaPlayer.create(req.body));
+    res.status(201).send(await Player.create(req.body));
   } catch (error) {
     next(error);
   }
@@ -24,8 +24,8 @@ router.post("/", async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    const vote = await NbaPlayer.findByPk(req.params.id)
-    res.send(await NbaPlayer.update(req.body));
+    const vote = await Player.findByPk(req.params.id)
+    res.send(await Player.update(req.body));
   } catch (error) {
     next(error);
   }
@@ -34,7 +34,7 @@ router.put('/:id', async (req, res, next) => {
 //Get read all votes
 router.get('/:id', async (req, res, next) => {
   try {
-    const vote = await NbaPlayer.findByPk(req.params.id,{include: [NbaTeam]}
+    const vote = await Player.findByPk(req.params.id,{include: [Franchise]}
     );
     res.json(vote);
   } catch (err) {
@@ -44,7 +44,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   try {
-    const vote = await NbaPlayer.findByPk(req.params.id);
+    const vote = await Player.findByPk(req.params.id);
     await vote.destroy();
     res.send(vote);
   } catch (error) {

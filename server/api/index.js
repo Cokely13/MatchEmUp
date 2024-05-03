@@ -9,8 +9,8 @@ router.use('/quarterbacks', require('./quarterbacks'))
 router.use('/artists', require('./artists'))
 router.use('/albums', require('./albums'))
 router.use('/songs', require('./songs'))
-router.use('/nbaplayers', require('./nbaplayers'))
-router.use('/nbateams', require('./nbateams'))
+router.use('/players', require('./players'))
+router.use('/franchises', require('./franchises'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

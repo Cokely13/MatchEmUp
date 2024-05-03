@@ -2,109 +2,206 @@
 
 const fs = require('fs');
 const csv = require('csv-parser');
-const { db, models: { Actor, Movie, Quarterback, Receiver, User, Song, Album, Artist, NbaPlayer, NbaTeam } } = require('../server/db');
+const { db, models: { Actor, Movie, Quarterback, Receiver, User, Song, Album, Artist, Player, Franchise} } = require('../server/db');
 
 async function seed() {
   await db.sync({ force: true }); // Clears db and matches models to tables
   console.log('db synced!');
 
+  await processCsvData();
 
+//   const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
 
-  const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
+//   // Fetch and create artists, albums, and songs
+//   async function fetchPopularAlbumsAndTracks() {
+//     const artists = await fetchTopArtists();
+//     for (const artistData of artists) {
+//       const artist = await Artist.create({ name: artistData.name }); // Create artist
+//       const topAlbumData = await fetchTopAlbums(artist.name);
 
-  // Fetch and create artists, albums, and songs
-  async function fetchPopularAlbumsAndTracks() {
-    const artists = await fetchTopArtists();
-    for (const artistData of artists) {
-      const artist = await Artist.create({ name: artistData.name }); // Create artist
-      const topAlbumData = await fetchTopAlbums(artist.name);
+//       if (!topAlbumData || !topAlbumData.name) {
+//         console.log(`Skipping album creation for artist: ${artistData.name} due to missing data.`);
+//         continue;  // Skip this iteration if no album data is found
+//       }
 
-      if (!topAlbumData || !topAlbumData.name) {
-        console.log(`Skipping album creation for artist: ${artistData.name} due to missing data.`);
-        continue;  // Skip this iteration if no album data is found
-      }
+//       const album = await Album.create({ // Create album
+//         title: topAlbumData.name,
+//         artistId: artist.id
+//       });
 
-      const album = await Album.create({ // Create album
-        title: topAlbumData.name,
-        artistId: artist.id
+//       const tracks = await fetchAlbumTracks(topAlbumData.mbid);
+//       for (const trackData of tracks) {
+//         await Song.create({ // Create song
+//           name: trackData.name,
+//           albumId: album.id
+//         });
+//       }
+//     }
+//   }
+
+//   // Fetch the top 10 artists from Last.fm
+//   async function fetchTopArtists() {
+//     const urlTopArtists = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=10`;
+//     const response = await fetch(urlTopArtists);
+//     const data = await response.json();
+//     return data.artists.artist; // Returns an array of top 10 artists
+//   }
+
+//   // Fetch the top album of a given artist
+//   async function fetchTopAlbums(artistName) {
+//     const urlTopAlbums = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=${API_KEY}&artist=${encodeURIComponent(artistName)}&format=json&limit=4`;
+//     const response = await fetch(urlTopAlbums);
+//     const data = await response.json();
+
+//     if (!data.topalbums || !data.topalbums.album.length) {
+//       console.error(`No albums found for artist: ${artistName}`);
+//       return [];  // Return an empty array if no albums are found
+//     }
+
+//     return data.topalbums.album; // Returns the top 4 albums for the artist
+// }
+
+//   // Fetch tracks for a given album using its MusicBrainz ID (mbid)
+//   async function fetchPopular() {
+//     const artists = await fetchTopArtists();
+//     for (const artistData of artists) {
+//         const artist = await Artist.create({ name: artistData.name }); // Create artist
+
+//         const topAlbumsData = await fetchTopAlbums(artist.name);
+//         for (const albumData of topAlbumsData) {
+//             if (!albumData || !albumData.name) {
+//                 console.log(`Skipping album creation for ${artistData.name} due to missing data.`);
+//                 continue; // Skip this iteration if no album data is found
+//             }
+
+//             await Album.create({ // Create album
+//                 title: albumData.name,
+//                 artistId: artist.id
+//             });
+//         }
+//     }
+// }
+
+// async function updateArtistImages() {
+//   const artistImages = {
+//       'Taylor Swift': '/Taylor.jpg',
+//       'The Weeknd': '/Weeknd.jpg',
+//       'Kanye West': '/Kanye.jpg',
+//       'Drake': '/Drake.jpg',
+//       'Lana Del Rey': '/Lana.jpg',
+//       'Kendrick Lamar': '/Kendrick.jpg',
+//       'Ariana Grande': '/Ariana.jpg',
+//       'Tyler, the Creator': '/Tyler.jpg',
+//       'Beyoncé': '/Beyonce.jpg',
+//       'Rihanna': '/Rihanna.jpg',
+//   };
+
+//   for (const artistName in artistImages) {
+//       const imagePath = artistImages[artistName];
+//       await Artist.update({ imagePath: imagePath }, { where: { name: artistName } });
+//   }
+// }
+
+//   // Initiate fetching and creating process
+//   await fetchPopular();
+//   await fetchPopularAlbumsAndTracks();
+//   await updateArtistImages();
+
+const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
+
+// Fetch and create artists, albums, and songs
+async function fetchPopularAlbumsAndTracks() {
+  const artists = await fetchTopArtists();
+  for (const artistData of artists) {
+    const artist = await Artist.create({ name: artistData.name }); // Create artist
+    const topAlbumData = await fetchTopAlbums(artist.name);
+
+    if (!topAlbumData || !topAlbumData.name) {
+      console.log(`Skipping album creation for artist: ${artistData.name} due to missing data.`);
+      continue;  // Skip this iteration if no album data is found
+    }
+
+    const album = await Album.create({ // Create album
+      title: topAlbumData.name,
+      artistId: artist.id
+    });
+
+    const tracks = await fetchAlbumTracks(topAlbumData.mbid);
+    for (const trackData of tracks) {
+      await Song.create({ // Create song
+        name: trackData.name,
+        albumId: album.id
       });
-
-      const tracks = await fetchAlbumTracks(topAlbumData.mbid);
-      for (const trackData of tracks) {
-        await Song.create({ // Create song
-          name: trackData.name,
-          albumId: album.id
-        });
-      }
     }
   }
-
-  // Fetch the top 10 artists from Last.fm
-  async function fetchTopArtists() {
-    const urlTopArtists = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=10`;
-    const response = await fetch(urlTopArtists);
-    const data = await response.json();
-    return data.artists.artist; // Returns an array of top 10 artists
-  }
-
-  // Fetch the top album of a given artist
-  async function fetchTopAlbums(artistName) {
-    const urlTopAlbums = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=${API_KEY}&artist=${encodeURIComponent(artistName)}&format=json&limit=4`;
-    const response = await fetch(urlTopAlbums);
-    const data = await response.json();
-
-    if (!data.topalbums || !data.topalbums.album.length) {
-      console.error(`No albums found for artist: ${artistName}`);
-      return [];  // Return an empty array if no albums are found
-    }
-
-    return data.topalbums.album; // Returns the top 4 albums for the artist
 }
 
-  // Fetch tracks for a given album using its MusicBrainz ID (mbid)
-  async function fetchPopularAlbumsAndTracks() {
-    const artists = await fetchTopArtists();
-    for (const artistData of artists) {
-        const artist = await Artist.create({ name: artistData.name }); // Create artist
+// Fetch the top 10 artists from Last.fm
+async function fetchTopArtists() {
+  const urlTopArtists = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=10`;
+  const response = await fetch(urlTopArtists);
+  const data = await response.json();
+  return data.artists.artist; // Returns an array of top 10 artists
+}
 
-        const topAlbumsData = await fetchTopAlbums(artist.name);
-        for (const albumData of topAlbumsData) {
-            if (!albumData || !albumData.name) {
-                console.log(`Skipping album creation for ${artistData.name} due to missing data.`);
-                continue; // Skip this iteration if no album data is found
-            }
+// Fetch the top album of a given artist
+async function fetchTopAlbums(artistName) {
+  const urlTopAlbums = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=${API_KEY}&artist=${encodeURIComponent(artistName)}&format=json&limit=4`;
+  const response = await fetch(urlTopAlbums);
+  const data = await response.json();
 
-            await Album.create({ // Create album
-                title: albumData.name,
-                artistId: artist.id
-            });
-        }
-    }
+  if (!data.topalbums || !data.topalbums.album.length) {
+    console.error(`No albums found for artist: ${artistName}`);
+    return [];  // Return an empty array if no albums are found
+  }
+
+  return data.topalbums.album; // Returns the top 4 albums for the artist
+}
+
+// Fetch tracks for a given album using its MusicBrainz ID (mbid)
+async function fetchPopularAlbumsAndTracks() {
+  const artists = await fetchTopArtists();
+  for (const artistData of artists) {
+      const artist = await Artist.create({ name: artistData.name }); // Create artist
+
+      const topAlbumsData = await fetchTopAlbums(artist.name);
+      for (const albumData of topAlbumsData) {
+          if (!albumData || !albumData.name) {
+              console.log(`Skipping album creation for ${artistData.name} due to missing data.`);
+              continue; // Skip this iteration if no album data is found
+          }
+
+          await Album.create({ // Create album
+              title: albumData.name,
+              artistId: artist.id
+          });
+      }
+  }
 }
 
 async function updateArtistImages() {
-  const artistImages = {
-      'Taylor Swift': '/Taylor.jpg',
-      'The Weeknd': '/Weeknd.jpg',
-      'Kanye West': '/Kanye.jpg',
-      'Drake': '/Drake.jpg',
-      'Lana Del Rey': '/Lana.jpg',
-      'Kendrick Lamar': '/Kendrick.jpg',
-      'Ariana Grande': '/Ariana.jpg',
-      'Tyler, the Creator': '/Tyler.jpg',
-      'Beyoncé': '/Beyonce.jpg',
-      'Rihanna': '/Rihanna.jpg',
-  };
+const artistImages = {
+    'Taylor Swift': '/Taylor.jpg',
+    'The Weeknd': '/Weeknd.jpg',
+    'Kanye West': '/Kanye.jpg',
+    'Drake': '/Drake.jpg',
+    'Lana Del Rey': '/Lana.jpg',
+    'Kendrick Lamar': '/Kendrick.jpg',
+    'Ariana Grande': '/Ariana.jpg',
+    'Tyler, the Creator': '/Tyler.jpg',
+    'Beyoncé': '/Beyonce.jpg',
+    'Rihanna': '/Rihanna.jpg',
+};
 
-  for (const artistName in artistImages) {
-      const imagePath = artistImages[artistName];
-      await Artist.update({ imagePath: imagePath }, { where: { name: artistName } });
-  }
+for (const artistName in artistImages) {
+    const imagePath = artistImages[artistName];
+    await Artist.update({ imagePath: imagePath }, { where: { name: artistName } });
+}
 }
 
-  // Initiate fetching and creating process
-  await fetchPopularAlbumsAndTracks();
-  await updateArtistImages();
+// Initiate fetching and creating process
+await fetchPopularAlbumsAndTracks();
+await updateArtistImages();
 
   // Process actors and movies from 'fixed.csv'
   const actorMovieResults = await new Promise((resolve, reject) => {
@@ -190,7 +287,9 @@ async function updateArtistImages() {
   console.log('Seeded successfully');
 }
 
-const teams = {};
+async function processCsvData() {
+
+const franchises = {};
 
 fs.createReadStream('script/bball.csv')
   .pipe(csv())
@@ -199,20 +298,22 @@ fs.createReadStream('script/bball.csv')
     const { Name, Image, Team, Year } = row;
 
     // Create or find the team
-    if (!teams[Team]) {
-      teams[Team] = await NbaTeam.create({
+    if (!franchises[Team]) {
+      franchises[Team] = await Franchise.create({
         team: Team,
         year: Year,
       });
     }
 
     // Create the player and associate with the team
-    const player = await NbaPlayer.create({
+    const player = await Player.create({
       name: Name,
       imagePath: Image,
-      nbateamId: teams[Team].id
+      franchiseId: franchises[Team].id
     });
   })
+
+
   .on('end', () => {
     console.log('CSV file successfully processed');
     console.log('Seeding completed');
@@ -220,6 +321,29 @@ fs.createReadStream('script/bball.csv')
   .on('error', (err) => {
     console.error('Error while reading CSV:', err);
   });
+
+   // Update quarterbacks with hardcoded images
+   const franchiseImages = {
+    'Lakers': '/lakers.png',
+    'Heat': '/heat.png',
+    'Celtics': '/celtics.png',
+    'Bucks': '/bucks.png',
+    'Cavaliers': '/cavs.png',
+    'Mavericks': '/mavs.png',
+    'Warriors': '/warrios.png',
+    'Raptors': '/raptors.png',
+    'Nuggets': '/nuggets.png',
+    'Spurs': '/spurs.png',
+    // Add other quarterbacks and their image paths as needed
+  };
+
+  for (const franchiseName in franchiseImages) {
+    const imagePath = franchiseImages[franchiseName];
+    await Franchise.update({ imagePath }, { where: { team: franchiseName } });
+  }
+
+
+}
 
 async function runSeed() {
   console.log('Seeding...')
