@@ -15,11 +15,11 @@ import { Link } from 'react-router-dom';
 
 
 
-// Individual word card component
 const WordCard = ({ word, onSelect, isSelected, image }) => {
   return (
-    <div  className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
-      <div >{word}</div>
+    <div className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
+      {image && <img src={image} alt={word} style={{ width: '100%', height: 'auto' }} />}
+      <div>{word}</div>
     </div>
   );
 };
@@ -67,10 +67,6 @@ const GameBoardNba = () => {
     setShowConfetti(true);
   };
 
-  const handlleConfetti = () => {
-    setShowConfetti(true);
-    console.log("hott")
-  }
 
   // Function to handle losing condition
   const handleLoss = () => {
@@ -96,24 +92,53 @@ const GameBoardNba = () => {
     setShowWrongModal(true);
   };
 
-
-
   const shuffleFranchisesAndPlayers = () => {
-    // Use allFranchises from the redux store instead of the hardcoded franchises array
-    const shuffledFranchises = [...allFranchises].sort(() => 0.5 - Math.random());
+    // Shuffle and pick the first 4 franchises
+    const shuffledFranchises = [...allFranchises].sort(() => 0.5 - Math.random()).slice(0, 4);
 
-    // Select first 4 Franchises
-    const selectedFranchises = shuffledFranchises.slice(0, 4);
+    // Shuffle and pick 4 players from each of the 4 franchises
+    const selectedPlayers = shuffledFranchises.flatMap(franchise => {
+        const shuffledPlayers = franchise.players.sort(() => 0.5 - Math.random());
+        return shuffledPlayers.slice(0, 4); // Make sure exactly 4 players are picked
+    });
 
-    console.log("selected", selectedFranchises)
+    // Further shuffle the combined list of players to randomize board layout
+    const randomizedPlayers = selectedPlayers.sort(() => 0.5 - Math.random());
 
-    // Extract and shuffle Players from the selected Franchises
-    const selectedPlayers = selectedFranchises.flatMap(franchise =>
-      franchise.players.sort(() => 0.5 - Math.random()).slice(0, 4)
-    ).sort(() => 0.5 - Math.random());
+    // Update gameWords state with player names and images
+    setGameWords(randomizedPlayers.map(player => ({
+        name: player.name,
+        imagePath: player.imagePath
+    })));
 
-    setGameWords(selectedPlayers.map(player => player.name));
-  };
+    // Debugging log to check the distribution of players
+    console.log("Game words set with players:", gameWords);
+};
+
+
+  // const shuffleFranchisesAndPlayers = () => {
+  //   // Use allFranchises from the redux store instead of the hardcoded franchises array
+  //   const shuffledFranchises = [...allFranchises].sort(() => 0.5 - Math.random());
+
+  //   // Select first 4 Franchises
+  //   const selectedFranchises = shuffledFranchises.slice(0, 4);
+
+  //   console.log("selected", selectedFranchises)
+
+  //   // Extract and shuffle Players from the selected Franchises
+  //   const selectedPlayers = selectedFranchises.flatMap(franchise =>
+  //     franchise.players.sort(() => 0.5 - Math.random()).slice(0, 4)
+  //   ).sort(() => 0.5 - Math.random());
+
+  //   // console.log("selectedPlayers", selectedPlayers)
+
+  //   setGameWords(selectedPlayers.map(player => ({
+  //     name: player.name,
+  //     imagePath: player.imagePath
+  //   })));
+
+
+  // };
 
   // Ensure this useEffect hook is called after your component is mounted and whenever allFranchises changes
   useEffect(() => {
@@ -214,7 +239,7 @@ const GameBoardNba = () => {
         }
 
         // Remove correctly guessed Players from the game board
-        const remainingWords = gameWords.filter((player) => !selectedWords.has(player));
+        const remainingWords = gameWords.filter((player) => !selectedWords.has(player.name));
 
         setGameWords(remainingWords);
 
@@ -291,7 +316,7 @@ const GameBoardNba = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-      image={word.franchiseImagePath} // Pass the Franchise's image path
+      // image={word.franchiseImagePath} Pass the Franchise's image path
     />
   ))}
 </div></div>: <div></div>}
@@ -308,7 +333,7 @@ const GameBoardNba = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-      image={word.franchiseImagePath} // Pass the Franchise's image path
+      // image={word.franchiseImagePath} Pass the Franchise's image path
     />
   ))}</div></div>: <div></div>}
        {row3 ?   <div> <div style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', margin: '10px 0' }}>
@@ -321,7 +346,7 @@ const GameBoardNba = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-      image={word.franchiseImagePath} // Pass the Franchise's image path
+       // image={word.franchiseImagePath} Pass the Franchise's image path
     />
   ))}</div></div>: <div></div>}
 
@@ -337,13 +362,13 @@ const GameBoardNba = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-      image={word.franchiseImagePath} // Pass the Franchise's image path
+      // image={word.franchiseImagePath} Pass the Franchise's image path
     />
   ))}</div></div>: <div></div>}
 <div>
     {/* Render submitted words first */}
 
-    <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
+    {/* <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
       {gameWords.map((word, index) => (
         <WordCard
           key={index}
@@ -352,7 +377,19 @@ const GameBoardNba = () => {
           onSelect={toggleSelectWord}
         />
       ))}
-    </div>
+    </div> */}
+
+    <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
+  {gameWords.map((player, index) => (
+    <WordCard
+      key={index}
+      word={player.name}
+      isSelected={selectedWords.has(player.name)}
+      onSelect={toggleSelectWord}
+      image={player.imagePath} // Pass the image path here
+    />
+  ))}
+</div>
 
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>
     {submittedWords.length === 16 || mistakes == 5 ?  <div className="control-panel">
