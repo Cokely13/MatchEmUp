@@ -287,40 +287,80 @@ await updateArtistImages();
   console.log('Seeded successfully');
 }
 
+// async function processCsvData() {
+
+// const franchises = {};
+
+// fs.createReadStream('script/bball.csv')
+//   .pipe(csv())
+//   .on('data', async (row) => {
+//     // Destructure the row into respective fields
+//     const { Name, Image, Team, Year } = row;
+
+//     // Create or find the team
+//     if (!franchises[Team]) {
+//       // Try to find the franchise or create it if it does not exist
+//       const [franchise, created] = await Franchise.findOrCreate({
+//           where: { team: Team },
+//           defaults: { team: Team, year: Year }
+//       });
+//       franchises[Team] = franchise;
+//   }
+
+//     // Create the player and associate with the team
+//     const player = await Player.create({
+//       name: Name,
+//       imagePath: Image,
+//       franchiseId: franchises[Team].id
+//     });
+//   })
+
+
+//   .on('end', () => {
+//     console.log('CSV file successfully processed');
+//     console.log('Seeding completed');
+//   })
+//   .on('error', (err) => {
+//     console.error('Error while reading CSV:', err);
+//   });
+
 async function processCsvData() {
+  const franchises = {};
 
-const franchises = {};
+  const franchisePromises = {};
 
-fs.createReadStream('script/bball.csv')
-  .pipe(csv())
-  .on('data', async (row) => {
-    // Destructure the row into respective fields
-    const { Name, Image, Team, Year } = row;
+  const dataStream = fs.createReadStream('script/bball.csv').pipe(csv());
+  for await (const row of dataStream) {
+      const { Name, Image, Team, Year } = row;
 
-    // Create or find the team
-    if (!franchises[Team]) {
-      franchises[Team] = await Franchise.create({
-        team: Team,
-        year: Year,
+      if (!franchises[Team]) {
+          if (!franchisePromises[Team]) {
+              // Promise to find or create the franchise, stored to prevent duplicate creations
+              franchisePromises[Team] = Franchise.findOrCreate({
+                  where: { team: Team },
+                  defaults: { team: Team, year: Year }
+              })
+              .then(([franchise]) => {
+                  franchises[Team] = franchise;
+                  return franchise;
+              });
+          }
+          // Wait for the franchise to be processed or found
+          await franchisePromises[Team];
+      }
+
+      // Create the player and associate with the franchise
+      await Player.create({
+          name: Name,
+          imagePath: Image,
+          franchiseId: franchises[Team].id
       });
-    }
+  }
 
-    // Create the player and associate with the team
-    const player = await Player.create({
-      name: Name,
-      imagePath: Image,
-      franchiseId: franchises[Team].id
-    });
-  })
+  console.log('CSV file successfully processed');
+  console.log('Seeding completed');
 
 
-  .on('end', () => {
-    console.log('CSV file successfully processed');
-    console.log('Seeding completed');
-  })
-  .on('error', (err) => {
-    console.error('Error while reading CSV:', err);
-  });
 
    // Update quarterbacks with hardcoded images
    const franchiseImages = {

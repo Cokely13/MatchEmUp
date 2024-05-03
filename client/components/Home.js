@@ -24,6 +24,8 @@ export const Home = props => {
       history.push('/qb'); // Redirect to /qb
     } else if (selection === 'Music') {
       history.push('/music'); // Redirect to /music
+    } else if (selection === 'NBA') {
+      history.push('/nba'); // Redirect to /nba
     } else if (selection === 'Random') {
       // Randomly choose between '/cinema', '/qb', and '/music'
       const paths = ['/cinema', '/qb', '/music'];
@@ -42,6 +44,7 @@ export const Home = props => {
           <option value="Cinema">Cinema</option>
           <option value="QB">QB</option>
           <option value="Music">Music</option>
+          <option value="NBA">NBA</option>
           <option value="Random">Random</option>
         </select>
         <button type="submit" className="match-button">Go</button>

@@ -31,7 +31,7 @@ allArtists: allArtistsReducer,
 allAlbums: allAlbumsReducer,
 allFranchises: franchisesReducer,
 singleFranchise: singleFranchiseReducer,
-allPlayers: playersReducer
+allPlayers: playersReducer,
 singlePlayer: singlePlayerReducer
 })
 const middleware = composeWithDevTools(

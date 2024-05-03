@@ -8,6 +8,7 @@ import {me} from './store'
 import GameBoard from './components/GameBoard';
 import GameBoardQb from './components/GameBoardQb';
 import GameBoardMusic from './components/GameBoardMusic'
+import GameBoardNba from './components/GameBoardNba';
 
 /**
  * COMPONENT
@@ -28,6 +29,7 @@ class Routes extends Component {
             <Route path="/cinema" component={GameBoard} />
             <Route path="/qb" component={GameBoardQb} />
             <Route path="/music" component={GameBoardMusic} />
+            <Route path="/nba" component={GameBoardNba} />
             <Redirect to="/home" />
           </Switch>
       </div>
