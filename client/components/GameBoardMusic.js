@@ -15,14 +15,6 @@ import { Link } from 'react-router-dom';
 
 
 
-// Individual word card component
-// const WordCard = ({ word, onSelect, isSelected, image }) => {
-//   return (
-//     <div  className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
-//       <div >{word}</div>
-//     </div>
-//   );
-// };
 
 
 const WordCard = ({ word, onSelect, isSelected, image }) => {

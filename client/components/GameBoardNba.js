@@ -38,6 +38,7 @@ const GameBoardNba = () => {
   const [submittedWords, setSubmittedWords] = useState([]);
   const [gameWords, setGameWords] = useState([]);
   const [picture, setPicture] = useState([]);
+  const [answer, setAnswer] = useState([]);
   const [row3, setRow3] = useState();
   const [row1, setRow1] = useState();
   const [row2, setRow2] = useState();
@@ -153,6 +154,7 @@ const GameBoardNba = () => {
     setSubmittedWords([]);
     setGameWords([]);
     setPicture([]);
+    setAnswer([]);
     setRow1(false);
     setRow2(false);
     setRow3(false);
@@ -167,6 +169,7 @@ const GameBoardNba = () => {
       const selectedWordArray = Array.from(selectedWords);
 
       const franchiseImages = [];
+      const franchiseNames = [];
       const matchingFranchises = [];
 
       // Check if there is a quarterback that matches three out of four players
@@ -182,7 +185,8 @@ const GameBoardNba = () => {
         const allPlayerMatch = matchingPlayers.length === 4;
 
         if (allPlayerMatch) {
-          franchiseImages.push(franchise.imagePath); // Capture the Franchise's image path when a match is found
+          franchiseImages.push(franchise.imagePath)
+          franchiseNames.push(franchise.team); // Capture the Franchise's image path when a match is found
         }
 
         return allPlayerMatch;
@@ -190,13 +194,16 @@ const GameBoardNba = () => {
 
       if (isSameFranchise) {
         // Correctly guessed all Players from the same Franchise
-        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((playerName, idx) => ({ name: playerName, franchiseImagePath: franchiseImages[idx] }))];
+        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((playerName, idx) => ({ name: playerName, franchiseImagePath: franchiseImages[idx], franchiseNames: franchiseNames[idx] } ))];
         setRow1(true)
         setSubmittedWords(newSubmittedWords);
         const images = [...picture]
+        const answers = [...answer]
 
         images.push(franchiseImages)
+        answers.push(franchiseNames)
         setPicture(images)
+        setAnswer(answers)
 
         if (submittedWords.length === 4){
           setRow2(true)
@@ -279,7 +286,7 @@ const GameBoardNba = () => {
       {row1 ?
        <div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-          <h2 style={{ color: 'white' }}>1st:</h2>
+          <h2 style={{ color: 'white' }}>1st: {answer[0]}</h2>
           <img src={picture[0]} alt="1st" className="picture-container" />
         </div>
       <div className='submitted-words first-row'>
@@ -296,7 +303,7 @@ const GameBoardNba = () => {
 </div></div>: <div></div>}
       {row2 ?     <div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-      <h2 style={{ color: 'white' }}>2nd:</h2>
+      <h2 style={{ color: 'white' }}>2nd: {answer[1]}</h2>
       <img src={picture[1]} alt="1st" className="picture-container" />
 
     </div>
@@ -311,7 +318,7 @@ const GameBoardNba = () => {
     />
   ))}</div></div>: <div></div>}
        {row3 ?   <div> <div style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', margin: '10px 0' }}>
-      <h2 style={{ color: 'white' }}>3rd:</h2>
+      <h2 style={{ color: 'white' }}>3rd: {answer[2]}</h2>
       <img src={picture[2]} alt="1st" className="picture-container" />
     </div>  <div className='submitted-words third-row'>
   {submittedWords.slice(8, 12).map((word, index) => (
@@ -326,7 +333,7 @@ const GameBoardNba = () => {
 
        {row4 ?  <div>
        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-       <h2 style={{ color: 'white' }}>4th:</h2>
+       <h2 style={{ color: 'white' }}>4th: {answer[3]}</h2>
        <img src={picture[3]} alt="1st" className="picture-container" />
      </div>
           <div className='submitted-words winner'>
