@@ -7,6 +7,10 @@ const Album = db.define('album', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  imagePath: {
+    type: Sequelize.TEXT,
+    defaultValue: "/Generic.png"
+  },
 });
 
 

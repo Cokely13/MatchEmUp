@@ -9,7 +9,6 @@ import Error2Modal from './Error2Modal';
 import OneAwayModal from './OneAwayModal';
 import WrongModal from './WrongModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFootballBall } from '@fortawesome/free-solid-svg-icons';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
@@ -17,13 +16,23 @@ import { Link } from 'react-router-dom';
 
 
 // Individual word card component
+// const WordCard = ({ word, onSelect, isSelected, image }) => {
+//   return (
+//     <div  className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
+//       <div >{word}</div>
+//     </div>
+//   );
+// };
+
+
 const WordCard = ({ word, onSelect, isSelected, image }) => {
   return (
-    <div  className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
-      <div >{word}</div>
+    <div className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+      {image && <img src={image} alt={word} style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />}
+      <div>{word}</div>
     </div>
   );
-};
+}
 
 const musicIcons = Array.from({ length: 5 }, (_, index) => (
   <FontAwesomeIcon key={index} icon={faMusic} style={{ marginRight: '5px' }} />
@@ -39,6 +48,7 @@ const GameBoardQb = () => {
   const [submittedWords, setSubmittedWords] = useState([]);
   const [gameWords, setGameWords] = useState([]);
   const [picture, setPicture] = useState([]);
+  const [answer, setAnswer] = useState([]);
   const [row3, setRow3] = useState();
   const [row1, setRow1] = useState();
   const [row2, setRow2] = useState();
@@ -110,7 +120,10 @@ const GameBoardQb = () => {
       artist.albums.sort(() => 0.5 - Math.random()).slice(0, 4)
     ).sort(() => 0.5 - Math.random());
 
-    setGameWords(selectedAlbums.map(album => album.title));
+    setGameWords(selectedAlbums.map(album => ({
+      name: album.title,
+      imagePath: album.imagePath
+  })));
   };
 
   // Ensure this useEffect hook is called after your component is mounted and whenever allQuarterbacks changes
@@ -152,6 +165,7 @@ const GameBoardQb = () => {
     setSubmittedWords([]);
     setGameWords([]);
     setPicture([]);
+    setAnswer([]);
     setRow1(false);
     setRow2(false);
     setRow3(false);
@@ -166,6 +180,7 @@ const GameBoardQb = () => {
       const selectedWordArray = Array.from(selectedWords);
 
       const artistImages = [];
+      const artistName = [];
       const matchingArtists = [];
 
       // Check if there is a quarterback that matches three out of four receivers
@@ -181,7 +196,8 @@ const GameBoardQb = () => {
         const allAlbumsMatch = matchingAlbums.length === 4;
 
         if (allAlbumsMatch) {
-          artistImages.push(artist.imagePath); // Capture the QB's image path when a match is found
+          artistImages.push(artist.imagePath)
+          artistName.push(artist.name); // Capture the QB's image path when a match is found
         }
 
         return allAlbumsMatch;
@@ -189,13 +205,18 @@ const GameBoardQb = () => {
 
       if (isSameArtist) {
         // Correctly guessed all WRs from the same QB
-        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((albumName, idx) => ({ name: albumName, artistImagePath: artistImages[idx] }))];
+        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((albumName, idx) => ({ name: albumName, artistImagePath: artistImages[idx], artistName: artistName[idx] }))];
         setRow1(true)
         setSubmittedWords(newSubmittedWords);
         const images = [...picture]
+        const answers = [...answer]
 
+
+        answers.push(artistName)
         images.push(artistImages)
         setPicture(images)
+        setAnswer(answers)
+
 
         if (submittedWords.length === 4){
           setRow2(true)
@@ -212,7 +233,7 @@ const GameBoardQb = () => {
         }
 
         // Remove correctly guessed WRs from the game board
-        const remainingWords = gameWords.filter((album) => !selectedWords.has(album));
+        const remainingWords = gameWords.filter((album) => !selectedWords.has(album.name));
 
         setGameWords(remainingWords);
 
@@ -278,7 +299,7 @@ const GameBoardQb = () => {
       {row1 ?
        <div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-          <h2>1st:</h2>
+          <h2 style={{ color: 'white' }}>1st: {answer[0]}</h2>
           <img src={picture[0]} alt="1st" className="picture-container" />
         </div>
       <div className='submitted-words first-row'>
@@ -295,7 +316,7 @@ const GameBoardQb = () => {
 </div></div>: <div></div>}
       {row2 ?     <div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-      <h2>2nd:</h2>
+      <h2 style={{ color: 'white' }}>2nd: {answer[1]}</h2>
       <img src={picture[1]} alt="1st" className="picture-container" />
 
     </div>
@@ -310,7 +331,7 @@ const GameBoardQb = () => {
     />
   ))}</div></div>: <div></div>}
        {row3 ?   <div> <div style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', margin: '10px 0' }}>
-      <h2>3rd:</h2>
+      <h2 style={{ color: 'white' }}>3rd: {answer[2]}</h2>
       <img src={picture[2]} alt="1st" className="picture-container" />
     </div>  <div className='submitted-words third-row'>
   {submittedWords.slice(8, 12).map((word, index) => (
@@ -325,7 +346,7 @@ const GameBoardQb = () => {
 
        {row4 ?  <div>
        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-       <h2>4th:</h2>
+       <h2 style={{ color: 'white' }}>4th: {answer[3]}</h2>
        <img src={picture[3]} alt="1st" className="picture-container" />
      </div>
           <div className='submitted-words winner'>
@@ -342,15 +363,16 @@ const GameBoardQb = () => {
     {/* Render submitted words first */}
 
     <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
-      {gameWords.map((word, index) => (
-        <WordCard
-          key={index}
-          word={word}
-          isSelected={selectedWords.has(word)}
-          onSelect={toggleSelectWord}
-        />
-      ))}
-    </div>
+  {gameWords.map((player, index) => (
+    <WordCard
+      key={index}
+      word={player.name}
+      isSelected={selectedWords.has(player.name)}
+      onSelect={toggleSelectWord}
+      image={player.imagePath} // Pass the image path here
+    />
+  ))}
+</div>
 
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>
     {submittedWords.length === 16 || mistakes == 5 ?  <div className="control-panel">

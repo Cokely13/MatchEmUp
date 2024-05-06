@@ -111,34 +111,8 @@ const GameBoardNba = () => {
         imagePath: player.imagePath
     })));
 
-    // Debugging log to check the distribution of players
-    console.log("Game words set with players:", gameWords);
 };
 
-
-  // const shuffleFranchisesAndPlayers = () => {
-  //   // Use allFranchises from the redux store instead of the hardcoded franchises array
-  //   const shuffledFranchises = [...allFranchises].sort(() => 0.5 - Math.random());
-
-  //   // Select first 4 Franchises
-  //   const selectedFranchises = shuffledFranchises.slice(0, 4);
-
-  //   console.log("selected", selectedFranchises)
-
-  //   // Extract and shuffle Players from the selected Franchises
-  //   const selectedPlayers = selectedFranchises.flatMap(franchise =>
-  //     franchise.players.sort(() => 0.5 - Math.random()).slice(0, 4)
-  //   ).sort(() => 0.5 - Math.random());
-
-  //   // console.log("selectedPlayers", selectedPlayers)
-
-  //   setGameWords(selectedPlayers.map(player => ({
-  //     name: player.name,
-  //     imagePath: player.imagePath
-  //   })));
-
-
-  // };
 
   // Ensure this useEffect hook is called after your component is mounted and whenever allFranchises changes
   useEffect(() => {
@@ -280,10 +254,10 @@ const GameBoardNba = () => {
        <div className="franchise-container">
     <div style={{ textAlign: 'center', margin: '20px' }}>
         <Button variant="link" onClick={handleShow}>
-          <h3 style={{ color: 'black' }}>How To Play</h3>
+          <h3 style={{ color: 'white' }}>How To Play</h3>
         </Button>
       </div>
-      <Link to="/home" style={{ color: 'black' }}>Home</Link>
+      <Link to="/home" style={{ color: 'white' }}>Home</Link>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>
@@ -305,7 +279,7 @@ const GameBoardNba = () => {
       {row1 ?
        <div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-          <h2>1st:</h2>
+          <h2 style={{ color: 'white' }}>1st:</h2>
           <img src={picture[0]} alt="1st" className="picture-container" />
         </div>
       <div className='submitted-words first-row'>
@@ -322,7 +296,7 @@ const GameBoardNba = () => {
 </div></div>: <div></div>}
       {row2 ?     <div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-      <h2>2nd:</h2>
+      <h2 style={{ color: 'white' }}>2nd:</h2>
       <img src={picture[1]} alt="1st" className="picture-container" />
 
     </div>
@@ -337,7 +311,7 @@ const GameBoardNba = () => {
     />
   ))}</div></div>: <div></div>}
        {row3 ?   <div> <div style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', margin: '10px 0' }}>
-      <h2>3rd:</h2>
+      <h2 style={{ color: 'white' }}>3rd:</h2>
       <img src={picture[2]} alt="1st" className="picture-container" />
     </div>  <div className='submitted-words third-row'>
   {submittedWords.slice(8, 12).map((word, index) => (
@@ -352,7 +326,7 @@ const GameBoardNba = () => {
 
        {row4 ?  <div>
        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-       <h2>4th:</h2>
+       <h2 style={{ color: 'white' }}>4th:</h2>
        <img src={picture[3]} alt="1st" className="picture-container" />
      </div>
           <div className='submitted-words winner'>
@@ -366,18 +340,7 @@ const GameBoardNba = () => {
     />
   ))}</div></div>: <div></div>}
 <div>
-    {/* Render submitted words first */}
 
-    {/* <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
-      {gameWords.map((word, index) => (
-        <WordCard
-          key={index}
-          word={word}
-          isSelected={selectedWords.has(word)}
-          onSelect={toggleSelectWord}
-        />
-      ))}
-    </div> */}
 
     <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
   {gameWords.map((player, index) => (
