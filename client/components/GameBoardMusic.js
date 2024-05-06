@@ -172,7 +172,7 @@ const GameBoardQb = () => {
       const selectedWordArray = Array.from(selectedWords);
 
       const artistImages = [];
-      const artistName = [];
+      const artistNames = [];
       const matchingArtists = [];
 
       // Check if there is a quarterback that matches three out of four receivers
@@ -189,7 +189,7 @@ const GameBoardQb = () => {
 
         if (allAlbumsMatch) {
           artistImages.push(artist.imagePath)
-          artistName.push(artist.name); // Capture the QB's image path when a match is found
+          artistNames.push(artist.name); // Capture the QB's image path when a match is found
         }
 
         return allAlbumsMatch;
@@ -197,14 +197,14 @@ const GameBoardQb = () => {
 
       if (isSameArtist) {
         // Correctly guessed all WRs from the same QB
-        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((albumName, idx) => ({ name: albumName, artistImagePath: artistImages[idx], artistName: artistName[idx] }))];
+        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((albumName, idx) => ({ name: albumName, artistImagePath: artistImages[idx], artistName: artistNames[idx] }))];
         setRow1(true)
         setSubmittedWords(newSubmittedWords);
         const images = [...picture]
         const answers = [...answer]
 
 
-        answers.push(artistName)
+        answers.push(artistNames)
         images.push(artistImages)
         setPicture(images)
         setAnswer(answers)

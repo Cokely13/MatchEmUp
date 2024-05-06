@@ -38,6 +38,7 @@ const GameBoardQb = () => {
   const [submittedWords, setSubmittedWords] = useState([]);
   const [gameWords, setGameWords] = useState([]);
   const [picture, setPicture] = useState([]);
+  const [answer, setAnswer] = useState([]);
   const [row3, setRow3] = useState();
   const [row1, setRow1] = useState();
   const [row2, setRow2] = useState();
@@ -152,6 +153,7 @@ const GameBoardQb = () => {
     setSubmittedWords([]);
     setGameWords([]);
     setPicture([]);
+    setAnswer([]);
     setRow1(false);
     setRow2(false);
     setRow3(false);
@@ -166,6 +168,7 @@ const GameBoardQb = () => {
       const selectedWordArray = Array.from(selectedWords);
 
       const qbImages = [];
+      const qbNames = [];
       const matchingQBs = [];
 
       // Check if there is a quarterback that matches three out of four receivers
@@ -182,6 +185,7 @@ const GameBoardQb = () => {
 
         if (allWrMatch) {
           qbImages.push(qb.imagePath); // Capture the QB's image path when a match is found
+          qbNames.push(qb.name)
         }
 
         return allWrMatch;
@@ -189,13 +193,16 @@ const GameBoardQb = () => {
 
       if (isSameQB) {
         // Correctly guessed all WRs from the same QB
-        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((wrName, idx) => ({ name: wrName, qbImagePath: qbImages[idx] }))];
+        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((wrName, idx) => ({ name: wrName, qbImagePath: qbImages[idx], qbName: qbNames[idx]  }))];
         setRow1(true)
         setSubmittedWords(newSubmittedWords);
         const images = [...picture]
+        const answers = [...answer]
 
         images.push(qbImages)
+        answers.push(qbNames)
         setPicture(images)
+        setAnswer(answers)
 
         if (submittedWords.length === 4){
           setRow2(true)
@@ -278,7 +285,7 @@ const GameBoardQb = () => {
       {row1 ?
        <div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-          <h2>1st:</h2>
+          <h2>1st: {answer[0]}</h2>
           <img src={picture[0]} alt="1st" className="picture-container" />
         </div>
       <div className='submitted-words first-row'>
@@ -295,7 +302,7 @@ const GameBoardQb = () => {
 </div></div>: <div></div>}
       {row2 ?     <div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-      <h2>2nd:</h2>
+      <h2>2nd: {answer[1]}</h2>
       <img src={picture[1]} alt="1st" className="picture-container" />
 
     </div>
@@ -310,7 +317,7 @@ const GameBoardQb = () => {
     />
   ))}</div></div>: <div></div>}
        {row3 ?   <div> <div style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', margin: '10px 0' }}>
-      <h2>3rd:</h2>
+      <h2>3rd: {answer[2]}</h2>
       <img src={picture[2]} alt="1st" className="picture-container" />
     </div>  <div className='submitted-words third-row'>
   {submittedWords.slice(8, 12).map((word, index) => (
@@ -325,7 +332,7 @@ const GameBoardQb = () => {
 
        {row4 ?  <div>
        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-       <h2>4th:</h2>
+       <h2>4th: {answer[3]}</h2>
        <img src={picture[3]} alt="1st" className="picture-container" />
      </div>
           <div className='submitted-words winner'>

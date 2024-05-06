@@ -39,6 +39,7 @@ const GameBoard = () => {
   const [submittedWords, setSubmittedWords] = useState([]);
   const [gameWords, setGameWords] = useState([]);
   const [picture, setPicture] = useState([]);
+  const [answer, setAnswer] = useState([]);
   const [row3, setRow3] = useState();
   const [row1, setRow1] = useState();
   const [row2, setRow2] = useState();
@@ -63,22 +64,17 @@ const GameBoard = () => {
 
   const handleClose = () => setShowHowToPlayModal(false);
   const handleShow = () => {
-    setPicture(allActors[0].imagePath)
     setShowHowToPlayModal(true)
   }
 
-    const handleTest = () =>{
-      console.log("pictures", picture)
-    }
+
   const handleWin = () => {
 
     setShowWinModal(true);
     setShowConfetti(true);
   };
 
-  const handlleConfetti = () => {
-    setShowConfetti(true);
-  }
+
 
   // Function to handle losing condition
   const handleLoss = () => {
@@ -160,6 +156,7 @@ const GameBoard = () => {
     setSubmittedWords([]);
     setGameWords([]);
     setPicture([]);
+    setAnswer([]);
     setRow1(false);
     setRow2(false);
     setRow3(false);
@@ -174,6 +171,7 @@ const GameBoard = () => {
       const selectedWordArray = Array.from(selectedWords);
 
       const actorImages = [];
+      const actorNames = [];
       const matchingActors = [];
 
       // Check if there is a quarterback that matches three out of four receivers
@@ -189,7 +187,8 @@ const GameBoard = () => {
         const allMovieMatch = matchingMovies.length === 4;
 
         if (allMovieMatch) {
-          actorImages.push(actor.imagePath); // Capture the QB's image path when a match is found
+          actorImages.push(actor.imagePath);
+          actorNames.push(actor.name) // Capture the QB's image path when a match is found
         }
 
         return allMovieMatch;
@@ -197,15 +196,18 @@ const GameBoard = () => {
 
       if (isSameActor) {
         // Correctly guessed all WRs from the same QB
-        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((movieName, idx) => ({ name: movieName, actorImagePath: actorImages[idx] }))];
+        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((movieName, idx) => ({ name: movieName, actorImagePath: actorImages[idx], actorName: actorNames[idx] }))];
         setRow1(true)
         setSubmittedWords(newSubmittedWords);
         const images = [...picture]
+        const answers = [...answer]
 
 
         images.push(actorImages)
+        answers.push(actorNames)
         setPicture(images)
-          console.log("pictures", picture)
+        setAnswer(answers)
+
         if (submittedWords.length === 4){
           setRow2(true)
         }
@@ -262,11 +264,11 @@ const GameBoard = () => {
        <div className="app-container" >
 
     <div style={{ textAlign: 'center', margin: '20px' }}>
-        <Button variant="link" onClick={handleShow} style={{ color: 'black' }}>
+        <Button variant="link" onClick={handleShow} style={{ color: 'white' }}>
           <h3>How To Play</h3>
         </Button>
       </div>
-      <Link style={{ color: 'black' }} to="/home">Home</Link>
+      <Link style={{ color: 'white' }} to="/home">Home</Link>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>
@@ -288,7 +290,7 @@ const GameBoard = () => {
       {row1 ?
        <div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-          <h2>1st:</h2>
+          <h2 style={{ color: 'white' }}>1st: {answer[0]}</h2>
           <img src={picture[0]} alt="1st" className="picture-container" />
         </div>
       <div className='submitted-words first-row'>
@@ -305,7 +307,7 @@ const GameBoard = () => {
 </div></div>: <div></div>}
       {row2 ?     <div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-      <h2>2nd:</h2>
+      <h2 style={{ color: 'white' }}>2nd: {answer[1]}</h2>
       <img src={picture[1]} alt="1st" className="picture-container" />
 
     </div>
@@ -320,7 +322,7 @@ const GameBoard = () => {
     />
   ))}</div></div>: <div></div>}
        {row3 ?   <div> <div style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', margin: '10px 0' }}>
-      <h2>3rd:</h2>
+      <h2 style={{ color: 'white' }}>3rd: {answer[2]}</h2>
       <img src={picture[2]} alt="1st" className="picture-container" />
     </div>  <div className='submitted-words third-row'>
   {submittedWords.slice(8, 12).map((word, index) => (
@@ -335,7 +337,7 @@ const GameBoard = () => {
 
        {row4 ?  <div>
        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-       <h2>4th:</h2>
+       <h2 style={{ color: 'white' }}>4th: {answer[3]}</h2>
        <img src={picture[3]} alt="1st" className="picture-container" />
      </div>
           <div className='submitted-words winner'>
