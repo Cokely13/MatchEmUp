@@ -9,6 +9,7 @@
     "seed": "node script/seed.js",
     "seed:nfl": "node script/nflseed.js",
     "seed:movie": "node script/movieseed.js",
+    "seed:movie2": "node script/movieseed2.js",
     "seed:nba": "node script/nbaseed.js",
     "seed:music": "node script/musicseed.js",
     "seed:all": "npm run seed:nfl && npm run seed:nba && npm run seed:music && npm run seed:movie",

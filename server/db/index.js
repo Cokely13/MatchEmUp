@@ -14,8 +14,11 @@ const Player = require('./models/Player')
 const Franchise = require('./models/Franchise')
 
 //associations could go here!
-Actor.hasMany(Movie);
-Movie.belongsTo(Actor);
+// Actor.hasMany(Movie);
+// Movie.belongsTo(Actor);
+Actor.hasMany(Movie, { foreignKey: 'ActorId' });
+Movie.belongsTo(Actor, { foreignKey: 'ActorId' });
+
 Quarterback.hasMany(Receiver);
 Receiver.belongsTo(Quarterback);
 Franchise.hasMany(Player);
