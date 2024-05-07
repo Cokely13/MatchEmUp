@@ -17,11 +17,13 @@ import { Link } from 'react-router-dom';
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected, image }) => {
   return (
-    <div  className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
-      <div >{word}</div>
+    <div className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+      {image && <img src={image} alt={word} style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />}
+      <div>{word}</div>
     </div>
   );
-};
+}
+
 
 
 
@@ -114,8 +116,13 @@ const GameBoard = () => {
       actor.movies.sort(() => 0.5 - Math.random()).slice(0, 4)
     ).sort(() => 0.5 - Math.random());
 
-    setGameWords(selectedMovies.map(movie => movie.name));
+    setGameWords(selectedMovies.map(movie => ({
+       name: movie.name,
+      imagePath: movie.imagePath
+    })));
   };
+
+  console.log("game", gameWords)
 
   // Ensure this useEffect hook is called after your component is mounted and whenever allActors changes
   useEffect(() => {
@@ -223,7 +230,7 @@ const GameBoard = () => {
         }
 
         // Remove correctly guessed WRs from the game board
-        const remainingWords = gameWords.filter((movie) => !selectedWords.has(movie));
+        const remainingWords = gameWords.filter((movie) => !selectedWords.has(movie.name));
 
         setGameWords(remainingWords);
 
@@ -357,9 +364,10 @@ const GameBoard = () => {
       {gameWords.map((word, index) => (
         <WordCard
           key={index}
-          word={word}
-          isSelected={selectedWords.has(word)}
+          word={word.name}
+          isSelected={selectedWords.has(word.name)}
           onSelect={toggleSelectWord}
+          image={word.imagePath}
         />
       ))}
     </div>

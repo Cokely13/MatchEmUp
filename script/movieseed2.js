@@ -86,7 +86,7 @@ async function fetchTopMoviesForActor(personId) {
 }
 
 async function updateActorsAndMovies() {
-    await db.sync({ force: true }); // Optional: Sync DB here if needed
+    // await db.sync({ force: true }); // Optional: Sync DB here if needed
     const actors = await fetchPopularActors();
 
     for (const actorData of actors) {
