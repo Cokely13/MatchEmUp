@@ -5,8 +5,8 @@ const csv = require('csv-parser');
 const { db, models: { Quarterback, Receiver } } = require('../server/db');
 
 async function nflseed() {
-  await db.sync({ force: true });
-  console.log('NFL DB synced!');
+  // await db.sync({ force: true });
+  // console.log('NFL DB synced!');
 
   // Reading from the CSV file for quarterbacks and receivers
   const qbReceiverResults = await new Promise((resolve, reject) => {

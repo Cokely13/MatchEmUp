@@ -9,7 +9,7 @@ async function seed() {
   await db.sync({ force: true }); // Clears db and matches models to tables
   console.log('db synced!');
 
-  await processCsvData();
+  // await processCsvData();
 
 
 const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
@@ -205,112 +205,112 @@ async function run() {
 run();
 
 
-  // Process quarterbacks and receivers from 'data.csv'
-  const qbReceiverResults = await new Promise((resolve, reject) => {
-    const results = [];
-    fs.createReadStream('script/data.csv')
-      .pipe(csv({
-        mapHeaders: ({ header, index }) => index === 0 ? 'receiver' : 'quarterback',
-      }))
-      .on('data', (data) => results.push([data.receiver, data.quarterback]))
-      .on('end', () => {
-        resolve(results);
-      })
-      .on('error', reject);
-  });
+  // // Process quarterbacks and receivers from 'data.csv'
+  // const qbReceiverResults = await new Promise((resolve, reject) => {
+  //   const results = [];
+  //   fs.createReadStream('script/data.csv')
+  //     .pipe(csv({
+  //       mapHeaders: ({ header, index }) => index === 0 ? 'receiver' : 'quarterback',
+  //     }))
+  //     .on('data', (data) => results.push([data.receiver, data.quarterback]))
+  //     .on('end', () => {
+  //       resolve(results);
+  //     })
+  //     .on('error', reject);
+  // });
 
-  for (const [receiverName, qbName] of qbReceiverResults) {
-    let qb = await Quarterback.findOne({ where: { name: qbName } });
-    if (!qb) {
-      qb = await Quarterback.create({ name: qbName });
-    }
-    await Receiver.create({ name: receiverName, quarterbackId: qb.id });
-  }
+  // for (const [receiverName, qbName] of qbReceiverResults) {
+  //   let qb = await Quarterback.findOne({ where: { name: qbName } });
+  //   if (!qb) {
+  //     qb = await Quarterback.create({ name: qbName });
+  //   }
+  //   await Receiver.create({ name: receiverName, quarterbackId: qb.id });
+  // }
 
-  // Update quarterbacks with hardcoded images
-  const quarterbackImages = {
-    'Brady': '/Brady.jpg',
-    'Rodgers': '/rodgers.jpg',
-    'Peyton': '/Peyton.jpg',
-    'Brees': '/brees.jpg',
-    'Favre': '/favre.jpg',
-    'Eli': '/eli.jpg',
-    'Ryan': '/Ryan.jpg',
-    'Marino': '/marino.jpg',
-    'Roethlisberger': '/Ben.jpg',
-    'Rivers': '/Rivers.jpg',
-    // Add other quarterbacks and their image paths as needed
-  };
+  // // Update quarterbacks with hardcoded images
+  // const quarterbackImages = {
+  //   'Brady': '/Brady.jpg',
+  //   'Rodgers': '/rodgers.jpg',
+  //   'Peyton': '/Peyton.jpg',
+  //   'Brees': '/brees.jpg',
+  //   'Favre': '/favre.jpg',
+  //   'Eli': '/eli.jpg',
+  //   'Ryan': '/Ryan.jpg',
+  //   'Marino': '/marino.jpg',
+  //   'Roethlisberger': '/Ben.jpg',
+  //   'Rivers': '/Rivers.jpg',
+  //   // Add other quarterbacks and their image paths as needed
+  // };
 
-  for (const qbName in quarterbackImages) {
-    const imagePath = quarterbackImages[qbName];
-    await Quarterback.update({ imagePath }, { where: { name: qbName } });
-  }
+  // for (const qbName in quarterbackImages) {
+  //   const imagePath = quarterbackImages[qbName];
+  //   await Quarterback.update({ imagePath }, { where: { name: qbName } });
+  // }
 
   console.log('Seeded successfully');
 }
 
 
-async function processCsvData() {
-  const franchises = {};
+// async function processCsvData() {
+//   const franchises = {};
 
-  const franchisePromises = {};
+//   const franchisePromises = {};
 
-  const dataStream = fs.createReadStream('script/bball.csv').pipe(csv());
-  for await (const row of dataStream) {
-      const { Name, Image, Team, Year } = row;
+//   const dataStream = fs.createReadStream('script/bball.csv').pipe(csv());
+//   for await (const row of dataStream) {
+//       const { Name, Image, Team, Year } = row;
 
-      if (!franchises[Team]) {
-          if (!franchisePromises[Team]) {
-              // Promise to find or create the franchise, stored to prevent duplicate creations
-              franchisePromises[Team] = Franchise.findOrCreate({
-                  where: { team: Team },
-                  defaults: { team: Team, year: Year }
-              })
-              .then(([franchise]) => {
-                  franchises[Team] = franchise;
-                  return franchise;
-              });
-          }
-          // Wait for the franchise to be processed or found
-          await franchisePromises[Team];
-      }
+//       if (!franchises[Team]) {
+//           if (!franchisePromises[Team]) {
+//               // Promise to find or create the franchise, stored to prevent duplicate creations
+//               franchisePromises[Team] = Franchise.findOrCreate({
+//                   where: { team: Team },
+//                   defaults: { team: Team, year: Year }
+//               })
+//               .then(([franchise]) => {
+//                   franchises[Team] = franchise;
+//                   return franchise;
+//               });
+//           }
+//           // Wait for the franchise to be processed or found
+//           await franchisePromises[Team];
+//       }
 
-      // Create the player and associate with the franchise
-      await Player.create({
-          name: Name,
-          imagePath: Image,
-          franchiseId: franchises[Team].id
-      });
-  }
+//       // Create the player and associate with the franchise
+//       await Player.create({
+//           name: Name,
+//           imagePath: Image,
+//           franchiseId: franchises[Team].id
+//       });
+//   }
 
-  console.log('CSV file successfully processed');
-  console.log('Seeding completed');
-
-
-
-   // Update quarterbacks with hardcoded images
-   const franchiseImages = {
-    'Lakers': '/lakers.png',
-    'Heat': '/heat.png',
-    'Celtics': '/celtics.png',
-    'Bucks': '/bucks.png',
-    'Cavs': '/cavs.png',
-    'Mavs': '/mavs.png',
-    'Warriors': '/warriors.png',
-    'Raptors': '/raptors.png',
-    'Nuggets': '/nuggets.png',
-    'Spurs': '/spurs.png',
-    // Add other quarterbacks and their image paths as needed
-  };
-
-  for (const franchiseName in franchiseImages) {
-    const imagePath = franchiseImages[franchiseName];
-    await Franchise.update({ imagePath }, { where: { team: franchiseName } });
-  }
+//   console.log('CSV file successfully processed');
+//   console.log('Seeding completed');
 
 
-}
+
+//    // Update quarterbacks with hardcoded images
+//    const franchiseImages = {
+//     'Lakers': '/lakers.png',
+//     'Heat': '/heat.png',
+//     'Celtics': '/celtics.png',
+//     'Bucks': '/bucks.png',
+//     'Cavs': '/cavs.png',
+//     'Mavs': '/mavs.png',
+//     'Warriors': '/warriors.png',
+//     'Raptors': '/raptors.png',
+//     'Nuggets': '/nuggets.png',
+//     'Spurs': '/spurs.png',
+//     // Add other quarterbacks and their image paths as needed
+//   };
+
+//   for (const franchiseName in franchiseImages) {
+//     const imagePath = franchiseImages[franchiseName];
+//     await Franchise.update({ imagePath }, { where: { team: franchiseName } });
+//   }
+
+
+// }
 
 async function runSeed() {
   console.log('Seeding...')
