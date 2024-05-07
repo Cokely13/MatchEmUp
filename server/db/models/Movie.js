@@ -7,6 +7,10 @@ const Movie = db.define('movie', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  imagePath: {
+    type: Sequelize.TEXT,
+    defaultValue: "/Generic.png"
+  },
 });
 
 

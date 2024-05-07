@@ -3,6 +3,7 @@
 const fs = require('fs');
 const csv = require('csv-parser');
 const { db, models: { Actor, Movie, Quarterback, Receiver, User, Song, Album, Artist, Player, Franchise} } = require('../server/db');
+const axios = require('axios');
 
 async function seed() {
   await db.sync({ force: true }); // Clears db and matches models to tables
@@ -10,128 +11,6 @@ async function seed() {
 
   await processCsvData();
 
-
-// const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
-
-// // Fetch and create artists, albums, and songs
-// async function fetchPopularAlbumsAndTracks() {
-//   const artists = await fetchTopArtists();
-//   for (const artistData of artists) {
-//     const artist = await Artist.create({ name: artistData.name }); // Create artist
-//     const topAlbumData = await fetchTopAlbums(artist.name);
-
-//     if (!topAlbumData || !topAlbumData.name) {
-//       console.log(`Skipping album creation for artist: ${artistData.name} due to missing data.`);
-//       continue;  // Skip this iteration if no album data is found
-//     }
-
-//     const album = await Album.create({ // Create album
-//       title: topAlbumData.name,
-//       artistId: artist.id
-//     });
-
-//     const tracks = await fetchAlbumTracks(topAlbumData.mbid);
-//     for (const trackData of tracks) {
-//       await Song.create({ // Create song
-//         name: trackData.name,
-//         albumId: album.id
-//       });
-//     }
-//   }
-// }
-
-// // Fetch the top 10 artists from Last.fm
-// async function fetchTopArtists() {
-//   const urlTopArtists = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=${API_KEY}&format=json&limit=10`;
-//   const response = await fetch(urlTopArtists);
-//   const data = await response.json();
-//   return data.artists.artist; // Returns an array of top 10 artists
-// }
-
-// // Fetch the top album of a given artist
-// // async function fetchTopAlbums(artistName) {
-// //   const urlTopAlbums = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=${API_KEY}&artist=${encodeURIComponent(artistName)}&format=json&limit=4`;
-// //   const response = await fetch(urlTopAlbums);
-// //   const data = await response.json();
-
-// //   if (!data.topalbums || !data.topalbums.album.length) {
-// //     console.error(`No albums found for artist: ${artistName}`);
-// //     return [];  // Return an empty array if no albums are found
-// //   }
-
-// //   return data.topalbums.album; // Returns the top 4 albums for the artist
-// // }
-// // Fetch the top album of a given artist, including image paths
-// async function fetchTopAlbums(artistName) {
-//   const urlTopAlbums = `http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&api_key=${API_KEY}&artist=${encodeURIComponent(artistName)}&format=json&limit=4`;
-//   const response = await fetch(urlTopAlbums);
-//   const data = await response.json();
-
-//   if (!data.topalbums || !data.topalbums.album.length) {
-//     console.error(`No albums found for artist: ${artistName}`);
-//     return [];  // Return an empty array if no albums are found
-//   }
-
-//   return data.topalbums.album.map(album => ({
-//     name: album.name,
-//     mbid: album.mbid,
-//     imagePath: album.image.find(img => img.size === 'large')['#text'] // Assuming 'large' is the size you want
-//   }));
-// }
-
-// // Fetch tracks for a given album using its MusicBrainz ID (mbid)
-// async function fetchPopularAlbumsAndTracks() {
-//   const artists = await fetchTopArtists();
-//   for (const artistData of artists) {
-//     const artist = await Artist.create({ name: artistData.name }); // Create artist
-//     const topAlbumsData = await fetchTopAlbums(artist.name);
-
-//     for (const albumData of topAlbumsData) {
-//       if (!albumData.name) {
-//         console.log(`Skipping album creation for ${artistData.name} due to missing data.`);
-//         continue; // Skip this iteration if no album data is found
-//       }
-
-//       const album = await Album.create({
-//         title: albumData.name,
-//         artistId: artist.id,
-//         imagePath: albumData.imagePath || '/Generic.png'  // Use default image if none provided
-//       });
-
-//       const tracks = await fetchAlbumTracks(albumData.mbid);
-//       for (const trackData of tracks) {
-//         await Song.create({
-//           name: trackData.name,
-//           albumId: album.id
-//         });
-//       }
-//     }
-//   }
-// }
-
-// async function updateArtistImages() {
-// const artistImages = {
-//     'Taylor Swift': '/Taylor.jpg',
-//     'The Weeknd': '/Weeknd.jpg',
-//     'Kanye West': '/Kanye.jpg',
-//     'Drake': '/Drake.jpg',
-//     'Lana Del Rey': '/Lana.jpg',
-//     'Kendrick Lamar': '/Kendrick.jpg',
-//     'Ariana Grande': '/Ariana.jpg',
-//     'Tyler, the Creator': '/Tyler.jpg',
-//     'Beyoncé': '/Beyonce.jpg',
-//     'Rihanna': '/Rihanna.jpg',
-// };
-
-// for (const artistName in artistImages) {
-//     const imagePath = artistImages[artistName];
-//     await Artist.update({ imagePath: imagePath }, { where: { name: artistName } });
-// }
-// }
-
-// // Initiate fetching and creating process
-// await fetchPopularAlbumsAndTracks();
-// await updateArtistImages();
 
 const API_KEY = '6e56a81fd7f7f0fb08932517fef4fc86';
 
@@ -236,44 +115,95 @@ async function updateArtistImages() {
 await fetchAndCreateMusicData();
 await updateArtistImages();
 
-  // Process actors and movies from 'fixed.csv'
-  const actorMovieResults = await new Promise((resolve, reject) => {
-    const results = [];
-    fs.createReadStream('script/fixed.csv')
-      .pipe(csv({
-        mapHeaders: ({ header, index }) => index === 0 ? 'actor' : 'movie',
-      }))
-      .on('data', (data) => results.push([data.actor, data.movie]))
-      .on('end', () => {
-        resolve(results);
-      })
-      .on('error', reject);
-  });
+  // // Process actors and movies from 'fixed.csv'
+  // const actorMovieResults = await new Promise((resolve, reject) => {
+  //   const results = [];
+  //   fs.createReadStream('script/fixed.csv')
+  //     .pipe(csv({
+  //       mapHeaders: ({ header, index }) => index === 0 ? 'actor' : 'movie',
+  //     }))
+  //     .on('data', (data) => results.push([data.actor, data.movie]))
+  //     .on('end', () => {
+  //       resolve(results);
+  //     })
+  //     .on('error', reject);
+  // });
 
-  for (const [actorName, movieName] of actorMovieResults) {
-    let actor = await Actor.findOne({ where: { name: actorName } });
-    if (!actor) {
-      actor = await Actor.create({ name: actorName });
+  // for (const [actorName, movieName] of actorMovieResults) {
+  //   let actor = await Actor.findOne({ where: { name: actorName } });
+  //   if (!actor) {
+  //     actor = await Actor.create({ name: actorName });
+  //   }
+  //   await Movie.create({ name: movieName, actorId: actor.id });
+  // }
+
+  // // Update actors with images from 'images.csv'
+  // const actorImagesResults = await new Promise((resolve, reject) => {
+  //   const results = [];
+  //   fs.createReadStream('script/images.csv')
+  //     .pipe(csv())
+  //     .on('data', (data) => results.push(data))
+  //     .on('end', () => {
+  //       resolve(results);
+  //     })
+  //     .on('error', reject);
+  // });
+
+  // for (const result of actorImagesResults) {
+  //   const { Actor: actorName, Images: imagePath } = result;
+  //   await Actor.update({ imagePath }, { where: { name: actorName } });
+  // }
+
+const API_KEY2 = '46bc0d05e584bfed1df9ee4d1ae6c6a6';
+const BASE_URL = 'https://api.themoviedb.org/3';
+
+async function fetchPopularActors() {
+  const url = `${BASE_URL}/person/popular?api_key=${API_KEY2}&language=en-US&page=1`;
+  const response = await axios.get(url);
+  return response.data.results.slice(0, 25);
+}
+
+async function fetchTopMoviesForActor(personId) {
+  const url = `${BASE_URL}/person/${personId}/movie_credits?api_key=${API_KEY2}&language=en-US`;
+  const response = await axios.get(url);
+  const movies = response.data.cast;
+  return movies.sort((a, b) => b.popularity - a.popularity).slice(0, 10);
+}
+
+async function updateActorsAndMovies() {
+  const actors = await fetchPopularActors();
+
+  for (const actorData of actors) {
+    const actor = await Actor.create({
+      name: actorData.name,
+      imagePath: `https://image.tmdb.org/t/p/w500${actorData.profile_path}`
+    });
+
+    const movies = await fetchTopMoviesForActor(actorData.id);
+    for (const movieData of movies) {
+      await Movie.create({
+        name: movieData.title,
+        imagePath: `https://image.tmdb.org/t/p/w500${movieData.poster_path}`,
+        ActorId: actor.id  // Assuming ActorId is the foreign key in the Movie model
+      });
     }
-    await Movie.create({ name: movieName, actorId: actor.id });
   }
+}
 
-  // Update actors with images from 'images.csv'
-  const actorImagesResults = await new Promise((resolve, reject) => {
-    const results = [];
-    fs.createReadStream('script/images.csv')
-      .pipe(csv())
-      .on('data', (data) => results.push(data))
-      .on('end', () => {
-        resolve(results);
-      })
-      .on('error', reject);
-  });
-
-  for (const result of actorImagesResults) {
-    const { Actor: actorName, Images: imagePath } = result;
-    await Actor.update({ imagePath }, { where: { name: actorName } });
+async function run() {
+  try {
+    await db.sync(); // Make sure your database is synced
+    await updateActorsAndMovies();
+    console.log('Successfully updated actors and their movies');
+  } catch (error) {
+    console.error('Failed to update data:', error);
+  } finally {
+    await db.close();
   }
+}
+
+run();
+
 
   // Process quarterbacks and receivers from 'data.csv'
   const qbReceiverResults = await new Promise((resolve, reject) => {
