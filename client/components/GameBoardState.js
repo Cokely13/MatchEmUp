@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {fetchActors} from '../store/allActorsStore'
+import { fetchStates } from '../store/allStatesStore';
 import { Button, Modal } from 'react-bootstrap';
 import WinModal from './WinModal';
 import LossModal from './LossModal';
@@ -9,33 +9,30 @@ import Error2Modal from './Error2Modal';
 import OneAwayModal from './OneAwayModal';
 import WrongModal from './WrongModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilm } from '@fortawesome/free-solid-svg-icons';
+import { faFootballBall } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
+
 
 
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected, image }) => {
   return (
-    <div className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-      {image && <img src={image} alt={word} style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />}
-      <div>{word}</div>
+    <div  className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
+      <div >{word}</div>
     </div>
   );
-}
+};
 
-
-
-
-const movieIcons = Array.from({ length: 5 }, (_, index) => (
-  <FontAwesomeIcon key={index} icon={faFilm} style={{ marginRight: '5px' }} />
+const footballIcons = Array.from({ length: 5 }, (_, index) => (
+  <FontAwesomeIcon key={index} icon={faFootballBall} style={{ marginRight: '5px' }} />
 ));
 
 
 
 
 // Main game board component
-const GameBoard = () => {
+const GameBoardState = () => {
   const [selectedWords, setSelectedWords] = useState(new Set());
   const [mistakes, setMistakes] = useState(0);
   const [submittedWords, setSubmittedWords] = useState([]);
@@ -56,27 +53,25 @@ const GameBoard = () => {
   const [showWrongModal, setShowWrongModal] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const allActors = useSelector((state) => state.allActors);
-
-
+  const allStates= useSelector((state) => state.allStates);
 
   useEffect(() => {
-    dispatch(fetchActors());
+    dispatch(fetchStates());
   }, []);
 
   const handleClose = () => setShowHowToPlayModal(false);
   const handleShow = () => {
-    setShowHowToPlayModal(true)
-  }
-
-
+    setShowHowToPlayModal(true)}
   const handleWin = () => {
 
     setShowWinModal(true);
     setShowConfetti(true);
   };
 
-
+  const handlleConfetti = () => {
+    setShowConfetti(true);
+    console.log("hott")
+  }
 
   // Function to handle losing condition
   const handleLoss = () => {
@@ -104,32 +99,27 @@ const GameBoard = () => {
 
 
 
-  const shuffleActorsAndMovies = () => {
-    // Use allActors from the redux store instead of the hardcoded qbs array
-    const shuffledActors = [...allActors].sort(() => 0.5 - Math.random());
+  const shuffleStatesAndCities = () => {
+    // Use allStates from the redux store instead of the hardcoded states array
+    const shuffledStates = [...allStates].sort(() => 0.5 - Math.random());
 
-    // Select first 4 QBs
-    const selectedActors = shuffledActors.slice(0, 4);
+    // Select first 4 States
+    const selectedStates = shuffledStates.slice(0, 4);
 
-    // Extract and shuffle WRs from the selected QBs
-    const selectedMovies = selectedActors.flatMap(actor =>
-      actor.movies.sort(() => 0.5 - Math.random()).slice(0, 4)
+    // Extract and shuffle Cities from the selected States
+    const selectedCities = selectedStates.flatMap(state =>
+      state.cities.sort(() => 0.5 - Math.random()).slice(0, 4)
     ).sort(() => 0.5 - Math.random());
 
-    setGameWords(selectedMovies.map(movie => ({
-       name: movie.name,
-      imagePath: movie.imagePath
-    })));
+    setGameWords(selectedCities.map(city => city.name));
   };
 
-  console.log("game", gameWords)
-
-  // Ensure this useEffect hook is called after your component is mounted and whenever allActors changes
+  // Ensure this useEffect hook is called after your component is mounted and whenever allStates changes
   useEffect(() => {
-    if (allActors.length > 0) {
-      shuffleActorsAndMovies();
+    if (allStates.length > 0) {
+      shuffleStatesAndCities();
     }
-  }, [allActors]);
+  }, [allStates]);
 
 
 
@@ -170,48 +160,47 @@ const GameBoard = () => {
     setRow4(false);
     setSelectedWords(new Set());
     setShowConfetti(false)
-    shuffleActorsAndMovies();
+    shuffleStatesAndCities();
   };
 
   const handleSubmit = () => {
     if (selectedWords.size === 4) {
       const selectedWordArray = Array.from(selectedWords);
 
-      const actorImages = [];
-      const actorNames = [];
-      const matchingActors = [];
+      const stateImages = [];
+      const stateNames = [];
+      const matchingStates = [];
 
-      // Check if there is a quarterback that matches three out of four receivers
-      const isSameActor = allActors.some((actor) => {
-        const matchingMovies = selectedWordArray.filter((movieName) =>
-        actor.movies.some((movie) => movie.name === movieName)
+      // Check if there is a quarterback that matches three out of four cities
+      const isSameState = allStates.some((state) => {
+        const matchingCities = selectedWordArray.filter((cityName) =>
+          state.cities.some((receiver) => receiver.name === cityName)
         );
 
-        if (matchingMovies.length === 3) {
-          matchingActors.push(actor.name);
+        if (matchingCities.length === 3) {
+          matchingStates.push(state.name);
         }
 
-        const allMovieMatch = matchingMovies.length === 4;
+        const allCityMatch = matchingCities.length === 4;
 
-        if (allMovieMatch) {
-          actorImages.push(actor.imagePath);
-          actorNames.push(actor.name) // Capture the QB's image path when a match is found
+        if (allCityMatch) {
+          stateImages.push(state.imagePath); // Capture the State's image path when a match is found
+          stateNames.push(state.name)
         }
 
-        return allMovieMatch;
+        return allCityMatch;
       });
 
-      if (isSameActor) {
-        // Correctly guessed all WRs from the same QB
-        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((movieName, idx) => ({ name: movieName, actorImagePath: actorImages[idx], actorName: actorNames[idx] }))];
+      if (isSameState) {
+        // Correctly guessed all Cities from the same State
+        const newSubmittedWords = [...submittedWords, ...selectedWordArray.map((cityName, idx) => ({ name: cityName, stateImagePath: stateImages[idx], stateName: stateNames[idx]  }))];
         setRow1(true)
         setSubmittedWords(newSubmittedWords);
         const images = [...picture]
         const answers = [...answer]
 
-
-        images.push(actorImages)
-        answers.push(actorNames)
+        images.push(stateImages)
+        answers.push(stateNames)
         setPicture(images)
         setAnswer(answers)
 
@@ -229,8 +218,8 @@ const GameBoard = () => {
           handleWin(); // Show win modal
         }
 
-        // Remove correctly guessed WRs from the game board
-        const remainingWords = gameWords.filter((movie) => !selectedWords.has(movie.name));
+        // Remove correctly guessed Cities from the game board
+        const remainingWords = gameWords.filter((city) => !selectedWords.has(city));
 
         setGameWords(remainingWords);
 
@@ -241,8 +230,8 @@ const GameBoard = () => {
         if (mistakes + 1 >= 5) {
           handleLoss(); // Show loss modal
         } else {
-          // Check if there is only one quarterback matching three out of four receivers
-          if (matchingActors.length === 1) {
+          // Check if there is only one quarterback matching three out of four cities
+          if (matchingStates.length === 1) {
             handleOneAway()
           } else {
             handleWrong()
@@ -268,24 +257,23 @@ const GameBoard = () => {
   };
 
   return (
-       <div className="app-container" >
-
+       <div className="state-container">
     <div style={{ textAlign: 'center', margin: '20px' }}>
-        <Button variant="link" onClick={handleShow} style={{ color: 'white' }}>
-          <h3>How To Play</h3>
+        <Button variant="link" onClick={handleShow}>
+          <h3 style={{ color: 'black' }}>How To Play</h3>
         </Button>
       </div>
-      <Link style={{ color: 'white' }} to="/home">Home</Link>
+      <Link to="/home" style={{ color: 'black' }}>Home</Link>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>
       {/* How To Play Modal */}
       <Modal show={showHowToPlayModal} onHide={handleClose} className="custom-modal">
         <Modal.Header closeButton>
-          <Modal.Title>How To Play!!!</Modal.Title>
+          <Modal.Title>How To Play</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Select 4 Movies from the same actor.
+          Select 4 players who caught touchdowns from the same quarterback.
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -297,7 +285,7 @@ const GameBoard = () => {
       {row1 ?
        <div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-          <h2 style={{ color: 'white' }}>1st: {answer[0]}</h2>
+          <h2>1st: {answer[0]}</h2>
           <img src={picture[0]} alt="1st" className="picture-container" />
         </div>
       <div className='submitted-words first-row'>
@@ -308,13 +296,13 @@ const GameBoard = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-       // Pass the QB's image path
+      image={word.stateImagePath} // Pass the State's image path
     />
   ))}
 </div></div>: <div></div>}
       {row2 ?     <div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-      <h2 style={{ color: 'white' }}>2nd: {answer[1]}</h2>
+      <h2>2nd: {answer[1]}</h2>
       <img src={picture[1]} alt="1st" className="picture-container" />
 
     </div>
@@ -325,10 +313,11 @@ const GameBoard = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
+      image={word.stateImagePath} // Pass the State's image path
     />
   ))}</div></div>: <div></div>}
        {row3 ?   <div> <div style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', margin: '10px 0' }}>
-      <h2 style={{ color: 'white' }}>3rd: {answer[2]}</h2>
+      <h2>3rd: {answer[2]}</h2>
       <img src={picture[2]} alt="1st" className="picture-container" />
     </div>  <div className='submitted-words third-row'>
   {submittedWords.slice(8, 12).map((word, index) => (
@@ -337,12 +326,13 @@ const GameBoard = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
+      image={word.stateImagePath} // Pass the State's image path
     />
   ))}</div></div>: <div></div>}
 
        {row4 ?  <div>
        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '10px 0' }}>
-       <h2 style={{ color: 'white' }}>4th: {answer[3]}</h2>
+       <h2>4th: {answer[3]}</h2>
        <img src={picture[3]} alt="1st" className="picture-container" />
      </div>
           <div className='submitted-words winner'>
@@ -352,6 +342,7 @@ const GameBoard = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
+      image={word.stateImagePath} // Pass the State's image path
     />
   ))}</div></div>: <div></div>}
 <div>
@@ -361,13 +352,13 @@ const GameBoard = () => {
       {gameWords.map((word, index) => (
         <WordCard
           key={index}
-          word={word.name}
-          isSelected={selectedWords.has(word.name)}
+          word={word}
+          isSelected={selectedWords.has(word)}
           onSelect={toggleSelectWord}
-          image={word.imagePath}
         />
       ))}
     </div>
+
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>
     {submittedWords.length === 16 || mistakes == 5 ?  <div className="control-panel">
           <button style={{marginBottom: '20px'}} className="btn btn-primary" onClick={handlePlayAgain}>Play Again</button>
@@ -378,10 +369,8 @@ const GameBoard = () => {
       </div>}
       {submittedWords.length === 16 || mistakes == 5 ?
       <div></div> : <h1 className="mistakes">
-      Mistakes remaining: {movieIcons.slice(0, 5 - mistakes)} </h1>}
+      Mistakes remaining: {footballIcons.slice(0, 5 - mistakes)} </h1>}
       </div>
-
-
     </div>
     <WinModal show={showWinModal} onHide={() => setShowWinModal(false)} />
       <LossModal show={showLossModal} onHide={() => setShowLossModal(false)} />
@@ -393,4 +382,4 @@ const GameBoard = () => {
   );
 };
 
-export default GameBoard;
+export default GameBoardState;

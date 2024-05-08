@@ -302,7 +302,6 @@ const GameBoardQb = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-      image={word.qbImagePath} // Pass the QB's image path
     />
   ))}
 </div></div>: <div></div>}
@@ -319,7 +318,6 @@ const GameBoardQb = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-      image={word.qbImagePath} // Pass the QB's image path
     />
   ))}</div></div>: <div></div>}
        {row3 ?   <div> <div style={{ display: 'flex', flexDirection: 'column',  alignItems: 'center', margin: '10px 0' }}>
@@ -332,7 +330,6 @@ const GameBoardQb = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-      image={word.qbImagePath} // Pass the QB's image path
     />
   ))}</div></div>: <div></div>}
 
@@ -348,7 +345,6 @@ const GameBoardQb = () => {
       word={word.name}
       onSelect={() => {}}
       isSelected={false}
-      image={word.qbImagePath} // Pass the QB's image path
     />
   ))}</div></div>: <div></div>}
 <div>

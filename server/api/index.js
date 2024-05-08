@@ -11,6 +11,8 @@ router.use('/albums', require('./albums'))
 router.use('/songs', require('./songs'))
 router.use('/players', require('./players'))
 router.use('/franchises', require('./franchises'))
+router.use('/states', require('./states'))
+router.use('/cities', require('./cities'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

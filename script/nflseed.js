@@ -58,10 +58,6 @@ async function runSeedNFL() {
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
-  } finally {
-    console.log('Closing NFL db connection');
-    await db.close();
-    console.log('NFL Db connection closed');
   }
 }
 

@@ -17,6 +17,10 @@ import singleFranchiseReducer from './singleFranchiseStore'
 import singlePlayerReducer from './singlePlayerStore'
 import franchisesReducer from './allFranchisesStore'
 import playersReducer from './allPlayersStore'
+import singleCityReducer from './singleCityStore'
+import singleStateReducer from './singleStateStore'
+import citiesReducer from './allCitiesStore'
+import statesReducer from './allStatesStore'
 
 const reducer = combineReducers({ auth,
 singleActor: singleActorReducer,
@@ -32,7 +36,11 @@ allAlbums: allAlbumsReducer,
 allFranchises: franchisesReducer,
 singleFranchise: singleFranchiseReducer,
 allPlayers: playersReducer,
-singlePlayer: singlePlayerReducer
+singlePlayer: singlePlayerReducer,
+singleCity: singleCityReducer,
+singleState: singleStateReducer,
+allCities: citiesReducer,
+allStates: statesReducer,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

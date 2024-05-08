@@ -75,10 +75,6 @@ async function runSeedNba() {
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
-  } finally {
-    console.log('Closing db connection');
-    await db.close();
-    console.log('Db connection closed');
   }
 }
 
