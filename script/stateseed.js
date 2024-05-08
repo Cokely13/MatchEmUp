@@ -7,9 +7,39 @@ const { db, models: { State, City } } = require('../server/db');
 const API_KEY = 'e6d4ff784de271fd73b3af4a080e13aaafc5a59b';
 
 // Helper function to clean city names
+// function cleanCityName(cityName) {
+//   // Removes ' city,' and anything following it
+//   // Adds removal of ' county,' and anything following it
+//   // Adds conditional removal of ' town,' only if it follows a space and anything after it
+//   return cityName.replace(/ city,.*$/, '')
+//                   .replace(/ County,.*$/i, '') // Case-insensitive removal of ' County,' and anything following it
+//                   .replace(/ county,.*$/i, '') // Case-insensitive removal of ' county,' and anything following it
+//                   .replace(/ metropolitan,.*$/i, '') // Case-insensitive removal of ' county,' and anything following it
+//                   .replace(/ village,.*$/i, '') // Case-insensitive removal of ' village,' and anything following it
+//                   .replace(/ metro,.*$/i, '') // Case-insensitive removal of ' county,' and anything following it
+//                   .replace(/\b and\b,.*$/, '') // Removes ' and,' and anything following it when 'and' is a standalone word
+//                   .replace(/ municipality,.*$/i, '') // Case-insensitive removal of ' county,' and anything following it
+//                  .replace(/ town,.*$/, '') // Removes ' town,' followed by anything
+//                  .replace(/\b town\b$/, '') // Removes ' town' if it's at the end of the string
+//                  .replace(/\/.*$/, ''); // Removes anything after a '/'
+// }
+
 function cleanCityName(cityName) {
-  return cityName.replace(/ city,.*$/, ''); // Removes ' city,' and anything following it
+  return cityName
+    .replace(/ city,.*$/, '') // Removes ' city,' and anything following it
+    .replace(/ County,.*$/i, '') // Case-insensitive removal of ' County,' and anything following it
+    .replace(/ county,.*$/i, '') // Case-insensitive removal of ' county,' and anything following it
+    .replace(/ metropolitan,.*$/i, '') // Case-insensitive removal of ' metro,' and anything following it
+    .replace(/ municipality,.*$/i, '') // Case-insensitive removal of ' municipality,' and anything following it
+    .replace(/ town,.*$/, '') // Removes ' town,' followed by anything
+    .replace(/ village,.*$/i, '') // Case-insensitive removal of ' village,' and anything following it
+    .replace(/\b town\b$/, '') // Removes ' town' if it's at the end of the string
+    .replace(/\band\b,.*$/, '') // Removes ' and,' and anything following it when 'and' is a standalone word
+    .replace(/\/.*$/, '') // Removes anything after a '/'
+    .replace(/\(.*\)$/, '') // Removes anything within parentheses at the end of the string
+    .trim(); // Removes any leading/trailing whitespace that might be left
 }
+
 
 // Function to map state codes to state names
 function getStateName(stateCode) {
