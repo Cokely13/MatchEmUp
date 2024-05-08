@@ -9,7 +9,8 @@ import Error2Modal from './Error2Modal';
 import OneAwayModal from './OneAwayModal';
 import WrongModal from './WrongModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFootballBall } from '@fortawesome/free-solid-svg-icons';
+// import { faFootballBall } from '@fortawesome/free-solid-svg-icons';
+import { faLandmark } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
 
@@ -18,14 +19,14 @@ import { Link } from 'react-router-dom';
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected, image }) => {
   return (
-    <div  className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
+    <div  className={`word-card2 ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)}>
       <div >{word}</div>
     </div>
   );
 };
 
-const footballIcons = Array.from({ length: 5 }, (_, index) => (
-  <FontAwesomeIcon key={index} icon={faFootballBall} style={{ marginRight: '5px' }} />
+const mapIcons = Array.from({ length: 5 }, (_, index) => (
+  <FontAwesomeIcon key={index} icon={faLandmark} style={{ marginRight: '5px' }} />
 ));
 
 
@@ -369,7 +370,7 @@ const GameBoardState = () => {
       </div>}
       {submittedWords.length === 16 || mistakes == 5 ?
       <div></div> : <h1 className="mistakes">
-      Mistakes remaining: {footballIcons.slice(0, 5 - mistakes)} </h1>}
+      Mistakes remaining: {mapIcons.slice(0, 5 - mistakes)} </h1>}
       </div>
     </div>
     <WinModal show={showWinModal} onHide={() => setShowWinModal(false)} />

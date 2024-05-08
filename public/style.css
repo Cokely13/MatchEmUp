@@ -95,6 +95,22 @@ form div {
   align-items: center;
 }
 
+.word-card2 {
+  cursor: pointer;
+  font-weight: bold;
+  background-color: lightgray;
+  border: 3px solid grey; /* Cool color border for word cards */
+  border-radius: 10px;
+  padding: 20px; /* Increase padding for better visual appeal */
+  margin: 10px; /* Increase margin for better spacing */
+  text-align: center;;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Smooth transitions */
+  box-shadow: 0 4px 8px rgba(255, 0, 127, 0.3); /* Cool box shadow */
+  display: flex; /* Add flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+}
+
 
 
 /* Adjust the grid-template-columns to accommodate 3 columns when there are only 12 words */
@@ -105,6 +121,11 @@ form div {
 
 
 .word-card.selected {
+  background-color: gray; /* Cool color for selected word cards */
+  color: #ffffff; /* Cool text color for selected word cards */
+}
+
+.word-card2.selected {
   background-color: gray; /* Cool color for selected word cards */
   color: #ffffff; /* Cool text color for selected word cards */
 }
@@ -308,6 +329,22 @@ text-align: center;
 
 .qb-container {
   background-image: url('field.jpg');
+  text-align: center;
+  background-size: cover; /* Cover the entire screen */
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* Set min-height to 100vh to cover the entire screen */
+  position: relative;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ /* Keep the background fixed as you scroll */
+  /* Add other styles for your app container */
+}
+
+.state-container {
+  background-image: url('usa.jpg');
   text-align: center;
   background-size: cover; /* Cover the entire screen */
   background-position: center;
