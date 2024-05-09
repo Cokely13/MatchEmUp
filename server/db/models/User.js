@@ -21,6 +21,14 @@ const User = db.define('user', {
   losses: {
     type: Sequelize.INTEGER
   },
+  imageUrl: {
+    type: Sequelize.TEXT,
+    defaultValue: 'https://cquipsplus.ca/wp-content/themes/cera/assets/images/avatars/user-avatar.png',
+  },
+  admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
 })
 
 module.exports = User

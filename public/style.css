@@ -467,7 +467,16 @@ text-align: center;
   padding: 10px 0; /* Optional: for spacing */
 }
 
-.auth-container {
+.guest-entry-button {
+  background: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -519,4 +528,4 @@ text-align: center;
 .error {
   color: red;
   margin-top: 10px;
-}
+} */
