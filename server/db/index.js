@@ -2,7 +2,7 @@
 
 const db = require('./db')
 
-// const User = require('./models/User')
+const User = require('./models/User')
 const Actor = require('./models/Actor')
 const Album = require('./models/Album')
 const Artist = require('./models/Artist')
@@ -37,7 +37,7 @@ Song.belongsTo(Album, { foreignKey: 'albumId' });
 module.exports = {
   db,
   models: {
-    // User,
+    User,
     Actor,
     Movie,
     Quarterback,

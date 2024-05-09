@@ -10,6 +10,7 @@ import GameBoardQb from './components/GameBoardQb';
 import GameBoardMusic from './components/GameBoardMusic'
 import GameBoardNba from './components/GameBoardNba';
 import GameBoardState from './components/GameBoardState';
+import AuthForm from './components/AuthForm';
 
 /**
  * COMPONENT
@@ -24,7 +25,9 @@ class Routes extends Component {
 
     return (
       <div>
+         {isLoggedIn ?
           <Switch>
+          <Route path="/auth" component={AuthForm} />
             <Route path="/home" component={Home} />
             <Route path="/image" component={Image} />
             <Route path="/cinema" component={GameBoard} />
@@ -33,7 +36,13 @@ class Routes extends Component {
             <Route path="/nba" component={GameBoardNba} />
             <Route path="/state" component={GameBoardState} />
             <Redirect to="/home" />
+          </Switch>: (
+          <Switch>
+            <Route path='/' exact component={ Login } />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
           </Switch>
+        )}
       </div>
     )
   }
