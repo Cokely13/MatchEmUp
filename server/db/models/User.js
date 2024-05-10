@@ -16,10 +16,12 @@ const User = db.define('user', {
     type: Sequelize.STRING,
   },
   wins: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   },
   losses: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   },
   imageUrl: {
     type: Sequelize.TEXT,
