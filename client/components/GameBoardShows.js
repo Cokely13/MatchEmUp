@@ -9,7 +9,7 @@ import Error2Modal from './Error2Modal';
 import OneAwayModal from './OneAwayModal';
 import WrongModal from './WrongModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilm } from '@fortawesome/free-solid-svg-icons';
+import { faTv } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ const WordCard = ({ word, onSelect, isSelected, image }) => {
 
 
 const characterIcons = Array.from({ length: 5 }, (_, index) => (
-  <FontAwesomeIcon key={index} icon={faFilm} style={{ marginRight: '5px' }} />
+  <FontAwesomeIcon key={index} icon={faTv} style={{ marginRight: '5px' }} />
 ));
 
 
@@ -122,7 +122,7 @@ const GameBoardShows = () => {
     })));
   };
 
-  console.log("game", gameWords)
+
 
   // Ensure this useEffect hook is called after your component is mounted and whenever allShows changes
   useEffect(() => {
@@ -268,7 +268,7 @@ const GameBoardShows = () => {
   };
 
   return (
-       <div className="app-container" >
+       <div className="show-container" >
 
     <div style={{ textAlign: 'center', margin: '20px' }}>
         <Button variant="link" onClick={handleShow} style={{ color: 'white' }}>

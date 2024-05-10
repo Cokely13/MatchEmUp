@@ -327,6 +327,22 @@ text-align: center;
   /* Add other styles for your app container */
 }
 
+.show-container {
+  background-image: url('tv2.jpg');
+  text-align: center;
+  background-size: cover; /* Cover the entire screen */
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* Set min-height to 100vh to cover the entire screen */
+  position: relative;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ /* Keep the background fixed as you scroll */
+  /* Add other styles for your app container */
+}
+
 .qb-container {
   background-image: url('field.jpg');
   text-align: center;
