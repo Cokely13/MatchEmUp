@@ -492,56 +492,19 @@ text-align: center;
   cursor: pointer;
 }
 
-/* .auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f4f4f4;
+.leaderboard {
+  text-align: center;
 }
 
-.auth-form {
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  // Adjust number of columns as necessary
+  gap: 10px;
   padding: 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.input-group input {
-  width: 100%;
+.grid-item {
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #f8f8f8;
 }
-
-.submit-btn, .guest-btn {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  margin-top: 10px;
-  border-radius: 4px;
-}
-
-.submit-btn {
-  background-color: #007BFF;
-}
-
-.guest-btn {
-  background-color: #6c757d;
-}
-
-.error {
-  color: red;
-  margin-top: 10px;
-} */

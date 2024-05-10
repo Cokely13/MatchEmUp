@@ -151,7 +151,9 @@ import GameBoardMusic from './components/GameBoardMusic';
 import GameBoardNba from './components/GameBoardNba';
 import GameBoardState from './components/GameBoardState';
 import GameBoardShows from './components/GameBoardShows';
+
 import Navbar from './components/Navbar';
+import Leaderboard from './components/Leaderboard';
 
 class Routes extends Component {
   componentDidMount() {
@@ -172,12 +174,13 @@ class Routes extends Component {
             <Route path="/nba" component={GameBoardNba} />
             <Route path="/state" component={GameBoardState} />
             <Route path="/show" component={GameBoardShows} />
+            <Route path="/leaderboard" component={Leaderboard} />
             <Redirect to="/home" />
           </Switch>
         ) : isGuest ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Route path="/cinema" component={GameBoard} />
+            <Route path="/cinema" component={GameBoardMovie} />
             <Route path="/qb" component={GameBoardQb} />
             <Route path="/music" component={GameBoardMusic} />
             <Route path="/nba" component={GameBoardNba} />
