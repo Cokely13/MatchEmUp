@@ -5,6 +5,7 @@ const musicseed = require('./musicseed');
 const movieseed = require('./movieseed');
 const stateseed = require('./stateseed');
 const userseed = require('./userseed');
+const tvseed = require('./tvseed');
 
 async function seedAll() {
   console.log('Starting the seeding process...');
@@ -32,6 +33,9 @@ async function seedAll() {
 
     await userseed();
     console.log('User data seeded!');
+
+    await tvseed();
+    console.log('Tv data seeded!');
 
   } catch (error) {
     console.error('Error during seeding:', error);

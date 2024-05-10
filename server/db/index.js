@@ -14,12 +14,16 @@ const Player = require('./models/Player')
 const Franchise = require('./models/Franchise')
 const City = require('./models/City')
 const State= require('./models/State')
+const Show = require('./models/Show')
+const Character= require('./models/Character')
 
 //associations could go here!
 // Actor.hasMany(Movie);
 // Movie.belongsTo(Actor);
 Actor.hasMany(Movie, { foreignKey: 'ActorId' });
 Movie.belongsTo(Actor, { foreignKey: 'ActorId' });
+Show.hasMany(Character, { foreignKey: 'ShowId' });
+Character.belongsTo(Show, { foreignKey: 'ShowId' });
 
 Quarterback.hasMany(Receiver);
 Receiver.belongsTo(Quarterback);
@@ -48,6 +52,8 @@ module.exports = {
     Player,
     Franchise,
     City,
-    State
+    State,
+    Show,
+    Character
   },
 }
