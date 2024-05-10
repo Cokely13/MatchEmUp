@@ -8,6 +8,7 @@ import ErrorModal from './ErrorModal';
 import Error2Modal from './Error2Modal';
 import OneAwayModal from './OneAwayModal';
 import WrongModal from './WrongModal';
+import { fetchSingleUser, updateSingleUser } from '../store/singleUserStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilm } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
@@ -35,7 +36,7 @@ const movieIcons = Array.from({ length: 5 }, (_, index) => (
 
 
 // Main game board component
-const GameBoard = () => {
+const GameBoardMovie = () => {
   const [selectedWords, setSelectedWords] = useState(new Set());
   const [mistakes, setMistakes] = useState(0);
   const [submittedWords, setSubmittedWords] = useState([]);
@@ -55,10 +56,13 @@ const GameBoard = () => {
   const [showOneAwayModal, setShowOneAwayModal] = useState(false);
   const [showWrongModal, setShowWrongModal] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-
+  const userId = useSelector(state => state.auth);
+  const user = useSelector(state => state.singleUser);
   const allActors = useSelector((state) => state.allActors);
 
-
+  useEffect(() => {
+    dispatch(fetchSingleUser(userId.id));
+  }, [dispatch, userId]);
 
   useEffect(() => {
     dispatch(fetchActors());
@@ -71,17 +75,25 @@ const GameBoard = () => {
 
 
   const handleWin = () => {
-
+    const updatedUser = {
+      ...user,
+      wins: user.wins + 1
+    };
+    dispatch(updateSingleUser(updatedUser));
     setShowWinModal(true);
     setShowConfetti(true);
   };
 
 
-
-  // Function to handle losing condition
-  const handleLoss = () => {
-    setShowLossModal(true);
+// Function to handle losing condition
+const handleLoss = () => {
+  const updatedUser = {
+    ...user,
+    losses: user.losses + 1
   };
+  dispatch(updateSingleUser(updatedUser));
+  setShowLossModal(true);
+};
 
   const handleError = () => {
     setShowErrorModal(true);
@@ -393,4 +405,4 @@ const GameBoard = () => {
   );
 };
 
-export default GameBoard;
+export default GameBoardMovie;

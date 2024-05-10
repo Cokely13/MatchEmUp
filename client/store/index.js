@@ -25,6 +25,8 @@ import showsReducer from './allShowsStore'
 import charactersReducer from './allCharactersStore'
 import singleShowReducer from './singleShowStore'
 import singleCharacterReducer from './singleCharacterStore'
+import usersReducer from './allUsersStore'
+import singleUserReducer from './singleUserStore'
 
 const reducer = combineReducers({ auth,
 singleActor: singleActorReducer,
@@ -50,6 +52,8 @@ singleShow: singleShowReducer,
 allCharacters: charactersReducer,
 allShows: showsReducer,
 singleCharacter: singleCharacterReducer,
+allUsers: usersReducer,
+singleUser: singleUserReducer
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

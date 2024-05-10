@@ -145,7 +145,7 @@ import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import { me } from './store';
-import GameBoard from './components/GameBoard';
+import GameBoardMovie from './components/GameBoardMovie';
 import GameBoardQb from './components/GameBoardQb';
 import GameBoardMusic from './components/GameBoardMusic';
 import GameBoardNba from './components/GameBoardNba';
@@ -166,7 +166,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Route path="/cinema" component={GameBoard} />
+            <Route path="/cinema" component={GameBoardMovie} />
             <Route path="/qb" component={GameBoardQb} />
             <Route path="/music" component={GameBoardMusic} />
             <Route path="/nba" component={GameBoardNba} />

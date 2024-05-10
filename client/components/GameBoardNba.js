@@ -8,6 +8,7 @@ import ErrorModal from './ErrorModal';
 import Error2Modal from './Error2Modal';
 import OneAwayModal from './OneAwayModal';
 import WrongModal from './WrongModal';
+import { fetchSingleUser, updateSingleUser } from '../store/singleUserStore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBasketballBall } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
@@ -52,25 +53,40 @@ const GameBoardNba = () => {
   const [showOneAwayModal, setShowOneAwayModal] = useState(false);
   const [showWrongModal, setShowWrongModal] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-
+  const userId = useSelector(state => state.auth);
+  const user = useSelector(state => state.singleUser);
   const allFranchises = useSelector((state) => state.allFranchises);
 
   useEffect(() => {
     dispatch(fetchFranchises());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchSingleUser(userId.id));
+  }, [dispatch, userId]);
+
   const handleClose = () => setShowHowToPlayModal(false);
   const handleShow = () => {
     setShowHowToPlayModal(true)}
-  const handleWin = () => {
 
-    setShowWinModal(true);
-    setShowConfetti(true);
-  };
+    const handleWin = () => {
+      const updatedUser = {
+        ...user,
+        wins: user.wins + 1
+      };
+      dispatch(updateSingleUser(updatedUser));
+      setShowWinModal(true);
+      setShowConfetti(true);
+    };
 
 
   // Function to handle losing condition
   const handleLoss = () => {
+    const updatedUser = {
+      ...user,
+      losses: user.losses + 1
+    };
+    dispatch(updateSingleUser(updatedUser));
     setShowLossModal(true);
   };
 

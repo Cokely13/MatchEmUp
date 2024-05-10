@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchStates } from '../store/allStatesStore';
 import { Button, Modal } from 'react-bootstrap';
+import { fetchSingleUser, updateSingleUser } from '../store/singleUserStore';
 import WinModal from './WinModal';
 import LossModal from './LossModal';
 import ErrorModal from './ErrorModal';
@@ -34,6 +35,8 @@ const mapIcons = Array.from({ length: 5 }, (_, index) => (
 
 // Main game board component
 const GameBoardState = () => {
+  const userId = useSelector(state => state.auth);
+  const user = useSelector(state => state.singleUser);
   const [selectedWords, setSelectedWords] = useState(new Set());
   const [mistakes, setMistakes] = useState(0);
   const [submittedWords, setSubmittedWords] = useState([]);
@@ -53,29 +56,37 @@ const GameBoardState = () => {
   const [showOneAwayModal, setShowOneAwayModal] = useState(false);
   const [showWrongModal, setShowWrongModal] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-
   const allStates= useSelector((state) => state.allStates);
 
   useEffect(() => {
     dispatch(fetchStates());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchSingleUser(userId.id));
+  }, [dispatch, userId]);
+
   const handleClose = () => setShowHowToPlayModal(false);
   const handleShow = () => {
     setShowHowToPlayModal(true)}
-  const handleWin = () => {
+    const handleWin = () => {
+      const updatedUser = {
+        ...user,
+        wins: user.wins + 1
+      };
+      dispatch(updateSingleUser(updatedUser));
+      setShowWinModal(true);
+      setShowConfetti(true);
+    };
 
-    setShowWinModal(true);
-    setShowConfetti(true);
-  };
-
-  const handlleConfetti = () => {
-    setShowConfetti(true);
-    console.log("hott")
-  }
 
   // Function to handle losing condition
   const handleLoss = () => {
+    const updatedUser = {
+      ...user,
+      losses: user.losses + 1
+    };
+    dispatch(updateSingleUser(updatedUser));
     setShowLossModal(true);
   };
 

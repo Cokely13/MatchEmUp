@@ -9,6 +9,7 @@ import Error2Modal from './Error2Modal';
 import OneAwayModal from './OneAwayModal';
 import WrongModal from './WrongModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { fetchSingleUser, updateSingleUser } from '../store/singleUserStore';
 import { faTv } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
@@ -55,10 +56,13 @@ const GameBoardShows = () => {
   const [showOneAwayModal, setShowOneAwayModal] = useState(false);
   const [showWrongModal, setShowWrongModal] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-
+  const userId = useSelector(state => state.auth);
+  const user = useSelector(state => state.singleUser);
   const allShows = useSelector((state) => state.allShows);
 
-
+  useEffect(() => {
+    dispatch(fetchSingleUser(userId.id));
+  }, [dispatch, userId]);
 
   useEffect(() => {
     dispatch(fetchShows());
@@ -71,17 +75,25 @@ const GameBoardShows = () => {
 
 
   const handleWin = () => {
-
+    const updatedUser = {
+      ...user,
+      wins: user.wins + 1
+    };
+    dispatch(updateSingleUser(updatedUser));
     setShowWinModal(true);
     setShowConfetti(true);
   };
 
 
-
-  // Function to handle losing condition
-  const handleLoss = () => {
-    setShowLossModal(true);
+// Function to handle losing condition
+const handleLoss = () => {
+  const updatedUser = {
+    ...user,
+    losses: user.losses + 1
   };
+  dispatch(updateSingleUser(updatedUser));
+  setShowLossModal(true);
+};
 
   const handleError = () => {
     setShowErrorModal(true);
