@@ -12,6 +12,7 @@ const SET_AUTH = 'SET_AUTH'
  * ACTION CREATORS
  */
 const setAuth = auth => ({type: SET_AUTH, auth})
+const setGuest = () => ({ type: SET_AUTH, auth: { isGuest: true, user: null } });
 
 /**
  * THUNK CREATORS
@@ -27,6 +28,11 @@ export const me = () => async dispatch => {
     return dispatch(setAuth(res.data))
   }
 }
+
+export const loginAsGuest = () => dispatch => {
+  dispatch(setGuest());
+  history.push('/home');  // Redirects the user to the homepage or a designated guest area
+};
 
 export const authenticate = (username, password, method) => async dispatch => {
   try {

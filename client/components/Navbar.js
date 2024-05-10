@@ -5,10 +5,11 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1 style={{textAlign: "center"}}>Qb Connection</h1>
     <nav>
         <div style={{textAlign: "center"}}>
-          <Link to="/home"><b>Home</b></Link>
+          <a href="#" onClick={handleClick} className="navbar-link">
+            Logout
+          </a>
         </div>
     </nav>
     <hr />

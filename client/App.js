@@ -11,6 +11,7 @@ const App = () => {
       <div className="title-container">
         <h1 className="title">MatchEmUp</h1>
       </div>
+      <Navbar />
       <Routes />
     </div>
   );
