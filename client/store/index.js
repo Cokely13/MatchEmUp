@@ -21,6 +21,10 @@ import singleCityReducer from './singleCityStore'
 import singleStateReducer from './singleStateStore'
 import citiesReducer from './allCitiesStore'
 import statesReducer from './allStatesStore'
+import showsReducer from './allShowsStore'
+import charactersReducer from './allCharactersStore'
+import singleShowReducer from './singleShowStore'
+import singleCharacterReducer from './singleCharacterStore'
 
 const reducer = combineReducers({ auth,
 singleActor: singleActorReducer,
@@ -41,6 +45,11 @@ singleCity: singleCityReducer,
 singleState: singleStateReducer,
 allCities: citiesReducer,
 allStates: statesReducer,
+allShows: showsReducer,
+singleShow: singleShowReducer,
+allCharacters: charactersReducer,
+allShows: showsReducer,
+singleCharacter: singleCharacterReducer,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

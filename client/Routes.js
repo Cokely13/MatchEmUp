@@ -10,6 +10,7 @@ import GameBoardQb from './components/GameBoardQb';
 import GameBoardMusic from './components/GameBoardMusic'
 import GameBoardNba from './components/GameBoardNba';
 import GameBoardState from './components/GameBoardState';
+import GameBoardShows from './components/GameBoardShows';
 
 /**
  * COMPONENT
@@ -33,6 +34,7 @@ class Routes extends Component {
             <Route path="/music" component={GameBoardMusic} />
             <Route path="/nba" component={GameBoardNba} />
             <Route path="/state" component={GameBoardState} />
+            <Route path="/show" component={GameBoardShows} />
             <Redirect to="/home" />
           </Switch>: (
           <Switch>
