@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { models: { User }} = require('../db')
+const { models: { User, Win, Loss }} = require('../db')
 
 router.get('/', async (req, res, next) => {
   try {
@@ -7,7 +7,12 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username', 'wins', 'losses']
+      attributes: ['id', 'username'],
+      include: [{
+        model: Win,
+      }, {
+        model: Loss,
+      }]
     })
     res.json(users)
   } catch (err) {
@@ -18,7 +23,13 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const event = await User.findByPk(req.params.id);
+    const event = await User.findByPk(req.params.id, {
+      include: [{
+        model: Win
+      }, {
+        model: Loss
+      }]
+    });
     res.json(event);
   } catch (err) {
     next(err);

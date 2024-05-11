@@ -15,6 +15,9 @@ router.use('/states', require('./states'))
 router.use('/cities', require('./cities'))
 router.use('/actors', require('./actors'))
 router.use('/shows', require('./shows'))
+router.use('/shows', require('./shows'))
+router.use('/wins', require('./wins'))
+router.use('/losses', require('./losses'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

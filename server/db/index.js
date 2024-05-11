@@ -16,6 +16,14 @@ const City = require('./models/City')
 const State= require('./models/State')
 const Show = require('./models/Show')
 const Character= require('./models/Character')
+const Win = require('./models/Win');
+const Loss = require('./models/Loss');
+
+User.hasMany(Win);
+Win.belongsTo(User);
+
+User.hasMany(Loss);
+Loss.belongsTo(User);
 
 //associations could go here!
 // Actor.hasMany(Movie);
@@ -54,6 +62,8 @@ module.exports = {
     City,
     State,
     Show,
-    Character
+    Character,
+    Win,
+    Loss
   },
 }

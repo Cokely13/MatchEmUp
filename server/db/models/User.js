@@ -15,14 +15,6 @@ const User = db.define('user', {
   password: {
     type: Sequelize.STRING,
   },
-  wins: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0
-  },
-  losses: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0
-  },
   imageUrl: {
     type: Sequelize.TEXT,
     defaultValue: 'https://cquipsplus.ca/wp-content/themes/cera/assets/images/avatars/user-avatar.png',
