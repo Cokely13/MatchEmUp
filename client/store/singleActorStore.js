@@ -1,58 +1,58 @@
 import axios from "axios";
 
 // Action Types
-const SET_SINGLE_STATE = "SET_SINGLE_STATE";
-const UPDATE_SINGLE_STATE = "UPDATE_SINGLE_STATE";
+const SET_SINGLE_ACTOR = "SET_SINGLE_ACTOR";
+const UPDATE_SINGLE_ACTOR = "UPDATE_SINGLE_ACTOR";
 const TOKEN = "token";
 
 // Action creators
-export const _setSingleState= (statedata) => {
+export const _setSingleActor= (actordata) => {
   return {
-    type: SET_SINGLE_STATE,
-    statedata,
+    type: SET_SINGLE_ACTOR,
+    actordata,
   };
 };
 
-const _updateSingleState = (statedata) => {
+const _updateSingleActor = (actordata) => {
   return {
-    type: UPDATE_SINGLE_STATE,
-    statedata,
+    type: UPDATE_SINGLE_ACTOR,
+    actordata,
   };
 };
 
 //Thunks
-export const fetchState = (id) => {
+export const fetchActor = (id) => {
   return async (dispatch) => {
-    const { data } = await axios.get(`/api/states/${id}`);
-    dispatch(_setSingleState(data));
+    const { data } = await axios.get(`/api/actors/${id}`);
+    dispatch(_setSingleActor(data));
   };
 };
 
-export const updateSingleState = (state, history) => {
+export const updateSingleActor = (actor, history) => {
   return async (dispatch) => {
     try {
-        await axios.put(`/api/states/${state.id}`, state);
-        const { data: stateData } = await axios.get(`/api/states/${state.id}`);
-        dispatch(_updateSingleState(stateData));
-        history.push(`/states/${state.id}`)
+        await axios.put(`/api/actors/${actor.id}`, actor);
+        const { data: actorData } = await axios.get(`/api/actors/${actor.id}`);
+        dispatch(_updateSingleActor(actorData));
+        history.push(`/actors/${actor.id}`)
       }
      catch (error) {
-      console.log("STATE", state)
+      console.log("ACTOR", actor)
     }
   };
 };
 
 // reducer
 const initialState = [];
-const singleStateReducer = (state = initialState, action) => {
+const singleActorReducer = (actor = initialState, action) => {
   switch (action.type) {
-    case SET_SINGLE_STATE:
-      return action.statedata;
-    case UPDATE_SINGLE_STATE:
-      return action.statedata;
+    case SET_SINGLE_ACTOR:
+      return action.actordata;
+    case UPDATE_SINGLE_ACTOR:
+      return action.actordata;
     default:
-      return state;
+      return actor;
   }
 };
 
-export default singleStateReducer;
+export default singleActorReducer;

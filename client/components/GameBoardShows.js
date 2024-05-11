@@ -13,7 +13,8 @@ import { fetchSingleUser, updateSingleUser } from '../store/singleUserStore';
 import { faTv } from '@fortawesome/free-solid-svg-icons';
 import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
-
+import {createWin} from '../store/allWinsStore'
+import {createLoss} from '../store/allLossesStore'
 
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected, image }) => {
@@ -75,25 +76,31 @@ const GameBoardShows = () => {
 
 
   const handleWin = () => {
-    const updatedUser = {
-      ...user,
-      wins: user.wins + 1
+    // Define the win object
+    const win = {
+      userId: userId.id, // assuming userId is obtained correctly from your auth state
+      category: 'Shows' // category for this game board
     };
-    dispatch(updateSingleUser(updatedUser));
+
+    // Dispatch the createWin action
+    dispatch(createWin(win));
+
     setShowWinModal(true);
     setShowConfetti(true);
   };
 
+  const handleLoss = () => {
+    // Define the win object
+    const loss = {
+      userId: userId.id, // assuming userId is obtained correctly from your auth state
+      category: 'Shows' // category for this game board
+    };
 
-// Function to handle losing condition
-const handleLoss = () => {
-  const updatedUser = {
-    ...user,
-    losses: user.losses + 1
+    // Dispatch the createWin action
+    dispatch(createLoss(loss));
+
+    setShowLossModal(true);
   };
-  dispatch(updateSingleUser(updatedUser));
-  setShowLossModal(true);
-};
 
   const handleError = () => {
     setShowErrorModal(true);
@@ -238,7 +245,6 @@ const handleLoss = () => {
         if (submittedWords.length === 12){
           setRow4(true)
 
-          handleWin(); // Show win modal
         }
 
         // Remove correctly guessed WRs from the game board

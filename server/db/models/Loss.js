@@ -7,10 +7,6 @@ const Loss = db.define('loss', {
     values: ['Shows', 'State', 'Music', 'Qb', 'Nba', 'Movies'],
     allowNull: false
   },
-  count: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0
-  }
 });
 
 module.exports = Loss;

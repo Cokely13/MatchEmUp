@@ -27,6 +27,10 @@ import singleShowReducer from './singleShowStore'
 import singleCharacterReducer from './singleCharacterStore'
 import usersReducer from './allUsersStore'
 import singleUserReducer from './singleUserStore'
+import singleLossReducer from './singleLossStore'
+import singleWinReducer from './singleWinStore'
+import winsReducer from './allWinsStore'
+import lossesReducer from './allLossesStore'
 
 const reducer = combineReducers({ auth,
 singleActor: singleActorReducer,
@@ -53,7 +57,11 @@ allCharacters: charactersReducer,
 allShows: showsReducer,
 singleCharacter: singleCharacterReducer,
 allUsers: usersReducer,
-singleUser: singleUserReducer
+singleUser: singleUserReducer,
+singleWin: singleWinReducer,
+singleLoss: singleLossReducer,
+allWins: winsReducer,
+allLosses: lossesReducer,
 })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

@@ -7,10 +7,6 @@ const Win = db.define('win', {
     values: ['Shows', 'State', 'Music', 'Qb', 'Nba', 'Movies'],
     allowNull: false
   },
-  count: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0
-  }
 });
 
 module.exports = Win;
