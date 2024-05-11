@@ -1,50 +1,57 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers } from '../store/allUsersStore'
+import { fetchUsers } from '../store/allUsersStore';
+import { Link } from 'react-router-dom';
+
+const categories = ['All', 'Shows', 'State', 'Music', 'Qb', 'Nba', 'Movies'];
 
 const Leaderboard = () => {
   const dispatch = useDispatch();
   const users = useSelector(state => state.allUsers);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  // Sort users by wins in descending order
-  const sortedUsers = users.sort((a, b) => b.wins - a.wins);
-
+  const countCategory = (records, category) => {
+    return records.reduce((acc, record) => {
+      if (category === 'All' || record.category === category) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+  };
 
   return (
     <div className="leaderboard">
       <h1>Leaderboard</h1>
-      {/* <div className="grid">
-        {sortedUsers.map(user => (
-          <div key={user.id} className="grid-item">
-            <p>{user.username}</p>
-            <p>Wins: {user.wins}</p>
-          </div>
-        ))}
-      </div> */}
-      <table className="table table-bordered text-center my-challenges-table" style= {{backgroundColor:"rgb(211, 211, 211)"}}>
-  <thead>
-    <tr style={{ fontSize: "30px", backgroundColor: "rgb(150, 150, 150)" }}>
-    <th scope="col">Name</th>
-    <th scope="col">Wins</th>
-    <th scope="col">Losses</th>
-    </tr>
-  </thead>
-  <tbody  style= {{fontSize:"20px"}} >
-  {sortedUsers.map(user => (
-          <tr key={user.id} className="grid-item">
-            <td scope="row">{user.username}</td>
-            <td scope="row">{user.wins}</td>
-            <td scope="row">{user.losses}</td>
+      <Link to="/home" style={{ color: 'white' }}>Home</Link>
+      <div>
+        <select onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}>
+          {categories.map(category => (
+            <option key={category} value={category}>{category}</option>
+          ))}
+        </select>
+      </div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Wins ({selectedCategory})</th>
+            <th>Losses ({selectedCategory})</th>
           </tr>
-        ))}
-
-
-          </tbody>
-                       </table>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user.id}>
+              <td>{user.username}</td>
+              <td>{countCategory(user.wins, selectedCategory)}</td>
+              <td>{countCategory(user.losses, selectedCategory)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
