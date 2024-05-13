@@ -23,6 +23,14 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  currentStreak: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  recordStreak: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  }
 })
 
 module.exports = User
