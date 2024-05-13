@@ -28,17 +28,26 @@ export const fetchSingleUser = (id) => {
   };
 };
 
+export const fetchSingleUserDirectly = (id) => {
+  return axios.get(`/api/users/${id}`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Failed to fetch user data:', error);
+      throw error;
+    });
+};
+
+
 export const updateSingleUser = (user) => {
   return async (dispatch) => {
     try {
-      console.log("GOT TO THIS SPOT")
         await axios.put(`/api/users/${user.id}`, user);
         const { data: userData } = await axios.get(`/api/users/${user.id}`);
 
         dispatch(_updateSingleUser(userData));
       }
      catch (error) {
-      console.log(console.log("EVENT11111", error))
+      console.log(console.log("Update User Error:", error))
     }
   };
 };

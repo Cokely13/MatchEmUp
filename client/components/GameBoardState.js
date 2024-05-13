@@ -16,6 +16,7 @@ import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
 import {createWin} from '../store/allWinsStore'
 import {createLoss} from '../store/allLossesStore'
+import { toast } from 'react-toastify';
 
 
 // Individual word card component
@@ -63,8 +64,6 @@ const GameBoardState = () => {
     dispatch(fetchStates());
   }, []);
 
-  console.log("user", user)
-
   useEffect(() => {
     dispatch(fetchSingleUser(userId.id));
   }, [dispatch, userId]);
@@ -74,7 +73,6 @@ const GameBoardState = () => {
     setShowHowToPlayModal(true)}
 
     const handleWin = () => {
-      console.log("HERE!!!!")
       // Define the win object
       const win = {
         userId: userId.id, // assuming userId is obtained correctly from your auth state
@@ -86,6 +84,10 @@ const GameBoardState = () => {
         currentStreak: user.currentStreak + 1,
         recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
       };
+
+      if (newStreak > user.recordStreak) {
+        toast.success(`New Record! Streak: ${newStreak}`);
+      }
 
        // Update user streak in the database or through your API
     dispatch(updateSingleUser(updatedUser));
