@@ -52,12 +52,12 @@ const Leaderboard = () => {
       <h1>Leaderboard</h1>
       <div>
         <div>
-          <select className='select' onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}>
+          <select className='' onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}>
             {categories.map(category => (
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
-          <select onChange={handleSortingChange} value={sortingCriteria} >
+          <select className='select' onChange={handleSortingChange} value={sortingCriteria} >
             {sortingOptions.map(option => (
               <option key={option} value={option}>{option}</option>
             ))}

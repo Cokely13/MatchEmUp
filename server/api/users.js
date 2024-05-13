@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username'],
+      attributes: ['id', 'username', 'currentStreak', 'recordStreak'],
       include: [{
         model: Win,
       }, {
@@ -56,8 +56,7 @@ router.put('/:id', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'username', 'email', 'admin', 'password'],
-      include: [Playlist],
+      attributes: ['id', 'username', 'email', 'admin', 'currentStreak', 'recordStreak'],
     });
     res.json(user);
   } catch (err) {

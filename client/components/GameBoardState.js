@@ -63,6 +63,8 @@ const GameBoardState = () => {
     dispatch(fetchStates());
   }, []);
 
+  console.log("user", user)
+
   useEffect(() => {
     dispatch(fetchSingleUser(userId.id));
   }, [dispatch, userId]);
@@ -72,11 +74,21 @@ const GameBoardState = () => {
     setShowHowToPlayModal(true)}
 
     const handleWin = () => {
+      console.log("HERE!!!!")
       // Define the win object
       const win = {
         userId: userId.id, // assuming userId is obtained correctly from your auth state
         category: 'State' // category for this game board
       };
+
+      const updatedUser = {
+        ...user,
+        currentStreak: user.currentStreak + 1,
+        recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
+      };
+
+       // Update user streak in the database or through your API
+    dispatch(updateSingleUser(updatedUser));
 
       // Dispatch the createWin action
       dispatch(createWin(win));
@@ -91,6 +103,14 @@ const GameBoardState = () => {
         userId: userId.id, // assuming userId is obtained correctly from your auth state
         category: 'State' // category for this game board
       };
+
+      const updatedUser = {
+        ...user,
+        currentStreak: 0,
+      };
+
+       // Update user streak in the database or through your API
+    dispatch(updateSingleUser(updatedUser));
 
       // Dispatch the createWin action
       dispatch(createLoss(loss));
