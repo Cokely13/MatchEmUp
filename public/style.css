@@ -536,13 +536,13 @@ text-align: center;
   border-collapse: collapse;
   border-radius: 5px;
   border: 2px solid Black;
+  background-color: white;
 }
 
 .leaderboard th, .leaderboard td {
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  border: 2px solid Black;
+  border-radius: 10px;
+  border: 1px solid Black;
 }
 
 .leaderboard th {
