@@ -7,6 +7,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
     <nav>
         <div style={{textAlign: "center"}}>
+        <Link to="/home" className="navbar-link">Home</Link>
         <Link to="/leaderboard" className="navbar-link">Leaderboard</Link>
           <a href="#" onClick={handleClick} className="navbar-link">
             Logout

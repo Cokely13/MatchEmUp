@@ -498,7 +498,7 @@ text-align: center;
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);  // Adjust number of columns as necessary
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   padding: 20px;
 }
@@ -507,4 +507,61 @@ text-align: center;
   padding: 10px;
   border: 1px solid #ccc;
   background-color: #f8f8f8;
+}
+
+.leaderboard {
+  background-color: lightgrey;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 5px;
+  border: 2px solid Black;
+}
+
+.leaderboard h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.leaderboard select {
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 2px solid Black;
+}
+
+.leaderboard .table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  border: 2px solid Black;
+}
+
+.leaderboard th, .leaderboard td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  border: 2px solid Black;
+}
+
+.leaderboard th {
+  color: black;
+}
+
+.leaderboard a {
+  text-decoration: none;
+  color: #fff;
+  background: #007bff;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.leaderboard .header-row {
+  font-size: 30px;
+  background: rgb(150, 150, 150);
+}
+
+.leaderboard .data-row {
+  font-size: 20px;
 }
