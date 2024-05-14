@@ -15,6 +15,7 @@ import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
 import {createWin} from '../store/allWinsStore'
 import {createLoss} from '../store/allLossesStore'
+import RecordModal from './RecordModal';
 
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected, image }) => {
@@ -52,6 +53,7 @@ const GameBoardQb = () => {
   const [showError2Modal, setShowError2Modal] = useState(false);
   const [showOneAwayModal, setShowOneAwayModal] = useState(false);
   const [showWrongModal, setShowWrongModal] = useState(false);
+  const [showRecordModal, setShowRecordModal] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const userId = useSelector(state => state.auth);
   const user = useSelector(state => state.singleUser);
@@ -107,6 +109,7 @@ const GameBoardQb = () => {
         };
 
         if (updatedUser.currentStreak > user.recordStreak) {
+          setShowRecordModal(true);
         }
 
         // Update user streak in the database or through your API
@@ -429,6 +432,7 @@ const GameBoardQb = () => {
       Mistakes remaining: {footballIcons.slice(0, 5 - mistakes)} </h1>}
       </div>
     </div>
+    <RecordModal show={showRecordModal} onHide={() => setShowRecordModal(false)} />
     <WinModal show={showWinModal} onHide={() => setShowWinModal(false)} />
       <LossModal show={showLossModal} onHide={() => setShowLossModal(false)} />
       <ErrorModal show={showErrorModal} onHide={() => setShowErrorModal(false)} />

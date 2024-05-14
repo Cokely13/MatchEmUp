@@ -440,6 +440,7 @@ const GameBoardMovie = () => {
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>
     {submittedWords.length === 16 || mistakes == 5 ?  <div className="control-panel">
           <button style={{marginBottom: '20px'}} className="btn btn-primary" onClick={handlePlayAgain}>Play Again</button>
+          <Link to="/home">Home</Link>
         </div> : <div className="control-panel">
         <button className="btn btn-warning" onClick={handleShuffle}>Shuffle</button>
         <button className="btn btn-info" onClick={handleDeselectAll}>Deselect all</button>

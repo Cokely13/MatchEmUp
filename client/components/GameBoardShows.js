@@ -15,6 +15,7 @@ import Confetti from 'react-confetti';
 import { Link } from 'react-router-dom';
 import {createWin} from '../store/allWinsStore'
 import {createLoss} from '../store/allLossesStore'
+import RecordModal from './RecordModal';
 
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected, image }) => {
@@ -50,6 +51,7 @@ const GameBoardShows = () => {
   const [row4, setRow4] = useState();
   const dispatch = useDispatch();
   const [showHowToPlayModal, setShowHowToPlayModal] = useState(false);
+  const [showRecordModal, setShowRecordModal] = useState(false);
   const [showWinModal, setShowWinModal] = useState(false);
   const [showLossModal, setShowLossModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
@@ -113,7 +115,7 @@ const GameBoardShows = () => {
       };
 
       if (updatedUser.currentStreak > user.recordStreak) {
-
+        setShowRecordModal(true);
       }
 
       // Update user streak in the database or through your API
@@ -447,6 +449,7 @@ const GameBoardShows = () => {
 
 
     </div>
+    <RecordModal show={showRecordModal} onHide={() => setShowRecordModal(false)} />
     <WinModal show={showWinModal} onHide={() => setShowWinModal(false)} />
       <LossModal show={showLossModal} onHide={() => setShowLossModal(false)} />
       <ErrorModal show={showErrorModal} onHide={() => setShowErrorModal(false)} />
