@@ -5,6 +5,7 @@ import {createWin} from '../store/allWinsStore'
 import {createLoss} from '../store/allLossesStore'
 import { Button, Modal } from 'react-bootstrap';
 import WinModal from './WinModal';
+import RecordModal from './RecordModal';
 import LossModal from './LossModal';
 import ErrorModal from './ErrorModal';
 import Error2Modal from './Error2Modal';
@@ -52,6 +53,7 @@ const GameBoardMovie = () => {
   const dispatch = useDispatch();
   const [showHowToPlayModal, setShowHowToPlayModal] = useState(false);
   const [showWinModal, setShowWinModal] = useState(false);
+  const [showRecordModal, setShowRecordModal] = useState(false);
   const [showLossModal, setShowLossModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [showError2Modal, setShowError2Modal] = useState(false);
@@ -76,50 +78,80 @@ const GameBoardMovie = () => {
   }
 
 
+  // const handleWin = () => {
+  //   // Define the win object
+
+  //   const updatedUser = {
+  //     ...user,
+  //     currentStreak: user.currentStreak + 1,
+  //     recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
+  //   };
+
+  //   // Update user streak in the database or through your API
+  //   dispatch(updateSingleUser(updatedUser));
+
+  //   const win = {
+  //     userId: userId.id, // assuming userId is obtained correctly from your auth state
+  //     category: 'Movies' // category for this game board
+  //   };
+
+  //   // Dispatch the createWin action
+  //   dispatch(createWin(win));
+
+  //   setShowWinModal(true);
+  //   setShowConfetti(true);
+  // };
+
   const handleWin = () => {
-    // Define the win object
-console.log("user", user)
-    const updatedUser = {
-      ...user,
-      currentStreak: user.currentStreak + 1,
-      recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
-    };
+    if (userId && userId.id) { // Check if userId exists and has a valid id
+      // Define the win object
+      const win = {
+        userId: userId.id,
+        category: 'Movies'
+      };
 
-    // Update user streak in the database or through your API
-    dispatch(updateSingleUser(updatedUser));
+      const updatedUser = {
+        ...user,
+        currentStreak: user.currentStreak + 1,
+        recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
+      };
 
-    const win = {
-      userId: userId.id, // assuming userId is obtained correctly from your auth state
-      category: 'Movies' // category for this game board
-    };
+      if (updatedUser.currentStreak > user.recordStreak) {
+       setShowRecordModal(true);
+      }
 
-    // Dispatch the createWin action
-    dispatch(createWin(win));
+      // Update user streak in the database or through your API
+      dispatch(updateSingleUser(updatedUser));
+      // Dispatch the createWin action
+      dispatch(createWin(win));
+    }
 
     setShowWinModal(true);
     setShowConfetti(true);
   };
 
   const handleLoss = () => {
-    // Define the win object
-    const loss = {
-      userId: userId.id, // assuming userId is obtained correctly from your auth state
-      category: 'Movies' // category for this game board
-    };
+    if (userId && userId.id) { // Check if userId exists and has a valid id
+      // Define the loss object
+      const loss = {
+        userId: userId.id,
+        category: 'Movies'
+      };
 
-    const updatedUser = {
-      ...user,
-      currentStreak: 0,
-    };
+      const updatedUser = {
+        ...user,
+        currentStreak: 0
+      };
 
-     // Update user streak in the database or through your API
-  dispatch(updateSingleUser(updatedUser));
-
-    // Dispatch the createWin action
-    dispatch(createLoss(loss));
+      // Update user streak in the database or through your API
+      dispatch(updateSingleUser(updatedUser));
+      // Dispatch the createLoss action
+      dispatch(createLoss(loss));
+    }
 
     setShowLossModal(true);
   };
+
 
 
 
@@ -308,13 +340,11 @@ console.log("user", user)
 
   return (
        <div className="app-container" >
-
     <div style={{ textAlign: 'center', margin: '20px' }}>
         <Button variant="link" onClick={handleShow} style={{ color: 'white' }}>
           <h3>How To Play</h3>
         </Button>
       </div>
-      <Link style={{ color: 'white' }} to="/home">Home</Link>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>
@@ -422,6 +452,7 @@ console.log("user", user)
 
 
     </div>
+    <RecordModal show={showRecordModal} onHide={() => setShowRecordModal(false)} />
     <WinModal show={showWinModal} onHide={() => setShowWinModal(false)} />
       <LossModal show={showLossModal} onHide={() => setShowLossModal(false)} />
       <ErrorModal show={showErrorModal} onHide={() => setShowErrorModal(false)} />

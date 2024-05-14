@@ -75,49 +75,79 @@ const GameBoardShows = () => {
   }
 
 
+  // const handleWin = () => {
+  //   // Define the win object
+  //   const win = {
+  //     userId: userId.id, // assuming userId is obtained correctly from your auth state
+  //     category: 'Shows' // category for this game board
+  //   };
+
+  //   const updatedUser = {
+  //     ...user,
+  //     currentStreak: user.currentStreak + 1,
+  //     recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
+  //   };
+
+  //    // Update user streak in the database or through your API
+  //    dispatch(updateSingleUser(updatedUser));
+
+  //   // Dispatch the createWin action
+  //   dispatch(createWin(win));
+
+  //   setShowWinModal(true);
+  //   setShowConfetti(true);
+  // };
+
   const handleWin = () => {
-    // Define the win object
-    const win = {
-      userId: userId.id, // assuming userId is obtained correctly from your auth state
-      category: 'Shows' // category for this game board
-    };
+    if (userId && userId.id) { // Check if userId exists and has a valid id
+      // Define the win object
+      const win = {
+        userId: userId.id,
+        category: 'Shows'
+      };
 
-    const updatedUser = {
-      ...user,
-      currentStreak: user.currentStreak + 1,
-      recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
-    };
+      const updatedUser = {
+        ...user,
+        currentStreak: user.currentStreak + 1,
+        recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
+      };
 
-     // Update user streak in the database or through your API
-     dispatch(updateSingleUser(updatedUser));
+      if (updatedUser.currentStreak > user.recordStreak) {
 
-    // Dispatch the createWin action
-    dispatch(createWin(win));
+      }
+
+      // Update user streak in the database or through your API
+      dispatch(updateSingleUser(updatedUser));
+      // Dispatch the createWin action
+      dispatch(createWin(win));
+    }
 
     setShowWinModal(true);
     setShowConfetti(true);
   };
 
   const handleLoss = () => {
-    // Define the win object
-    const loss = {
-      userId: userId.id, // assuming userId is obtained correctly from your auth state
-      category: 'Shows' // category for this game board
-    };
+    if (userId && userId.id) { // Check if userId exists and has a valid id
+      // Define the loss object
+      const loss = {
+        userId: userId.id,
+        category: 'Shows'
+      };
 
-    const updatedUser = {
-      ...user,
-      currentStreak: 0,
-    };
+      const updatedUser = {
+        ...user,
+        currentStreak: 0
+      };
 
-     // Update user streak in the database or through your API
-  dispatch(updateSingleUser(updatedUser));
-
-    // Dispatch the createWin action
-    dispatch(createLoss(loss));
+      // Update user streak in the database or through your API
+      dispatch(updateSingleUser(updatedUser));
+      // Dispatch the createLoss action
+      dispatch(createLoss(loss));
+    }
 
     setShowLossModal(true);
   };
+
 
   const handleError = () => {
     setShowErrorModal(true);
@@ -310,7 +340,6 @@ const GameBoardShows = () => {
           <h3>How To Play</h3>
         </Button>
       </div>
-      <Link style={{ color: 'white' }} to="/home">Home</Link>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>

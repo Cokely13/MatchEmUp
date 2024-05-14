@@ -70,4 +70,4 @@ const store = createStore(reducer, middleware)
 
 export default store
 export * from './auth'
-export * from './singleUserStore'
+// export * from './singleUserStore'

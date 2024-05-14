@@ -65,4 +65,6 @@ const singleUserReducer = (state = initialState, action) => {
   }
 };
 
+
+
 export default singleUserReducer;

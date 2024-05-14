@@ -16,7 +16,6 @@ import { Link } from 'react-router-dom';
 import {createWin} from '../store/allWinsStore'
 import {createLoss} from '../store/allLossesStore'
 
-
 // Individual word card component
 const WordCard = ({ word, onSelect, isSelected, image }) => {
   return (
@@ -70,49 +69,78 @@ const GameBoardQb = () => {
   const handleShow = () => {
     setShowHowToPlayModal(true)}
 
+    // const handleWin = () => {
+    //   // Define the win object
+    //   const win = {
+    //     userId: userId.id, // assuming userId is obtained correctly from your auth state
+    //     category: 'Qb' // category for this game board
+    //   };
+
+    //   const updatedUser = {
+    //     ...user,
+    //     currentStreak: user.currentStreak + 1,
+    //     recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
+    //   };
+
+    //    // Update user streak in the database or through your API
+    // dispatch(updateSingleUser(updatedUser));
+
+    //   // Dispatch the createWin action
+    //   dispatch(createWin(win));
+
+    //   setShowWinModal(true);
+    //   setShowConfetti(true);
+    // };
+
     const handleWin = () => {
-      // Define the win object
-      const win = {
-        userId: userId.id, // assuming userId is obtained correctly from your auth state
-        category: 'Qb' // category for this game board
-      };
+      if (userId && userId.id) { // Check if userId exists and has a valid id
+        // Define the win object
+        const win = {
+          userId: userId.id,
+          category: 'Qb'
+        };
 
-      const updatedUser = {
-        ...user,
-        currentStreak: user.currentStreak + 1,
-        recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
-      };
+        const updatedUser = {
+          ...user,
+          currentStreak: user.currentStreak + 1,
+          recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
+        };
 
-       // Update user streak in the database or through your API
-    dispatch(updateSingleUser(updatedUser));
+        if (updatedUser.currentStreak > user.recordStreak) {
+        }
 
-      // Dispatch the createWin action
-      dispatch(createWin(win));
+        // Update user streak in the database or through your API
+        dispatch(updateSingleUser(updatedUser));
+        // Dispatch the createWin action
+        dispatch(createWin(win));
+      }
 
       setShowWinModal(true);
       setShowConfetti(true);
     };
 
     const handleLoss = () => {
-      // Define the win object
-      const loss = {
-        userId: userId.id, // assuming userId is obtained correctly from your auth state
-        category: 'Qb' // category for this game board
-      };
+      if (userId && userId.id) { // Check if userId exists and has a valid id
+        // Define the loss object
+        const loss = {
+          userId: userId.id,
+          category: 'Qb'
+        };
 
-      const updatedUser = {
-        ...user,
-        currentStreak: 0,
-      };
+        const updatedUser = {
+          ...user,
+          currentStreak: 0
+        };
 
-       // Update user streak in the database or through your API
-    dispatch(updateSingleUser(updatedUser));
-
-      // Dispatch the createWin action
-      dispatch(createLoss(loss));
+        // Update user streak in the database or through your API
+        dispatch(updateSingleUser(updatedUser));
+        // Dispatch the createLoss action
+        dispatch(createLoss(loss));
+      }
 
       setShowLossModal(true);
     };
+
 
   const handleError2 = () => {
     setShowError2Modal(true);
@@ -293,7 +321,6 @@ const GameBoardQb = () => {
           <h3 style={{ color: 'black' }}>How To Play</h3>
         </Button>
       </div>
-      <Link to="/home" style={{ color: 'black' }}>Home</Link>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
 </div>

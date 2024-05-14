@@ -64,3 +64,20 @@ export default function(state = {}, action) {
       return state
   }
 }
+
+// const initialState = {
+//   id: null,
+//   username: '',
+//   isGuest: false,
+//   currentStreak: 0,
+//   recordStreak: 0,
+// };
+
+// export default function (state = initialState, action) {
+//   switch (action.type) {
+//     case SET_AUTH:
+//       return { ...state, ...action.auth };
+//     default:
+//       return state;
+//   }
+// }

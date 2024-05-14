@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { fetchSingleUser } from '../store/singleUserStore';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -7,9 +8,15 @@ import { Link } from 'react-router-dom';
  * COMPONENT
  */
 export const Home = props => {
-  const { username } = props;
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.singleUser);
+  const { username, userId} = props;
   const history = useHistory(); // Use the useHistory hook for redirection
   const [selection, setSelection] = useState(''); // State to keep track of the dropdown selection
+
+  useEffect(() => {
+    dispatch(fetchSingleUser(userId));
+  }, [dispatch]);
 
   const handleDropdownChange = (event) => {
     setSelection(event.target.value); // Update state when the dropdown value changes
@@ -60,6 +67,12 @@ export const Home = props => {
         </select>
         <button type="submit" className="match-button">Go</button>
       </form>
+      {(username) && (
+        <div className='streak-display'>
+          <div>Current Streak: {user.currentStreak}</div>
+          <div>Record Streak: {user.recordStreak}</div>
+        </div>
+      )}
       {/* <button onClick={handleGuestEntry} className="guest-entry-button">Enter As Guest</button> */}
     </div>
   );
@@ -70,7 +83,8 @@ export const Home = props => {
  */
 const mapState = state => {
   return {
-    username: state.auth.username
+    username: state.auth.username,
+    userId: state.auth.id,
   }
 }
 
