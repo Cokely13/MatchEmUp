@@ -586,3 +586,14 @@ text-align: center;
     padding: 8px;
   }
 }
+
+.correctAnswers {
+  color: white;
+  margin-bottom: 20px;
+  display: flex; /* Add flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  padding: 10 px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
