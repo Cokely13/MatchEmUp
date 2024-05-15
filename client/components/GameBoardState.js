@@ -50,6 +50,7 @@ const GameBoardState = () => {
   const [row1, setRow1] = useState();
   const [row2, setRow2] = useState();
   const [row4, setRow4] = useState();
+  const [lossWords, setLossWords] = useState({});
   const [showRecordModal, setShowRecordModal] = useState(false);
   const dispatch = useDispatch();
   const [showHowToPlayModal, setShowHowToPlayModal] = useState(false);
@@ -74,32 +75,6 @@ const GameBoardState = () => {
   const handleShow = () => {
     setShowHowToPlayModal(true)}
 
-    // const handleWin = () => {
-    //   // Define the win object
-    //   const win = {
-    //     userId: userId.id, // assuming userId is obtained correctly from your auth state
-    //     category: 'State' // category for this game board
-    //   };
-
-    //   const updatedUser = {
-    //     ...user,
-    //     currentStreak: user.currentStreak + 1,
-    //     recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
-    //   };
-
-    //   if (newStreak > user.recordStreak) {
-    //     toast.success(`New Record! Streak: ${newStreak}`);
-    //   }
-
-    //    // Update user streak in the database or through your API
-    // dispatch(updateSingleUser(updatedUser));
-
-    //   // Dispatch the createWin action
-    //   dispatch(createWin(win));
-
-    //   setShowWinModal(true);
-    //   setShowConfetti(true);
-    // };
 
     const handleWin = () => {
       if (userId && userId.id) { // Check if userId exists and has a valid id
@@ -147,6 +122,17 @@ const GameBoardState = () => {
         // Dispatch the createLoss action
         dispatch(createLoss(loss));
       }
+      console.log("gameWords", gameWords)
+      const groupedWords = gameWords.reduce((acc, word) => {
+        const stateName = allStates.find(state=> state.cities.some(city => city.name === word.name)).name;
+        if (!acc[stateName]) {
+          acc[stateName] = [];
+        }
+        acc[stateName].push(word.name);
+        return acc;
+      }, {});
+
+      setLossWords(groupedWords);
 
       setShowLossModal(true);
     };
@@ -234,6 +220,7 @@ const GameBoardState = () => {
     setRow4(false);
     setSelectedWords(new Set());
     setShowConfetti(false)
+    setLossWords({});
     shuffleStatesAndCities();
   };
 
@@ -419,7 +406,7 @@ const GameBoardState = () => {
   ))}</div></div>: <div></div>}
 <div>
     {/* Render submitted words first */}
-
+    {mistakes !== 5 ? (
     <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
       {gameWords.map((word, index) => (
         <WordCard
@@ -430,6 +417,23 @@ const GameBoardState = () => {
         />
       ))}
     </div>
+    ) : (
+          <div>
+            <h2>Correct Answers:</h2>
+            <div className='correctAnswers'>
+              {Object.keys(lossWords).map((state, index) => (
+                <div key={index}>
+                  <h3>{state}:</h3>
+                  <ul>
+                    {lossWords[state].map((city, idx) => (
+                      <li key={idx}>{city}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>
     {submittedWords.length === 16 || mistakes == 5 ?  <div className="control-panel">
