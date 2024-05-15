@@ -49,6 +49,7 @@ const GameBoardShows = () => {
   const [row1, setRow1] = useState();
   const [row2, setRow2] = useState();
   const [row4, setRow4] = useState();
+  const [lossWords, setLossWords] = useState({});
   const dispatch = useDispatch();
   const [showHowToPlayModal, setShowHowToPlayModal] = useState(false);
   const [showRecordModal, setShowRecordModal] = useState(false);
@@ -147,6 +148,17 @@ const GameBoardShows = () => {
       dispatch(createLoss(loss));
     }
 
+    const groupedWords = gameWords.reduce((acc, word) => {
+      const showName = allShows.find(show => show.characters.some(character => character.name === word.name)).name;
+      if (!acc[showName]) {
+        acc[showName] = [];
+      }
+      acc[showName].push(word.name);
+      return acc;
+    }, {});
+
+    setLossWords(groupedWords);
+
     setShowLossModal(true);
   };
 
@@ -238,6 +250,7 @@ const GameBoardShows = () => {
     setRow4(false);
     setSelectedWords(new Set());
     setShowConfetti(false)
+    setLossWords({});
     shuffleShowsAndCharacters();
   };
 
@@ -422,7 +435,8 @@ const GameBoardShows = () => {
   ))}</div></div>: <div></div>}
 <div>
     {/* Render submitted words first */}
-
+    <div>
+        {mistakes !== 5 ? (
     <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
       {gameWords.map((word, index) => (
         <WordCard
@@ -434,6 +448,26 @@ const GameBoardShows = () => {
         />
       ))}
     </div>
+    ) : (
+          <div>
+            <h2>Correct Answers:</h2>
+            <div className='correctAnswers'>
+              {Object.keys(lossWords).map((show, index) => (
+                <div key={index}>
+                  <h3>{show}:</h3>
+                  <ul>
+                    {lossWords[show].map((character, idx) => (
+                      <li key={idx}>{character}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+  </div>
+
+
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>
     {submittedWords.length === 16 || mistakes == 5 ?  <div className="control-panel">
           <button style={{marginBottom: '20px'}} className="btn btn-primary" onClick={handlePlayAgain}>Play Again</button>

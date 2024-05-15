@@ -58,6 +58,7 @@ const GameBoardQb = () => {
   const userId = useSelector(state => state.auth);
   const user = useSelector(state => state.singleUser);
   const allQuarterbacks = useSelector((state) => state.allQuarterbacks);
+  const [lossWords, setLossWords] = useState({});
 
   useEffect(() => {
     dispatch(fetchQuarterbacks());
@@ -70,29 +71,6 @@ const GameBoardQb = () => {
   const handleClose = () => setShowHowToPlayModal(false);
   const handleShow = () => {
     setShowHowToPlayModal(true)}
-
-    // const handleWin = () => {
-    //   // Define the win object
-    //   const win = {
-    //     userId: userId.id, // assuming userId is obtained correctly from your auth state
-    //     category: 'Qb' // category for this game board
-    //   };
-
-    //   const updatedUser = {
-    //     ...user,
-    //     currentStreak: user.currentStreak + 1,
-    //     recordStreak: Math.max(user.recordStreak, user.currentStreak + 1)
-    //   };
-
-    //    // Update user streak in the database or through your API
-    // dispatch(updateSingleUser(updatedUser));
-
-    //   // Dispatch the createWin action
-    //   dispatch(createWin(win));
-
-    //   setShowWinModal(true);
-    //   setShowConfetti(true);
-    // };
 
     const handleWin = () => {
       if (userId && userId.id) { // Check if userId exists and has a valid id
@@ -141,6 +119,17 @@ const GameBoardQb = () => {
         dispatch(createLoss(loss));
       }
 
+      console.log("hey", gameWords)
+      const groupedWords = gameWords.reduce((acc, word) => {
+        const quarterbackName = allQuarterbacks.find(quarterback=> quarterback.receivers.some(receiver => receiver.name === word.name)).name;
+        if (!acc[quarterbackName]) {
+          acc[quarterbackName] = [];
+        }
+        acc[quarterbackName].push(word.name);
+        return acc;
+      }, {});
+
+      setLossWords(groupedWords);
       setShowLossModal(true);
     };
 
@@ -222,6 +211,7 @@ const GameBoardQb = () => {
     setRow4(false);
     setSelectedWords(new Set());
     setShowConfetti(false)
+    setLossWords({});
     shuffleQBsAndWRs();
   };
 
@@ -407,7 +397,8 @@ const GameBoardQb = () => {
   ))}</div></div>: <div></div>}
 <div>
     {/* Render submitted words first */}
-
+    <div>
+        {mistakes !== 5 ? (
     <div className={`game-board ${gameWords.length === 12 ? 'adjusted' : ''}`}>
       {gameWords.map((word, index) => (
         <WordCard
@@ -418,6 +409,23 @@ const GameBoardQb = () => {
         />
       ))}
     </div>
+         ) : (
+          <div>
+            <h2>Correct Answers:</h2>
+            <div className='correctAnswers'>
+              {Object.keys(lossWords).map((quarterback, index) => (
+                <div key={index}>
+                  <h3>{quarterback}:</h3>
+                  <ul>
+                    {lossWords[quarterback].map((receiver, idx) => (
+                      <li key={idx}>{receiver}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>
     {submittedWords.length === 16 || mistakes == 5 ?  <div className="control-panel">
@@ -430,6 +438,7 @@ const GameBoardQb = () => {
       {submittedWords.length === 16 || mistakes == 5 ?
       <div></div> : <h1 className="mistakes">
       Mistakes remaining: {footballIcons.slice(0, 5 - mistakes)} </h1>}
+      </div>
       </div>
     </div>
     <RecordModal show={showRecordModal} onHide={() => setShowRecordModal(false)} />
@@ -444,3 +453,4 @@ const GameBoardQb = () => {
 };
 
 export default GameBoardQb;
+
