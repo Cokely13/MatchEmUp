@@ -122,7 +122,7 @@ const GameBoardState = () => {
         // Dispatch the createLoss action
         dispatch(createLoss(loss));
       }
-      console.log("gameWords", gameWords)
+
       const groupedWords = gameWords.reduce((acc, word) => {
         const stateName = allStates.find(state=> state.cities.some(city => city.name === word.name)).name;
         if (!acc[stateName]) {
@@ -171,7 +171,9 @@ const GameBoardState = () => {
       state.cities.sort(() => 0.5 - Math.random()).slice(0, 4)
     ).sort(() => 0.5 - Math.random());
 
-    setGameWords(selectedCities.map(city => city.name));
+    setGameWords(selectedCities.map(city => ({
+      name: city.name,
+    })));
   };
 
   // Ensure this useEffect hook is called after your component is mounted and whenever allStates changes
@@ -279,7 +281,7 @@ const GameBoardState = () => {
         }
 
         // Remove correctly guessed Cities from the game board
-        const remainingWords = gameWords.filter((city) => !selectedWords.has(city));
+        const remainingWords = gameWords.filter((city) => !selectedWords.has(city.name));
 
         setGameWords(remainingWords);
 
@@ -311,6 +313,7 @@ const GameBoardState = () => {
     setGameWords(gameWords.sort(() => 0.5 - Math.random()));
     setSelectedWords(new Set()); // This will clear the selection
   };
+
 
   const handleDeselectAll = () => {
     setSelectedWords(new Set());
@@ -411,8 +414,8 @@ const GameBoardState = () => {
       {gameWords.map((word, index) => (
         <WordCard
           key={index}
-          word={word}
-          isSelected={selectedWords.has(word)}
+          word={word.name}
+          isSelected={selectedWords.has(word.name)}
           onSelect={toggleSelectWord}
         />
       ))}
@@ -420,7 +423,7 @@ const GameBoardState = () => {
     ) : (
           <div>
             <h2>Correct Answers:</h2>
-            <div className='correctAnswers'>
+            <div className='correctAnswers' style={{color: "black"}}>
               {Object.keys(lossWords).map((state, index) => (
                 <div key={index}>
                   <h3>{state}:</h3>
