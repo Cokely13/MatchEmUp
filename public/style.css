@@ -601,6 +601,8 @@ text-align: center;
 .edit-container {
   margin: 20px;
   font-family: Arial, sans-serif;
+  background-color: white;
+  padding: 10px;
 }
 
 h2 {
@@ -666,3 +668,12 @@ h2 {
   background-color: #b3b3b3;
 }
 
+.items-list{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.item{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
