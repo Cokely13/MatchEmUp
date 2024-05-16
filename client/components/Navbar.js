@@ -9,6 +9,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         <div style={{textAlign: "center"}}>
         <Link to="/home" className="navbar-link">Home</Link>
         <Link to="/leaderboard" className="navbar-link">Leaderboard</Link>
+        <Link to="/edit" className="navbar-link">Edit</Link>
           <a href="#" onClick={handleClick} className="navbar-link">
             Logout
           </a>

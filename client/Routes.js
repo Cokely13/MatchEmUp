@@ -10,6 +10,7 @@ import GameBoardMusic from './components/GameBoardMusic';
 import GameBoardNba from './components/GameBoardNba';
 import GameBoardState from './components/GameBoardState';
 import GameBoardShows from './components/GameBoardShows';
+import Edit from './components/Edit';
 
 import Navbar from './components/Navbar';
 import Leaderboard from './components/Leaderboard';
@@ -27,6 +28,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
+            <Route path="/edit" component={Edit} />
             <Route path="/cinema" component={GameBoardMovie} />
             <Route path="/qb" component={GameBoardQb} />
             <Route path="/music" component={GameBoardMusic} />
