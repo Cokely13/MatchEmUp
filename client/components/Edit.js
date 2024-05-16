@@ -1,73 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { fetchStates, deleteState } from '../store/allStatesStore';
-// import { fetchShows, deleteShow} from '../store/allStatesStore'
-// import {fetchActors, deleteActor} from '../store/allActorsStore'
-// import {fetchArtists, deleteArtist} from '../store/allArtistsStore'
-// import {fetchQuarterbacks, deleteQuarterback} from '../store/allQuarterbacksStore'
-// import {fetchFranchises, deleteFranchise} from '../store/allFranchisesStore'
-
-// function Edit() {
-//   const dispatch = useDispatch();
-//   const allStates = useSelector((state) => state.allStates);
-//   const allShows = useSelector((show) => state.allShows);
-//   const allFranchises = useSelector((franchise) => state.allFranchises);
-//   const allActors = useSelector((actor) => state.allActors);
-//   const allArtists = useSelector((artist) => state.allArtists);
-//   const allQuarterbacks = useSelector((quarterback) => state.allQuarterbacks);
-//   const [stateToDelete, setStateToDelete] = useState(null);
-
-//   useEffect(() => {
-//     dispatch(fetchStates());
-//     dispatch(fetchQuarterbacks());
-//     dispatch(fetchFranchises());
-//     dispatch(fetchShows());
-//     dispatch(fetchActors());
-//     dispatch(fetchArtists());
-//   }, [dispatch]);
-
-//   const handleDeleteClick = (stateId) => {
-//     setStateToDelete(stateId);
-//   };
-
-//   const confirmDelete = () => {
-//     if (stateToDelete) {
-//       dispatch(deleteState(stateToDelete));
-//       setStateToDelete(null);
-//     }
-//   };
-
-//   const cancelDelete = () => {
-//     setStateToDelete(null);
-//   };
-
-//   return (
-//     <div className="edit-container">
-//       <h2>Edit States</h2>
-//       {allStates && allStates.length > 0 ? (
-//         allStates.map((state) => (
-//           <div key={state.id} className="state-item">
-//             <span className="state-name">{state.name}</span>
-//             {stateToDelete === state.id ? (
-//               <span style={{ marginLeft: '10px' }} className="confirm-delete">
-//                 Are you sure?{' '}
-//                 <button className="btn-confirm" onClick={confirmDelete}>Yes</button>
-//                 <button className="btn-cancel" onClick={cancelDelete}>No</button>
-//               </span>
-//             ) : (
-//               <button className="btn-delete" onClick={() => handleDeleteClick(state.id)}>Delete</button>
-//             )}
-//           </div>
-//         ))
-//       ) : (
-//         <div>No states available</div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Edit;
-
 
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -77,6 +7,8 @@ import { fetchActors, deleteActor } from '../store/allActorsStore';
 import { fetchArtists, deleteArtist } from '../store/allArtistsStore';
 import { fetchQuarterbacks, deleteQuarterback } from '../store/allQuarterbacksStore';
 import { fetchFranchises, deleteFranchise } from '../store/allFranchisesStore';
+import {fetchCities, deleteCity} from '../store/allCitiesStore'
+import {updateSingleCity} from '../store/singleCityStore'
 
 
 function Edit() {
@@ -86,6 +18,7 @@ function Edit() {
   const allFranchises = useSelector((state) => state.allFranchises);
   const allActors = useSelector((state) => state.allActors);
   const allArtists = useSelector((state) => state.allArtists);
+  const allCities = useSelector((state) => state.allCities);
   const allQuarterbacks = useSelector((state) => state.allQuarterbacks);
   const [category, setCategory] = useState('states');
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -97,6 +30,7 @@ function Edit() {
     dispatch(fetchActors());
     dispatch(fetchArtists());
     dispatch(fetchQuarterbacks());
+    dispatch(fetchCities())
   }, [dispatch]);
 
   const handleDeleteClick = (itemId) => {
@@ -120,6 +54,9 @@ function Edit() {
           break;
         case 'artists':
           dispatch(deleteArtist(itemToDelete));
+          break;
+          case 'cities':
+          dispatch(deleteCity(itemToDelete));
           break;
         case 'quarterbacks':
           dispatch(deleteQuarterback(itemToDelete));
@@ -167,6 +104,7 @@ function Edit() {
           <option value="actors">Actors</option>
           <option value="artists">Artists</option>
           <option value="quarterbacks">Quarterbacks</option>
+          <option value="cities">Cities</option>
         </select>
       </div>
       <div className="items-list">
@@ -176,6 +114,7 @@ function Edit() {
         {category === 'actors' && renderList(allActors, 'actors')}
         {category === 'artists' && renderList(allArtists, 'artists')}
         {category === 'quarterbacks' && renderList(allQuarterbacks, 'quarterbacks')}
+        {category === 'cities' && renderList(allCities, 'cities')}
       </div>
     </div>
   );
