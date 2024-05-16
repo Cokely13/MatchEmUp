@@ -597,3 +597,72 @@ text-align: center;
   margin-right: 10px;
   margin-left: 10px;
 }
+
+.edit-container {
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  color: #333;
+}
+
+.state-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.state-name {
+  font-size: 18px;
+  color: #555;
+}
+
+.confirm-delete {
+  display: flex;
+  align-items: center;
+}
+
+.btn-delete,
+.btn-confirm,
+.btn-cancel {
+  padding: 5px 10px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-delete {
+  background-color: #ff6666;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #ff4d4d;
+}
+
+.btn-confirm {
+  background-color: #66cc66;
+  color: white;
+}
+
+.btn-confirm:hover {
+  background-color: #4d994d;
+}
+
+.btn-cancel {
+  background-color: #cccccc;
+  color: #333;
+}
+
+.btn-cancel:hover {
+  background-color: #b3b3b3;
+}
+
