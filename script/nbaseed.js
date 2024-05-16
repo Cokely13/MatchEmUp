@@ -20,8 +20,8 @@ async function nbaseed() {
           if (!franchisePromises[Team]) {
               // Promise to find or create the franchise, stored to prevent duplicate creations
               franchisePromises[Team] = Franchise.findOrCreate({
-                  where: { team: Team },
-                  defaults: { team: Team, year: Year }
+                  where: { name: Team },
+                  defaults: { name: Team, year: Year }
               })
               .then(([franchise]) => {
                   franchises[Team] = franchise;
@@ -62,7 +62,7 @@ async function nbaseed() {
 
   for (const franchiseName in franchiseImages) {
     const imagePath = franchiseImages[franchiseName];
-    await Franchise.update({ imagePath }, { where: { team: franchiseName } });
+    await Franchise.update({ imagePath }, { where: { name: franchiseName } });
   }
 
 

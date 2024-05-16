@@ -119,7 +119,7 @@ const GameBoardNba = () => {
           }
 
           const groupedWords = gameWords.reduce((acc, word) => {
-            const franchiseName = allFranchises.find(franchise => franchise.players.some(player => player.name === word.name)).team;
+            const franchiseName = allFranchises.find(franchise => franchise.players.some(player => player.name === word.name)).name;
             if (!acc[franchiseName]) {
               acc[franchiseName] = [];
             }
@@ -219,14 +219,14 @@ const GameBoardNba = () => {
               );
 
               if (matchingPlayers.length === 3) {
-                matchingFranchises.push(franchise.team);
+                matchingFranchises.push(franchise.name);
               }
 
               const allPlayerMatch = matchingPlayers.length === 4;
 
               if (allPlayerMatch) {
                 franchiseImages.push(franchise.imagePath);
-                franchiseNames.push(franchise.team);
+                franchiseNames.push(franchise.name);
               }
 
               return allPlayerMatch;
