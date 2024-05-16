@@ -28,16 +28,17 @@ export const fetchCity = (id) => {
   };
 };
 
-export const updateSingleCity = (city, history) => {
+export const updateSingleCity = (city) => {
   return async (dispatch) => {
     try {
+      console.log("HERE!!", city)
         await axios.put(`/api/cities/${city.id}`, city);
         const { data: cityData } = await axios.get(`/api/cities/${city.id}`);
         dispatch(_updateSingleCity(cityData));
-        history.push(`/cities/${city.id}`)
+        // history.push(`/cities/${city.id}`)
       }
      catch (error) {
-      console.log("CITY", city)
+      console.error("Failed to update city:", error);
     }
   };
 };
