@@ -119,7 +119,7 @@ const GameBoardQb = () => {
         dispatch(createLoss(loss));
       }
 
-      console.log("hey", gameWords)
+
       const groupedWords = gameWords.reduce((acc, word) => {
         const quarterbackName = allQuarterbacks.find(quarterback=> quarterback.receivers.some(receiver => receiver.name === word.name)).name;
         if (!acc[quarterbackName]) {
@@ -162,7 +162,9 @@ const GameBoardQb = () => {
       qb.receivers.sort(() => 0.5 - Math.random()).slice(0, 4)
     ).sort(() => 0.5 - Math.random());
 
-    setGameWords(selectedWRs.map(wr => wr.name));
+    setGameWords(selectedWRs.map(wr => ({
+      name: wr.name,
+    })));
   };
 
   // Ensure this useEffect hook is called after your component is mounted and whenever allQuarterbacks changes
@@ -270,7 +272,7 @@ const GameBoardQb = () => {
         }
 
         // Remove correctly guessed WRs from the game board
-        const remainingWords = gameWords.filter((wr) => !selectedWords.has(wr));
+        const remainingWords = gameWords.filter((wr) => !selectedWords.has(wr.name));
 
         setGameWords(remainingWords);
 
@@ -403,8 +405,8 @@ const GameBoardQb = () => {
       {gameWords.map((word, index) => (
         <WordCard
           key={index}
-          word={word}
-          isSelected={selectedWords.has(word)}
+          word={word.name}
+          isSelected={selectedWords.has(word.name)}
           onSelect={toggleSelectWord}
         />
       ))}
