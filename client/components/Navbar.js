@@ -1,39 +1,81 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
+// import React from 'react'
+// import {connect} from 'react-redux'
+// import {Link} from 'react-router-dom'
+// import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+// const Navbar = ({handleClick, isLoggedIn}) => (
+//   <div>
+//     <nav>
+//         <div style={{textAlign: "center"}}>
+//         <Link to="/home" className="navbar-link">Home</Link>
+//         <Link to="/leaderboard" className="navbar-link">Leaderboard</Link>
+//         <Link to="/edit" className="navbar-link">Edit</Link>
+//           <a href="#" onClick={handleClick} className="navbar-link">
+//             Logout
+//           </a>
+//         </div>
+//     </nav>
+//     <hr />
+//   </div>
+// )
+
+// /**
+//  * CONTAINER
+//  */
+// const mapState = state => {
+//   return {
+//     isLoggedIn: !!state.auth.id
+//   }
+// }
+
+// const mapDispatch = dispatch => {
+//   return {
+//     handleClick() {
+//       dispatch(logout())
+//     }
+//   }
+// }
+
+// export default connect(mapState, mapDispatch)(Navbar)
+
+
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../store';
+
+const Navbar = ({ handleClick, isLoggedIn, isAdmin, isGuest }) => (
   <div>
     <nav>
-        <div style={{textAlign: "center"}}>
+      <div style={{ textAlign: 'center' }}>
         <Link to="/home" className="navbar-link">Home</Link>
-        <Link to="/leaderboard" className="navbar-link">Leaderboard</Link>
-        <Link to="/edit" className="navbar-link">Edit</Link>
-          <a href="#" onClick={handleClick} className="navbar-link">
-            Logout
-          </a>
-        </div>
+        {!isGuest && <Link to="/leaderboard" className="navbar-link">Leaderboard</Link>}
+        {isAdmin && <Link to="/edit" className="navbar-link">Edit</Link>}
+        <a href="#" onClick={handleClick} className="navbar-link">Logout</a>
+      </div>
     </nav>
     <hr />
   </div>
-)
+);
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
+  const { auth } = state;
   return {
-    isLoggedIn: !!state.auth.id
-  }
-}
+    isLoggedIn: !!auth.id,
+    isAdmin: !!auth.admin,
+    isGuest: state.auth.isGuest,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+      dispatch(logout());
+    },
+  };
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);
