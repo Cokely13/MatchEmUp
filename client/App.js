@@ -10,24 +10,7 @@ import Routes from './Routes';
 
 const App = ({ isLoggedIn, isGuest, userId, recordStreak, currentStreak}) => {
 
-  // const [userDetails, setUserDetails] = useState({
-  //   currentStreak: 0,
-  //   recordStreak: 0
-  // });
 
-
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     fetchSingleUserDirectly(userId)
-  //       .then(data => {
-  //         setUserDetails({
-  //           currentStreak: data.currentStreak,
-  //           recordStreak: data.recordStreak
-  //         });
-  //       })
-  //       .catch(error => console.error('Failed to fetch user details:', error));
-  //   }
-  // }, [isLoggedIn, userId]);
 
   return (
     <div className="homepage">
@@ -35,12 +18,6 @@ const App = ({ isLoggedIn, isGuest, userId, recordStreak, currentStreak}) => {
         <h1 className="title">MatchEmUp</h1>
       </div>
       {(isLoggedIn || isGuest) && <Navbar />}
-      {/* {(isLoggedIn) && (
-        <div className='streak-display'>
-          <div>Current Streak: {currentStreak}</div>
-          <div>Record Streak: {recordStreak}</div>
-        </div>
-      )} */}
       <Routes />
     </div>
   );

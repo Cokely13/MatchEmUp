@@ -9,6 +9,7 @@ import { fetchQuarterbacks, deleteQuarterback } from '../store/allQuarterbacksSt
 import { fetchFranchises, deleteFranchise } from '../store/allFranchisesStore';
 import {fetchCities, deleteCity} from '../store/allCitiesStore'
 import {updateSingleCity} from '../store/singleCityStore'
+import { fetchSingleUser } from '../store/singleUserStore';
 
 
 function Edit() {
@@ -23,7 +24,11 @@ function Edit() {
   const [category, setCategory] = useState('states');
   const [itemToDelete, setItemToDelete] = useState(null);
   const [editCityId, setEditCityId] = useState(null);
-const [editCityName, setEditCityName] = useState('');
+  const [editCityName, setEditCityName] = useState('');
+  const user = useSelector(state => state.singleUser);
+
+
+  console.log("user", user)
 
   useEffect(() => {
     dispatch(fetchStates());
@@ -123,71 +128,11 @@ const [editCityName, setEditCityName] = useState('');
   );
 
 
-  // const renderList = (items, type) => (
-  //   items && items.length > 0 ? (
-  //     // items.map((item) => (
-  //     //   <div key={item.id} className="item">
-  //     //     <span className="item-name">{item.name}</span>
-  //     items.map((item) => (
-  //       <div key={item.id} className="item">
-  //         {editCityId === item.id ? (
-  //           <input
-  //             type="text"
-  //             value={editCityName}
-  //             onChange={(e) => setEditCityName(e.target.value)}
-  //             onBlur={() => saveEdit(item.id)}
-  //             onKeyDown={(e) => e.key === 'Enter' && saveEdit(item.id)}
-  //           />
-  //         ) : (
-  //           <span className="item-name" onDoubleClick={() => type === 'cities' && handleEditClick(item)}>
-  //             {item.name}
-  //           </span>
-  //         )}
-  //         {itemToDelete === item.id ? (
-  //           <span style={{ marginLeft: '10px' }} className="confirm-delete">
-  //             Are you sure?{' '}
-  //             <button className="btn-confirm" onClick={confirmDelete}>Yes</button>
-  //             <button className="btn-cancel" onClick={cancelDelete}>No</button>
-  //           </span>
-  //         ) : (
-  //           <button className="btn-delete" onClick={() => handleDeleteClick(item.id)}>Delete</button>
-  //         )}
-  //       </div>
-  //     ))
-  //   ) : (
-  //     <div>No {type} available</div>
-  //   )
-  // );
-
-  // const renderList2 = (items, type) => (
-  //   items && items.length > 0 ? (
-  //     items.map((item) => (
-  //       <div key={item.id} className="item">
-  //         {editCityId === item.id ? (
-  //           <input
-  //             type="text"
-  //             value={editCityName}
-  //             onChange={(e) => setEditCityName(e.target.value)}
-  //             onBlur={() => saveEdit(item.id)}
-  //             onKeyDown={(e) => e.key === 'Enter' && saveEdit(item.id)}
-  //           />
-  //         ) : (
-  //           <span className="item-name" onDoubleClick={() => type === 'cities' && handleEditClick(item)}>
-  //             {item.name}
-  //           </span>
-
-  //         )}
-  //         {/* Delete logic remains the same */}
-  //       </div>
-  //     ))
-  //   ) : (
-  //     <div>No {type} available</div>
-  //   )
-  // );
-
   return (
     <div className="edit-container">
       <h2>Edit Items</h2>
+      {user.admin ?
+      <div>
       <div className="dropdown">
         <select onChange={(e) => setCategory(e.target.value)} value={category}>
           <option value="states">States</option>
@@ -207,7 +152,7 @@ const [editCityName, setEditCityName] = useState('');
         {category === 'artists' && renderList(allArtists, 'artists')}
         {category === 'quarterbacks' && renderList(allQuarterbacks, 'quarterbacks')}
         {category === 'cities' && renderList(allCities, 'cities')}
-      </div>
+      </div></div> : <div>No Access</div>}
     </div>
   );
   }

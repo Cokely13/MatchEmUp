@@ -22,14 +22,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// router.put('/:id', async (req, res, next) => {
-//   try {
-//     const vote = await City.findByPk(req.params.id)
-//     res.send(await City.update(req.body));
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+
 
 router.put('/:id', async (req, res, next) => {
   try {
