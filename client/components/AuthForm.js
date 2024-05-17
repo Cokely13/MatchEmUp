@@ -1,84 +1,3 @@
-// import React, { useState } from 'react';
-// import { connect } from 'react-redux';
-// import { authenticate } from '../store';
-
-// /**
-//  * COMPONENT
-//  */
-// const AuthForm = props => {
-//   const { name, displayName, handleSubmit, error } = props;
-//   const [localError, setLocalError] = useState(''); // State to manage local error messages
-
-//   const handleFormSubmit = evt => {
-//     evt.preventDefault();
-//     const formName = evt.target.name;
-//     const username = evt.target.username.value;
-//     const password = evt.target.password.value;
-//     try {
-//       console.log(`Submitting form ${formName} for user ${username}`);
-//       handleSubmit(username, password, formName);
-//     } catch (err) {
-//       console.error('Submission error:', err);
-//       setLocalError('Failed to submit form. Please try again.'); // Set local error message
-//       alert('Error during form submission. Check console for details.'); // Popup alert for debugging
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <form onSubmit={handleFormSubmit} name={name}>
-//         <div>
-//           <label htmlFor="username">
-//             <small>Username</small>
-//           </label>
-//           <input name="username" type="text" />
-//         </div>
-//         <div>
-//           <label htmlFor="password">
-//             <small>Password!!</small>
-//           </label>
-//           <input name="password" type="password" />
-//         </div>
-//         <div>
-//           <button type="submit">{displayName}</button>
-//         </div>
-//         {error && error.response && <div> {error.response.data} </div>}
-//         {localError && <div>{localError}</div>} {/* Display local error */}
-//       </form>
-//     </div>
-//   );
-// };
-
-// /**
-//  * CONTAINER
-//  */
-// const mapLogin = state => {
-//   return {
-//     name: 'login',
-//     displayName: 'Login',
-//     error: state.auth.error
-//   };
-// };
-
-// const mapSignup = state => {
-//   return {
-//     name: 'signup',
-//     displayName: 'Sign Up',
-//     error: state.auth.error
-//   };
-// };
-
-// const mapDispatch = dispatch => {
-//   return {
-//     handleSubmit(username, password, formName) {
-//       dispatch(authenticate(username, password, formName));
-//     }
-//   };
-// };
-
-// export const Login = connect(mapLogin, mapDispatch)(AuthForm);
-// export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
-
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { authenticate, loginAsGuest } from '../store';  // Ensure you have a loginAsGuest action if needed
@@ -113,28 +32,52 @@ const AuthForm = props => {
     }
   };
 
-  return (
-    <div>
-      <form onSubmit={handleFormSubmit} name={name}>
-        {/* Form fields for username and password */}
-        <div>
-          <label htmlFor="username"><small>Username</small></label>
-          <input name="username" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password"><small>Password</small></label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-          <button type="button" onClick={handleGuestSubmit}>Continue as Guest</button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-        {localError && <div>{localError}</div>}
-      </form>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <form onSubmit={handleFormSubmit} name={name}>
+//         {/* Form fields for username and password */}
+//         <div>
+//           <label htmlFor="username"><small>Username</small></label>
+//           <input name="username" type="text" />
+//         </div>
+//         <div>
+//           <label htmlFor="password"><small>Password</small></label>
+//           <input name="password" type="password" />
+//         </div>
+//         <div>
+//           <button type="submit">{displayName}</button>
+//           <button type="button" onClick={handleGuestSubmit}>Continue as Guest</button>
+//         </div>
+//         {error && error.response && <div> {error.response.data} </div>}
+//         {localError && <div>{localError}</div>}
+//       </form>
+//     </div>
+//   );
+// };
+
+return (
+  <div className="auth-container">
+    <form onSubmit={handleFormSubmit} name={name} className="auth-form">
+      <h2 className="auth-title">{displayName}</h2>
+      <div className="auth-input-group">
+        <label htmlFor="username" className="auth-label"><small>Username</small></label>
+        <input name="username" type="text" className="auth-input" />
+      </div>
+      <div className="auth-input-group">
+        <label htmlFor="password" className="auth-label"><small>Password</small></label>
+        <input name="password" type="password" className="auth-input" />
+      </div>
+      <div className="auth-button-group">
+        <button type="submit" className="auth-button">{displayName}</button>
+        <button type="button" className="auth-button auth-button-guest" onClick={handleGuestSubmit}>Continue as Guest</button>
+      </div>
+      {error && error.response && <div className="auth-error">{error.response.data}</div>}
+      {localError && <div className="auth-error">{localError}</div>}
+    </form>
+  </div>
+);
+
+}
 
 const mapLogin = state => ({
   name: 'login',
