@@ -44,6 +44,16 @@ export const authenticate = (username, password, method) => async dispatch => {
   }
 }
 
+export const signup = (username, password) => async dispatch => {
+  try {
+    const res = await axios.post('/auth/signup', {username, password})
+    window.localStorage.setItem(TOKEN, res.data.token)
+    dispatch(me())
+  } catch (authError) {
+    return dispatch(setAuth({error: authError}))
+  }
+}
+
 export const logout = () => {
   window.localStorage.removeItem(TOKEN)
   history.push('/login')
@@ -65,19 +75,4 @@ export default function(state = {}, action) {
   }
 }
 
-// const initialState = {
-//   id: null,
-//   username: '',
-//   isGuest: false,
-//   currentStreak: 0,
-//   recordStreak: 0,
-// };
 
-// export default function (state = initialState, action) {
-//   switch (action.type) {
-//     case SET_AUTH:
-//       return { ...state, ...action.auth };
-//     default:
-//       return state;
-//   }
-// }
