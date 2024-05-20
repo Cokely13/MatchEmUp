@@ -720,14 +720,18 @@ h2 {
   font-size: 16px;
 }
 
+
 .auth-button-group {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;  /* Stack buttons vertically */
+  align-items: center;     /* Center-align the buttons */
+  gap: 10px;               /* Space between buttons */
 }
+
 
 .auth-button {
   background-color: #007bff;
+  width: 80%;
   color: #ffffff;
   border: none;
   padding: 10px 20px;
@@ -748,6 +752,33 @@ h2 {
 
 .auth-button-guest:hover {
   background-color: #5a6268;
+}
+
+.auth-button-login {
+  background-color: #007BFF; /* Blue for login */
+  color: white;
+}
+
+.auth-button-login:hover {
+  background-color: #0056b3; /* Darken on hover */
+}
+
+.auth-button-signup {
+  background-color: #28a745; /* Green for signup */
+  color: white;
+}
+
+.auth-button-signup:hover {
+  background-color: #1e7e34; /* Darken on hover */
+}
+
+.auth-button-guest {
+  background-color: grey; /* Orange for guest */
+  color: white;
+}
+
+.auth-button-guest:hover {
+  background-color: #e36c09; /* Darken on hover */
 }
 
 .auth-error {
