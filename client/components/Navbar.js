@@ -10,6 +10,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin, isGuest }) => (
       <div style={{ textAlign: 'center' }}>
         <Link to="/home" className="navbar-link">Home</Link>
         {!isGuest && <Link to="/leaderboard" className="navbar-link">Leaderboard</Link>}
+        {!isGuest && <Link to="/profile" className="navbar-link">Profile</Link>}
         {isAdmin && <Link to="/edit" className="navbar-link">Edit</Link>}
         <a href="#" onClick={handleClick} className="navbar-link">Logout</a>
       </div>
