@@ -32,7 +32,7 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username', 'currentStreak', 'recordStreak'],
+      attributes: ['id', 'username', 'currentStreak', 'recordStreak', 'image'],
       include: [{
         model: Win,
       }, {
@@ -69,19 +69,35 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     const user = await User.findByPk(req.params.id);
+//     res.send(await user.update(req.body));
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
+router.put('/:id', upload.single('image'), async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id);
-    res.send(await user.update(req.body));
+      const user = await User.findByPk(req.params.id);
+
+      // If there's an uploaded file, update the image path
+      if (req.file) {
+          req.body.image = req.file.location; // URL of the uploaded file in S3
+      }
+
+      const updatedUser = await user.update(req.body);
+      res.json(updatedUser);
   } catch (error) {
-    next(error);
+      next(error);
   }
 });
 
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'username', 'email', 'admin', 'currentStreak', 'recordStreak'],
+      attributes: ['id', 'username', 'email', 'admin', 'currentStreak', 'recordStreak', 'image'],
     });
     res.json(user);
   } catch (err) {

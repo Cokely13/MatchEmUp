@@ -46,6 +46,8 @@ const handleUpload = async () => {
   const formData = new FormData();
   formData.append('image', selectedFile);
 
+  console.log("SELECTED FILE", selectedFile)
+
   try {
     // Upload the photo to your server
     const uploadResponse = await fetch(`/api/users/${user.id}`, {
@@ -55,6 +57,8 @@ const handleUpload = async () => {
 
     if (uploadResponse.ok) {
       const responseData = await uploadResponse.json();
+
+      console.log("HEY", responseData)
       // Assuming the server response contains the URL of the uploaded image
       dispatch(updateSingleUser({ id, image: responseData.imageUrl }));
       alert('Photo uploaded and profile updated successfully');

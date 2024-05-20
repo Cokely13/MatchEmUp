@@ -15,10 +15,10 @@ const User = db.define('user', {
   password: {
     type: Sequelize.STRING,
   },
-  imageUrl: {
-    type: Sequelize.TEXT,
-    defaultValue: 'https://cquipsplus.ca/wp-content/themes/cera/assets/images/avatars/user-avatar.png',
-  },
+  // imageUrl: {
+  //   type: Sequelize.TEXT,
+  //   defaultValue: 'https://cquipsplus.ca/wp-content/themes/cera/assets/images/avatars/user-avatar.png',
+  // },
   admin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
