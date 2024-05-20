@@ -29,7 +29,7 @@ export const Home = props => {
 
   const navigateToSelection = () => {
     const paths = {
-      'Cinema': '/cinema',
+      'Movies': '/cinema',
       'QB': '/qb',
       'Music': '/music',
       'NBA': '/nba',
@@ -57,7 +57,7 @@ export const Home = props => {
         <div className="match-heading">What Do You Want to Match?</div>
         <select value={selection} onChange={handleDropdownChange} className="match-select">
           <option value="">Select...</option>
-          <option value="Cinema">Cinema</option>
+          <option value="Movies">Movies</option>
           <option value="QB">QB</option>
           <option value="Music">Music</option>
           <option value="NBA">NBA</option>
