@@ -4,7 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 const OneAwayModal = ({ show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} className="custom-modal">
-      <Modal.Header closeButton>
+      <Modal.Header >
         <Modal.Title>Wrong!</Modal.Title>
       </Modal.Header>
       <Modal.Body>But Only One Away!</Modal.Body>

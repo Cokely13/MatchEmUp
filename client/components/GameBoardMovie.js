@@ -288,8 +288,8 @@ const GameBoardMovie = () => {
         {showConfetti && <Confetti />}
       </div>
       <Modal show={showHowToPlayModal} onHide={handleClose} className="custom-modal">
-        <Modal.Header closeButton>
-          <Modal.Title>How To Play!!!</Modal.Title>
+        <Modal.Header>
+          <Modal.Title>How To Play</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Select 4 Movies from the same actor.

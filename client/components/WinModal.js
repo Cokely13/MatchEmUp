@@ -5,7 +5,7 @@ import Confetti from 'react-confetti'; // Import Confetti component
 const WinModal = ({ show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} centered className="custom-modal">
-      <Modal.Header closeButton>
+      <Modal.Header >
         <Modal.Title>Congratulations!</Modal.Title>
       </Modal.Header>
       <Modal.Body>You won the game!</Modal.Body>

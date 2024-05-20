@@ -193,7 +193,7 @@ button:hover {
   margin: 0 10px; /* Add margin between the buttons */
 }
 
-.custom-modal {
+/* .custom-modal {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 200px;
@@ -216,7 +216,7 @@ text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 @keyframes fadeIn {
   from {
@@ -763,4 +763,55 @@ h2 {
 
 .auth-input-group input {
   font-size: 16px;
+}
+
+.custom-modal .modal-content {
+  background-color: #f8f9fa; /* Light grey background */
+  border-radius: 8px; /* Rounded corners for the modal */
+  border: 1px solid #dee2e6; /* Light grey border */
+  /* align-items: center; */
+}
+
+
+
+.custom-modal .modal-header {
+  border-bottom: 1px solid #dee2e6; /* Light grey line under the header */
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white; /* White text color */
+  display: flex; /* Enables flexbox */
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+}
+
+.custom-modal .modal-title {
+  font-weight: bold; /* Bold font for modal title */
+}
+
+.custom-modal .modal-body {
+  padding: 20px; /* Spacious padding for the body */
+  color: #495057; /* Dark grey text for readability */
+  font-size: 1.1rem; /* Slightly larger font size */
+  display: flex; /* Enables flexbox */
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+  font-weight: bold;
+}
+
+.custom-modal .modal-footer {
+  border-top: 1px solid #dee2e6; /* Light grey line above the footer */
+  justify-content: center; /* Center align the buttons */
+  /* align-items: center; */
+}
+
+.custom-modal .btn-primary {
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* Soft shadow for primary button */
+}
+
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000; /* Ensure it is above other content */
 }

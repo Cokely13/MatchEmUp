@@ -4,7 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 const RecordModal = ({ show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} centered className="custom-modal">
-      <Modal.Header closeButton>
+      <Modal.Header >
       </Modal.Header>
       <Modal.Body>New Record!!!</Modal.Body>
       <Modal.Footer>

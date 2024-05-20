@@ -331,7 +331,7 @@ const GameBoardState = () => {
 </div>
       {/* How To Play Modal */}
       <Modal show={showHowToPlayModal} onHide={handleClose} className="custom-modal">
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>How To Play</Modal.Title>
         </Modal.Header>
         <Modal.Body>

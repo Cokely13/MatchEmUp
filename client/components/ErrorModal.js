@@ -4,7 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 const ErrorModal = ({ show, onHide }) => {
   return (
     <Modal show={show} onHide={onHide} className="custom-modal">
-      <Modal.Header closeButton>
+      <Modal.Header >
         <Modal.Title>Oops!</Modal.Title>
       </Modal.Header>
       <Modal.Body>Can Not Select More than 4 Names</Modal.Body>
