@@ -30,7 +30,18 @@ const User = db.define('user', {
   recordStreak: {
     type: Sequelize.INTEGER,
     defaultValue: 0
-  }
+  },
+  image : {
+    type: Sequelize.TEXT,
+    defaultValue: "/Generic.png"
+  },
+  email: {
+    type: Sequelize.STRING,
+   defaultValue: 'test@gmail.com',
+    validate: {
+      isEmail: true,
+    },
+  },
 })
 
 module.exports = User

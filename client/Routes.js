@@ -15,6 +15,7 @@ import Profile from './components/Profile';
 
 import Navbar from './components/Navbar';
 import Leaderboard from './components/Leaderboard';
+import Password from './components/Password';
 
 class Routes extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/edit" component={Edit} />
             <Route path="/profile" component={Profile} />
+            <Route path="/password" component={Password} />
             <Route path="/cinema" component={GameBoardMovie} />
             <Route path="/qb" component={GameBoardQb} />
             <Route path="/music" component={GameBoardMusic} />
