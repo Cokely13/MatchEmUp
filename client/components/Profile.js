@@ -24,8 +24,6 @@ function Profile() {
   }, [dispatch,])
 
 
-console.log("user", user)
-
 const imageUrl = user.image
 
 const handleFileChange = (event) => {
@@ -57,8 +55,6 @@ const handleUpload = async () => {
 
     if (uploadResponse.ok) {
       const responseData = await uploadResponse.json();
-
-      console.log("HEY", responseData)
       // Assuming the server response contains the URL of the uploaded image
       dispatch(updateSingleUser({ id, image: responseData.imageUrl }));
       alert('Photo uploaded and profile updated successfully');
@@ -75,6 +71,33 @@ const handleUpload = async () => {
 const handlePassword = () => {
   history.push('/password');
 }
+
+const countCategory = (records, category) => records.reduce((acc, record) => (category === 'All' || record.category === category) ? acc + 1 : acc, 0);
+
+  const calculateWinPercentage = (wins, losses) => {
+    const totalGames = wins + losses;
+    return totalGames > 0 ? ((wins / totalGames) * 100).toFixed(2) : "0.00";
+  };
+
+  let movieWins = countCategory(user.wins, 'Movies');
+  let showWins = countCategory(user.wins, 'Shows');
+  let movieLosses = countCategory(user.losses, 'Movies');
+  let showLosses = countCategory(user.losses, 'Shows');
+  let moviePercentage = calculateWinPercentage(movieWins, movieLosses);
+  let showPercentage = calculateWinPercentage(showWins, showLosses);
+  let stateWins = countCategory(user.wins, 'State');
+  let musicWins = countCategory(user.wins, 'Music');
+  let stateLosses = countCategory(user.losses, 'State');
+  let musicLosses = countCategory(user.losses, 'Music');
+  let musicPercentage = calculateWinPercentage(musicWins, musicLosses);
+  let statePercentage = calculateWinPercentage(stateWins, stateLosses);
+  let qbWins = countCategory(user.wins, 'Qb');
+  let nbaWins = countCategory(user.wins, 'Nba');
+  let qbLosses = countCategory(user.losses, 'Qb');
+  let nbaLosses = countCategory(user.losses, 'Nba');
+  let nbaPercentage = calculateWinPercentage(nbaWins, nbaLosses);
+  let qbPercentage = calculateWinPercentage(qbWins, qbLosses);
+
 
 
   return (
@@ -98,9 +121,27 @@ const handlePassword = () => {
   )}
     <div style={{fontSize:"25px"}} >
     <div><b> {user.email ? user.email : 'No Email'} </b></div>
-
+    <div> Total Plays: {user.wins ? user.wins.length + user.losses.length : 0}</div>
     <div> Wins: {user.wins ? user.wins.length : 0}</div>
     <div> Losses: {user.wins ? user.losses.length : 0}</div>
+    <div> MovieWins: {movieWins}</div>
+    <div> ShowWins: {showWins}</div>
+    <div> MovieLosses: {movieLosses}</div>
+    <div> ShowLosses: {showLosses}</div>
+    <div> Win Percentage Movies: {moviePercentage}</div>
+    <div> Win Percentage Shows: {showPercentage}</div>
+    <div> StateWins: {stateWins}</div>
+    <div> QbWins: {qbWins}</div>
+    <div> StateLosses: {stateLosses}</div>
+    <div> QbLosses: {qbLosses}</div>
+    <div> Win Percentage State: {statePercentage}</div>
+    <div> Win Percentage Qb: {qbPercentage}</div>
+    <div> NbaWins: {nbaWins}</div>
+    <div> MusicWins: {musicWins}</div>
+    <div> NbaLosses: {nbaLosses}</div>
+    <div> MusicLosses: {musicLosses}</div>
+    <div> Win Percentage Nba: {nbaPercentage}</div>
+    <div> Win Percentage Music: {musicPercentage}</div>
     </div>
      <button className="btn btn-primary" onClick={() => handlePassword()}>Change Password</button>
      {newPhoto ? <div style={{ margin: '20px 0' }} >
