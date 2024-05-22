@@ -23,9 +23,9 @@ const Leaderboard = () => {
     return totalGames > 0 ? ((wins / totalGames) * 100).toFixed(2) : "0.00";
   };
 
-  const sortedRecord = [...users].sort((a,b) => {
-    b.recordStreak - a.recordStreak;
-  })
+
+
+  const sortedRecord = [...users].sort((a, b) => b.recordStreak - a.recordStreak);
 
   const sortedUsers = [...users].sort((a, b) => {
     let aWins = countCategory(a.wins, selectedCategory);
@@ -81,7 +81,9 @@ const Leaderboard = () => {
         <tbody>
           {sortedUsers.map(user => (
             <tr key={user.id}>
-              <td >{user.username}</td>
+              <td >{user.image && (
+        <div className="user-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
+      )}{user.username}</td>
               <td >{countCategory(user.wins, selectedCategory)}</td>
               <td >{countCategory(user.losses, selectedCategory)}</td>
               <td >{calculateWinPercentage(countCategory(user.wins, selectedCategory), countCategory(user.losses, selectedCategory))}%</td>
@@ -100,7 +102,9 @@ const Leaderboard = () => {
         <tbody>
           {sortedRecord.map(user => (
             <tr key={user.id}>
-              <td >{user.username}</td>
+              <td >{user.image && (
+        <div className="user-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
+      )}{user.username}</td>
               <td >{user.recordStreak}</td>
               <td >{user.currentStreak}</td>
             </tr>

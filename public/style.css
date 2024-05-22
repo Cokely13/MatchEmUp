@@ -480,6 +480,8 @@ text-align: center;
 }
 
 .leaderboard {
+  flex-direction: column;  /* Stack buttons vertically */
+  align-items: center;     /* Center-align the buttons */
   text-align: center;
 }
 
@@ -895,12 +897,15 @@ h2 {
   border-radius: 10px;
   background-color: white; /* White background for the table */
   text-align: center;
+
 }
 
 .table th, .table td {
   border: 1px solid black; /* Sharp black borders for cells */
   padding: 8px; /* Padding inside cells */
   text-align: center; /* Align text to the left; adjust as needed */
+  vertical-align: middle;
+  font-weight: bold;
 }
 
 .table thead th {
