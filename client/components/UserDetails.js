@@ -50,7 +50,7 @@ function UserDetails() {
 
   return (
     <div className="profile-container">
-      <h1 className="profile-header">{user.username} Profile</h1>
+      <h1 className="profile-header">{user.username}'s Profile</h1>
       {user.image && (
         <div className="user-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
       )}

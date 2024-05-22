@@ -193,20 +193,7 @@ button:hover {
   margin: 0 10px; /* Add margin between the buttons */
 }
 
-/* .custom-modal {
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 200px;
-}
 
-.custom-modal .modal-header {
-  /* Custom header styles */
-  background-color: #f8f9fa;
-  /* display: flex; */
-  margin-left: auto;
-  margin-right: auto;
-  /* justify-content: center; */
-}
 
 .custom-modal .modal-body {
 text-align: center;
@@ -514,7 +501,6 @@ text-align: center;
   padding: 20px;
   max-width: 800px;
   margin: auto;
-  border-radius: 5px;
   border: 2px solid Black;
 }
 
@@ -534,14 +520,13 @@ text-align: center;
 .leaderboard .table {
   width: 100%;
   border-collapse: collapse;
-  border-radius: 5px;
-  border: 2px solid Black;
+  /* border-radius: 5px; */
+  border: 10px solid Black;
   background-color: white;
 }
 
 .leaderboard th, .leaderboard td {
   padding: 10px;
-  border-radius: 10px;
   border: 1px solid Black;
 }
 
@@ -874,7 +859,8 @@ h2 {
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  border: 3px solid #007bff;
+  border: 3px solid black; /* Cool color border for word cards */
+  border-radius: 10px;
   margin-bottom: 20px;
 }
 
@@ -897,20 +883,39 @@ h2 {
   max-height: 100%; /* Ensures the image is no taller than the container */
 }
 
-.profile-info {
-  font-size: 1.25rem;
-  margin-bottom: 20px;
-}
+
+
+
+
 
 .table {
-  margin-top: 20px;
-  max-width: 600px;
   width: 100%;
-  border-collapse: collapse;
-  border-radius: 5px;
-  border: 2px solid Black;
-  background-color: white;
+  border-collapse: collapse; /* Ensures borders between cells are merged */
+  border: 10px solid black;
+  border-radius: 10px;
+  background-color: white; /* White background for the table */
+  text-align: center;
 }
+
+.table th, .table td {
+  border: 1px solid black; /* Sharp black borders for cells */
+  padding: 8px; /* Padding inside cells */
+  text-align: center; /* Align text to the left; adjust as needed */
+}
+
+.table thead th {
+  background-color: #f0f0f0; /* Light gray background for header */
+  color: #333; /* Darker text color for better contrast */
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #fafafa; /* Slight gray background for even rows for better readability */
+}
+
+
+
+
+
 
 .btn-primary, .btn-success, .btn-secondary {
   margin: 10px;
@@ -941,7 +946,8 @@ input[type="file"] {
 .profile-info {
   background-color: #ffffff;
   padding: 20px;
-  border-radius: 8px;
+  border: 3px solid grey; /* Cool color border for word cards */
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 20px;
   width: calc(100% - 40px); /* Adjust width as per the layout */
