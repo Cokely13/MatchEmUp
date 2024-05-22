@@ -846,3 +846,134 @@ h2 {
   height: 100vh;
   z-index: 1000; /* Ensure it is above other content */
 }
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  min-height: 100vh;
+  width: 1000px; /* Increased width */
+  max-width: 1200px;
+  margin: auto; /* Centering the container on the page */
+  border: 3px solid black; /* Adding a visible border */
+}
+
+
+.profile-header {
+  margin-bottom: 20px;
+  font-size: 1.75rem;
+  color: #333;
+}
+
+.user-image-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid #007bff;
+  margin-bottom: 20px;
+}
+
+.preview-image-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden; /* Ensures nothing spills outside the circular boundary */
+  border: 3px solid #007bff;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-image-container img {
+  overflow: hidden; /* Ensures nothing spills outside the circular boundary */
+  display: block; /* Removes extra space below the image */
+  max-width: 100%; /* Ensures the image is no wider than the container */
+  max-height: 100%; /* Ensures the image is no taller than the container */
+}
+
+.profile-info {
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+}
+
+.table {
+  margin-top: 20px;
+  max-width: 600px;
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  border: 2px solid Black;
+  background-color: white;
+}
+
+.btn-primary, .btn-success, .btn-secondary {
+  margin: 10px;
+  font-weight: bold;
+}
+
+input[type="file"] {
+  margin-top: 15px;
+}
+
+.change-photo-button-container img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+.details-toggle {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  width: calc(100% - 40px); /* Adjust width as per the layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-info div {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.profile-info div b {
+  font-weight: 600;
+  color: #0056b3; /* A blue that's often associated with links or important items */
+  margin-right: 5px;
+}
+
+.details-toggle {
+  padding: 8px 16px;
+  background-color: #007bff; /* Bootstrap primary blue */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  align-self: center; /* Center the button within the flex container */
+  font-size: 14px;
+}
+
+.details-toggle:hover {
+  background-color: #0056b3; /* A slightly darker blue on hover */
+}

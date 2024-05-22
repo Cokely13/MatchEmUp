@@ -1,63 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchSingleUser, updateSingleUser } from '../store/singleUserStore';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
-function Profile() {
+
+function UserDetails() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { id } = useSelector(state => state.auth);
+  const { userId } = useParams();
   const user = useSelector(state => state.singleUser);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
-  const [newPhoto, setNewPhoto] = useState(null);
   const [details, setDetails] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchSingleUser(id));
-  }, [dispatch, id]);
+    dispatch(fetchSingleUser(userId));
+  }, [dispatch, userId]);
 
-  const handleFileChange = event => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      setPreviewUrl(URL.createObjectURL(file));
-    }
-  };
-
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      alert('Please select a file to upload');
-      return;
-    }
-    const formData = new FormData();
-    formData.append('image', selectedFile);
-    try {
-      const response = await fetch(`/api/users/${user.id}`, {
-        method: 'PUT',
-        body: formData,
-      });
-      if (response.ok) {
-        const responseData = await response.json();
-        dispatch(updateSingleUser({ id, image: responseData.imageUrl }));
-        alert('Photo uploaded and profile updated successfully');
-        setNewPhoto(false);
-      } else {
-        alert('Upload failed');
-      }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      alert('Upload failed');
-    }
-  };
 
   const handleDetailsToggle = () => {
     setDetails(!details);
   };
 
-  const handlePasswordChange = () => {
-    history.push('/password');
-  };
+
 
   const countCategory = (records, category) => records.reduce((acc, record) => (category === 'All' || record.category === category) ? acc + 1 : acc, 0);
 
@@ -87,7 +50,7 @@ function Profile() {
 
   return (
     <div className="profile-container">
-      <h1 className="profile-header">My Profile</h1>
+      <h1 className="profile-header">{user.username} Profile</h1>
       {user.image && (
         <div className="user-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
       )}
@@ -148,22 +111,8 @@ function Profile() {
                </tr>
          </tbody>
        </table> : <div></div>}
-       <button className="btn btn-primary" onClick={handlePasswordChange}>Change Password</button>
-      {newPhoto ? (
-        <div>
-          <input type="file" onChange={handleFileChange} />
-          <button className="btn btn-success" onClick={handleUpload}>Upload Photo</button>
-          {previewUrl && (
-            <div className="preview-image-container">
-              <img src={previewUrl} alt="Preview" />
-            </div>
-          )}
-        </div>
-      ) : (
-        <button className="btn btn-secondary" onClick={() => setNewPhoto(true)}>Change Photo</button>
-      )}
     </div>
   );
 }
 
-export default Profile;
+export default UserDetails;
