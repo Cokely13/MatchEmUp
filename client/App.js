@@ -15,7 +15,7 @@ const App = ({ isLoggedIn, isGuest, userId, recordStreak, currentStreak}) => {
   return (
     <div className="homepage">
       <div className="title-container">
-        <h1 className="title">MatchEmUp</h1>
+        <h1 className="title">FourCast</h1>
       </div>
       {(isLoggedIn || isGuest) && <Navbar />}
       <Routes />
