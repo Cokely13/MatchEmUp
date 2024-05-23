@@ -82,8 +82,9 @@ const Leaderboard = () => {
           {sortedUsers.map(user => (
             <tr key={user.id}>
               <td >{user.image && (
-        <div className="user-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
-      )}{user.username}</td>
+         <div style={{marginBottom: "20px"}}>
+        <div className="leaderboard-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
+      <Link to={`/users/${user.id}`}  >{user.username}</Link></div>)}</td>
               <td >{countCategory(user.wins, selectedCategory)}</td>
               <td >{countCategory(user.losses, selectedCategory)}</td>
               <td >{calculateWinPercentage(countCategory(user.wins, selectedCategory), countCategory(user.losses, selectedCategory))}%</td>
@@ -103,8 +104,8 @@ const Leaderboard = () => {
           {sortedRecord.map(user => (
             <tr key={user.id}>
               <td >{user.image && (
-        <div className="user-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
-      )}{user.username}</td>
+        <div className="leaderboard-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
+      )}<Link to={`/users/${user.id}`} >{user.username}</Link></td>
               <td >{user.recordStreak}</td>
               <td >{user.currentStreak}</td>
             </tr>

@@ -479,11 +479,6 @@ text-align: center;
   cursor: pointer;
 }
 
-.leaderboard {
-  flex-direction: column;  /* Stack buttons vertically */
-  align-items: center;     /* Center-align the buttons */
-  text-align: center;
-}
 
 .grid {
   display: grid;
@@ -499,6 +494,9 @@ text-align: center;
 }
 
 .leaderboard {
+  flex-direction: column;  /* Stack buttons vertically */
+  align-items: center;     /* Center-align the buttons */
+  text-align: center;
   background-color: lightgrey;
   padding: 20px;
   max-width: 800px;
@@ -563,6 +561,7 @@ text-align: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   text-align: right;
   z-index: 1000;  /* Ensures it stays on top of other content */
+  border: 2px solid Black;
 }
 
 @media (max-width: 600px) {
@@ -865,6 +864,18 @@ h2 {
   border-radius: 10px;
   margin-bottom: 20px;
 }
+
+.leaderboard-image-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid black; /* Cool color border for word cards */
+  /* border-radius: 10px; */
+  margin-bottom: 20px;
+}
+
 
 .preview-image-container {
   width: 200px;
