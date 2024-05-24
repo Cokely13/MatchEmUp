@@ -139,18 +139,50 @@ const GameBoardMovie = () => {
     setShowWrongModal(true);
   };
 
+  // const shuffleActorsAndMovies = () => {
+  //   const shuffledActors = [...allActors].sort(() => 0.5 - Math.random());
+  //   const selectedActors = shuffledActors.slice(0, 4);
+  //   const selectedMovies = selectedActors.flatMap(actor =>
+  //     actor.movies.sort(() => 0.5 - Math.random()).slice(0, 4)
+  //   ).sort(() => 0.5 - Math.random());
+
+  //   setGameWords(selectedMovies.map(movie => ({
+  //     name: movie.name,
+  //     imagePath: movie.imagePath
+  //   })));
+  // };
+
   const shuffleActorsAndMovies = () => {
     const shuffledActors = [...allActors].sort(() => 0.5 - Math.random());
     const selectedActors = shuffledActors.slice(0, 4);
-    const selectedMovies = selectedActors.flatMap(actor =>
-      actor.movies.sort(() => 0.5 - Math.random()).slice(0, 4)
-    ).sort(() => 0.5 - Math.random());
+    let selectedMovies = [];
+    let uniqueMovies = new Set();
 
-    setGameWords(selectedMovies.map(movie => ({
-      name: movie.name,
-      imagePath: movie.imagePath
-    })));
-  };
+    for (const actor of selectedActors) {
+        let actorMovies = [];
+        const movies = actor.movies.sort(() => 0.5 - Math.random());
+        for (const movie of movies) {
+            if (!uniqueMovies.has(movie.name) && actorMovies.length < 4) {
+                uniqueMovies.add(movie.name);
+                actorMovies.push({
+                    name: movie.name,
+                    imagePath: movie.imagePath
+                });
+            }
+        }
+        if (actorMovies.length < 4) {
+            console.error(`Not enough unique movies for actor: ${actor.name}`);
+            // Optionally handle the case where an actor doesn't have 4 unique movies
+        }
+        selectedMovies = [...selectedMovies, ...actorMovies];
+    }
+
+    // Shuffle the final selection of movies to mix them on the board
+    selectedMovies.sort(() => 0.5 - Math.random());
+
+    setGameWords(selectedMovies);
+};
+
 
   useEffect(() => {
     if (allActors.length > 0) {

@@ -36,27 +36,58 @@ async function fetchTopMoviesForActor(personId) {
     return movies.sort((a, b) => b.popularity - a.popularity).slice(0, 10);
 }
 
+// async function updateActorsAndMovies() {
+//     const actors = await fetchPopularActors();
+
+//     for (const actorData of actors) {
+//         const [actor, created] = await Actor.findOrCreate({
+//             where: { name: actorData.name },
+//             defaults: {
+//                 name: actorData.name,
+//                 imagePath: `https://image.tmdb.org/t/p/w500${actorData.profile_path}`
+//             }
+//         });
+
+//         if (created) {
+//             const movies = await fetchTopMoviesForActor(actorData.id);
+//             for (const movieData of movies) {
+//                 await Movie.create({
+//                     name: movieData.title,
+//                     imagePath: `https://image.tmdb.org/t/p/w500${movieData.poster_path}`,
+//                     ActorId: actor.id  // Ensuring that Movie is linked to Actor
+//                 });
+//             }
+//         }
+//     }
+// }
+
 async function updateActorsAndMovies() {
     const actors = await fetchPopularActors();
 
     for (const actorData of actors) {
-        const [actor, created] = await Actor.findOrCreate({
-            where: { name: actorData.name },
-            defaults: {
-                name: actorData.name,
-                imagePath: `https://image.tmdb.org/t/p/w500${actorData.profile_path}`
-            }
-        });
+        const movies = await fetchTopMoviesForActor(actorData.id);
 
-        if (created) {
-            const movies = await fetchTopMoviesForActor(actorData.id);
-            for (const movieData of movies) {
-                await Movie.create({
-                    name: movieData.title,
-                    imagePath: `https://image.tmdb.org/t/p/w500${movieData.poster_path}`,
-                    ActorId: actor.id  // Ensuring that Movie is linked to Actor
-                });
+        // Check if there are at least 4 movies for the actor
+        if (movies.length >= 4) {
+            const [actor, created] = await Actor.findOrCreate({
+                where: { name: actorData.name },
+                defaults: {
+                    name: actorData.name,
+                    imagePath: `https://image.tmdb.org/t/p/w500${actorData.profile_path}`
+                }
+            });
+
+            if (created) {
+                for (const movieData of movies.slice(0, 10)) { // Add up to 10 top movies
+                    await Movie.create({
+                        name: movieData.title,
+                        imagePath: `https://image.tmdb.org/t/p/w500${movieData.poster_path}`,
+                        ActorId: actor.id  // Ensuring that Movie is linked to Actor
+                    });
+                }
             }
+        } else {
+            console.log(`Skipping actor ${actorData.name} as they do not have at least 4 movies.`);
         }
     }
 }
