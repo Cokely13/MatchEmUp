@@ -281,10 +281,32 @@ async function fetchTopAlbums(artistName) {
   }
 }
 
+async function updateArtistImages() {
+  const artistImages = {
+    'Taylor Swift': '/Taylor.jpg',
+    'The Weeknd': '/Weeknd.jpg',
+    'Kanye West': '/Kanye.jpg',
+    'Drake': '/Drake.jpg',
+    'Lana Del Rey': '/Lana.jpg',
+    'Kendrick Lamar': '/Kendrick.jpg',
+    'Ariana Grande': '/Ariana.jpg',
+    'Tyler, the Creator': '/Tyler.jpg',
+    'Beyoncé': '/Beyonce.jpg',
+    'Rihanna': '/Rihanna.jpg',
+    'Arctic Monkeys': '/artic.jpg',
+  };
+
+  for (const artistName in artistImages) {
+    const imagePath = artistImages[artistName];
+    await Artist.update({ imagePath: imagePath }, { where: { name: artistName } });
+  }
+}
+
 async function musicseed() {
   console.log('Seeding music data...');
   try {
     await fetchAndCreateMusicData();
+    await updateArtistImages();
     console.log('Music Seeded successfully');
   } catch (err) {
     console.error('Error seeding music data:', err);
