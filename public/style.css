@@ -421,46 +421,75 @@ text-align: center;
 } */
 
 .home {
-  border: 2px solid #CCC;
+  border: 10px solid grey;
   background-color: white;
   display: flex;
   justify-content: space-around; /* Distributes space between and around content items */
   align-items: flex-start; /* Aligns items to be flush with the start */
   padding: 20px; /* Adds space inside the home container */
+  margin-bottom: 25px;
 }
 
 
+
+/* .photo-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15%;
+}
+
+.photo-column.left {
+  margin-right: 15%;
+}
+
+.photo-column.right {
+  margin-left: 15%;
+} */
+
+.photo-column img {
+  border: 10px solid grey;
+  object-fit: cover; /* Keeps aspect ratio intact while filling the area */
+  margin-bottom: 15%; /* Space between images */
+  width: 100%;
+  object-fit: cover;
+}
+
+
+.photo-column.left img, .photo-column.right img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  display: block; /* Ensures that the image does not inline any extra space */
+}
 
 .photo-column {
   display: flex;
   flex-direction: column;
-  gap: 15%; /* 15% gap between photos */
+  align-items: center; /* Centers the images in their column */
+  justify-content: start;
 }
 
-.photo-column.left {
-  margin-right: 15%; /* 15% margin between the left column and center content */
-}
-
-.photo-column.right {
-  margin-left: 15%; /* 15% margin between the right column and center content */
-}
-
-.photo-column img {
-  border: 10px solid grey;
-  width: 200px;  /* Set a fixed width for all images */
-  height: 200px; /* Set a fixed height for all images */
-  object-fit: cover; /* Ensures the images cover the area without distorting aspect ratio */
-  margin-bottom: 15%; /* Maintains a 15% margin between the images */
-  width: 100%; /* Makes images expand to fill their container */
-  object-fit: cover; /* Ensures the images are nicely cropped to fit the container without stretching */
+.photo-column.left, .photo-column.right {
+  flex: 1;  /* Ensures both columns take up equal space */
+  margin: 0 2%; /* Adds slight spacing between the columns and the content */
 }
 
 .content {
-  flex-grow: 1; /* Allows the central content to take up the remaining space */
+  flex-grow: 1; /* Gives more space to the middle content area */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center aligns the children */
+  align-items: center;
+  padding: 20px;
 }
+
+
+
+/* .content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
 
 .match-form {
   display: flex;

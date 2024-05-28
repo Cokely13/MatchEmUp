@@ -81,9 +81,9 @@ export const Home = props => {
 return (
   <div className="home">
       <div className="photo-column left">
-      <Link to={`/music`}> <img src="music.jpg" alt="Description1" /></Link>
-      <Link to={`/show`}>   <img src="tv.jpg" alt="Description2" /></Link>
-      <Link to={`/qb`}>   <img src="field.jpg" alt="Description3" /></Link>
+      <Link to={`/music`}> <img src="records.jpg" alt="Description1" /></Link>
+      <Link to={`/show`}>   <img src="tvShow.jpg" alt="Description2" /></Link>
+      <Link to={`/qb`}>   <img src="nflimage.jpg" alt="Description3" /></Link>
       </div>
 
       <div className="content">
@@ -93,11 +93,11 @@ return (
               <select value={selection} onChange={handleDropdownChange} className="match-select">
                   <option value="">Select...</option>
                   <option value="Movies">Movies</option>
-                  <option value="QB">QB</option>
+                  <option value="QB">NFL</option>
                   <option value="Music">Music</option>
                   <option value="NBA">NBA</option>
-                  <option value="STATE">STATE</option>
-                  <option value="TV">TV</option>
+                  <option value="STATE">States</option>
+                  <option value="TV">Television</option>
                   <option value="Random">Random</option>
               </select>
               <button type="submit" className="match-button">Go</button>
@@ -111,9 +111,9 @@ return (
       </div>
 
       <div className="photo-column right">
-      <Link to={`/nba`}>   <img src="court.jpg" alt="Description4" /></Link>
-      <Link to={`/cinema`}>     <img src="imax.jpg" alt="Description5" /></Link>
-      <Link to={`/state`}>    <img src="usa.jpg" alt="Description6" /></Link>
+      <Link to={`/nba`}>   <img src="nbaimage.jpg" alt="Description4" /></Link>
+      <Link to={`/cinema`}>     <img src="movies.jpg" alt="Description5" /></Link>
+      <Link to={`/state`}>    <img src="statemap.jpg" alt="Description6" /></Link>
       </div>
   </div>
 );
