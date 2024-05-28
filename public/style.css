@@ -239,7 +239,7 @@ text-align: center;
 
 .title-container {
   display: inline-block;
-  background-color: black;
+  /* background-color: black; */
   border-radius: 10px;
   padding: 10px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -280,7 +280,7 @@ text-align: center;
 
 
 
-.title {
+/* .title {
   font-size: 3rem;
   color: #fff;
   text-transform: uppercase;
@@ -288,6 +288,25 @@ text-align: center;
   font-weight: bold;
   font-family: Arial, sans-serif;
   margin: 0;
+} */
+
+
+.title {
+  font-size: 4rem;  /* Larger font size for prominence */
+  /* color: #1e90ff;   */
+  color: #00bfff;
+  text-transform: uppercase;
+  letter-spacing: 3px;  /* Increased spacing for a more airy, premium look */
+  font-weight: 900;  /* Extra bold font weight */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Modern, clean font family */
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);  /* Subtle text shadow for depth */
+  display: flex;
+  justify-content: center;  /* Centers title horizontally */
+  align-items: center;
+  height: 100px;  /* Gives more height to the title area */
+  /* background-color: #282c34;   */
+  border-bottom: 5px solid #00bfff;  /* Accent border */
 }
 
 @media (max-width: 768px) {
@@ -410,19 +429,12 @@ text-align: center;
   text-align: center;
 }
 
-/* .home {
-  border: 2px solid #CCC;
-  background-color: lightblue;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-} */
 
 .home {
-  border: 10px solid grey;
-  background-color: white;
+  /* border: 10px solid grey;
+  background-color: white; */
+  border: 10px solid #00bfff;  /* Navy Blue border for contrast */
+  background-color: #e6f7ff;
   display: flex;
   justify-content: space-around; /* Distributes space between and around content items */
   align-items: flex-start; /* Aligns items to be flush with the start */
@@ -447,7 +459,7 @@ text-align: center;
 } */
 
 .photo-column img {
-  border: 10px solid grey;
+  border: 10px solid #00bfff;
   object-fit: cover; /* Keeps aspect ratio intact while filling the area */
   margin-bottom: 15%; /* Space between images */
   width: 100%;
@@ -482,6 +494,11 @@ text-align: center;
   padding: 20px;
 }
 
+.content h1 {
+  color: #000080;  /* Deep Sky Blue for the main "Welcome" heading */
+  font-size: 2.5em; /* Adjust size as needed */
+}
+
 
 
 /* .content {
@@ -500,8 +517,8 @@ text-align: center;
 
 .match-heading {
   margin-bottom: 20px; /* Space above the form heading */
-  font-size: 24px; /* Larger text for heading */
-  color: #FFF; /* White text color */
+  font-size: 24px;
+    color: #36454F; /* Charcoal Gray for the subheading */
 }
 
 .match-select, .match-button {
