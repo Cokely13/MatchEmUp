@@ -50,32 +50,73 @@ export const Home = props => {
   //   history.push('/home'); // Redirect guests to the homepage
   // };
 
-  return (
-    <div className="homepage">
-      <h1>Welcome {username || 'Guest'}!</h1>
-      <form onSubmit={handleSubmit} className="match-form">
-        <div className="match-heading">What Do You Want to Match?</div>
-        <select value={selection} onChange={handleDropdownChange} className="match-select">
-          <option value="">Select...</option>
-          <option value="Movies">Movies</option>
-          <option value="QB">QB</option>
-          <option value="Music">Music</option>
-          <option value="NBA">NBA</option>
-          <option value="STATE">STATE</option>
-          <option value="TV">TV</option>
-          <option value="Random">Random</option>
-        </select>
-        <button type="submit" className="match-button">Go</button>
-      </form>
-      {(username) && (
-        <div className='streak-display'>
-          <div>Current Streak: {user.currentStreak}</div>
-          <div>Record Streak: {user.recordStreak}</div>
-        </div>
-      )}
-      {/* <button onClick={handleGuestEntry} className="guest-entry-button">Enter As Guest</button> */}
-    </div>
-  );
+//   return (
+//     <div className="home">
+//       <h1>Welcome {username || 'Guest'}!</h1>
+//       <form onSubmit={handleSubmit} className="match-form">
+//         <div className="match-heading">What Do You Want to Match?</div>
+//         <select value={selection} onChange={handleDropdownChange} className="match-select">
+//           <option value="">Select...</option>
+//           <option value="Movies">Movies</option>
+//           <option value="QB">QB</option>
+//           <option value="Music">Music</option>
+//           <option value="NBA">NBA</option>
+//           <option value="STATE">STATE</option>
+//           <option value="TV">TV</option>
+//           <option value="Random">Random</option>
+//         </select>
+//         <button type="submit" className="match-button">Go</button>
+//       </form>
+//       {(username) && (
+//         <div className='streak-display'>
+//           <div>Current Streak: {user.currentStreak}</div>
+//           <div>Record Streak: {user.recordStreak}</div>
+//         </div>
+//       )}
+//       {/* <button onClick={handleGuestEntry} className="guest-entry-button">Enter As Guest</button> */}
+//     </div>
+//   );
+// }
+
+return (
+  <div className="home">
+      <div className="photo-column left">
+      <Link to={`/music`}> <img src="music.jpg" alt="Description1" /></Link>
+      <Link to={`/show`}>   <img src="tv.jpg" alt="Description2" /></Link>
+      <Link to={`/qb`}>   <img src="field.jpg" alt="Description3" /></Link>
+      </div>
+
+      <div className="content">
+          <h1>Welcome {username || 'Guest'}!</h1>
+          <form onSubmit={handleSubmit} className="match-form">
+              <div className="match-heading">What Do You Want to Match?</div>
+              <select value={selection} onChange={handleDropdownChange} className="match-select">
+                  <option value="">Select...</option>
+                  <option value="Movies">Movies</option>
+                  <option value="QB">QB</option>
+                  <option value="Music">Music</option>
+                  <option value="NBA">NBA</option>
+                  <option value="STATE">STATE</option>
+                  <option value="TV">TV</option>
+                  <option value="Random">Random</option>
+              </select>
+              <button type="submit" className="match-button">Go</button>
+          </form>
+          {username && (
+              <div className='streak-display'>
+                  <div>Current Streak: {user.currentStreak}</div>
+                  <div>Record Streak: {user.recordStreak}</div>
+              </div>
+          )}
+      </div>
+
+      <div className="photo-column right">
+      <Link to={`/nba`}>   <img src="court.jpg" alt="Description4" /></Link>
+      <Link to={`/cinema`}>     <img src="imax.jpg" alt="Description5" /></Link>
+      <Link to={`/state`}>    <img src="usa.jpg" alt="Description6" /></Link>
+      </div>
+  </div>
+);
 }
 
 /**
