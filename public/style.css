@@ -963,37 +963,7 @@ h2 {
   z-index: 1000; /* Ensure it is above other content */
 }
 
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 10px;
-  min-height: 100vh;
-  width: 1000px; /* Increased width */
-  max-width: 1200px;
-  margin: auto; /* Centering the container on the page */
-  border: 3px solid black; /* Adding a visible border */
-}
 
-
-.profile-header {
-  margin-bottom: 20px;
-  font-size: 1.75rem;
-  color: #333;
-}
-
-.user-image-container {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  border: 3px solid black; /* Cool color border for word cards */
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
 
 
 
@@ -1007,6 +977,94 @@ h2 {
   margin-bottom: 20px;
 }
 
+.profile-container {
+  background-color: #f8f9fa; /* Light grey background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-width: 800px;
+  margin: 20px auto;
+  border: 10px solid #00bfff; /* Consistent with the navbar and leaderboard */
+}
+
+.profile-header {
+  color: #000080; /* Navy blue for the header */
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-image-container {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin: auto;
+  border: 5px solid #00bfff; /* Deep Sky Blue to match other borders */
+  margin-bottom: 20px;
+}
+
+
+
+.details-toggle, .btn {
+  background: #007bff; /* Bootstrap primary blue */
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s;
+}
+
+.details-toggle:hover, .btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+
+  border-spacing: 0; /* Removes space between borders */
+  border: 2px solid #00bfff;
+  border-bottom: 5px solid #00bfff;
+}
+
+.table th, .table td {
+  padding: 10px;
+  border: 5px solid #00bfff; /* Consistent with the other tables */
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 5px solid #00bfff;
+}
+
+.table th:last-child, .table td:last-child {
+  border-right: 5px solid #00bfff; /* Ensures right border on the last column */
+}
+
+.table tr:last-child th, .table tr:last-child td {
+  border-bottom: 5px solid #00bfff; /* Ensures bottom border on the last row */
+}
+
+.table th {
+  background-color: #e6f7ff; /* Pale blue for header */
+  color: #000080; /* Navy blue text */
+}
+
+.preview-image-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
+
+
+
+
+
+
+
 
 
 .preview-image-container {
@@ -1014,11 +1072,13 @@ h2 {
   height: 200px;
   border-radius: 50%;
   overflow: hidden; /* Ensures nothing spills outside the circular boundary */
-  border: 3px solid #007bff;
+  border: 3px solid #00bfff;;
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .preview-image-container img {
@@ -1027,39 +1087,6 @@ h2 {
   max-width: 100%; /* Ensures the image is no wider than the container */
   max-height: 100%; /* Ensures the image is no taller than the container */
 }
-
-
-
-
-
-
-.table {
-  width: 100%;
-  border-collapse: collapse; /* Ensures borders between cells are merged */
-  border: 10px solid black;
-  border-radius: 10px;
-  background-color: white; /* White background for the table */
-  text-align: center;
-
-}
-
-.table th, .table td {
-  border: 1px solid black; /* Sharp black borders for cells */
-  padding: 8px; /* Padding inside cells */
-  text-align: center; /* Align text to the left; adjust as needed */
-  vertical-align: middle;
-  font-weight: bold;
-}
-
-.table thead th {
-  background-color: #f0f0f0; /* Light gray background for header */
-  color: #333; /* Darker text color for better contrast */
-}
-
-.table tbody tr:nth-child(even) {
-  background-color: #fafafa; /* Slight gray background for even rows for better readability */
-}
-
 
 
 
@@ -1091,17 +1118,19 @@ input[type="file"] {
   margin-bottom: 20px;
 }
 
+
+
 .profile-info {
-  background-color: #ffffff;
+  background-color: #ffffff;  /* Keeps the background white for clarity */
   padding: 20px;
-  border: 3px solid grey; /* Cool color border for word cards */
+  border: 3px solid #00bfff;  /* Deep Sky Blue for consistency with other elements */
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 20px;
-  width: calc(100% - 40px); /* Adjust width as per the layout */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+  margin: 20px auto;  /* Centered margin for better alignment */
+  width: calc(100% - 40px);  /* Adjust width to ensure it's responsive */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;  /* Center alignment for the content within */
 }
 
 .profile-info div {
