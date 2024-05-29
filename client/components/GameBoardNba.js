@@ -290,9 +290,9 @@ const GameBoardNba = () => {
         return (
           <div className="franchise-container">
             <div style={{ textAlign: 'center', margin: '20px' }}>
-              <Button variant="link" onClick={handleShow}>
-                <h3 style={{ color: 'white' }}>How To Play</h3>
-              </Button>
+  <button onClick={handleShow} className="how-to-play-button">
+                <h3 >How To Play</h3>
+              </button>
             </div>
             <div className="confetti-container">
               {showConfetti && <Confetti />}
@@ -397,21 +397,6 @@ const GameBoardNba = () => {
             ))}
           </div>
         ) : (
-          // <div>
-          //   <h2>Correct Answers:</h2>
-          //   <div className='correctAnswers'>
-          //     {Object.keys(lossWords).map((franchise, index) => (
-          //       <div key={index}>
-          //         <h3>{franchise}:</h3>
-          //         <ul>
-          //           {lossWords[franchise].map((player, idx) => (
-          //             <li key={idx}>{player}</li>
-          //           ))}
-          //         </ul>
-          //       </div>
-          //     ))}
-          //   </div>
-          // </div>
           <div className="correct-answers-container">
           <h2>Correct Answers:</h2>
           <div className="correct-answers">
@@ -431,12 +416,12 @@ const GameBoardNba = () => {
 
         <div className={`${submittedWords.length === 16 || mistakes === 5 ? "control-panel sticky-footer" : "control-panel sticky-footer"}`}>
           {submittedWords.length === 16 || mistakes === 5 ? (
+            <div className="control-panel">
             <div>
-              <div><Link to="/home" style={{ color: 'white' }}>Home</Link></div>
-              <div className="control-panel">
-                <button style={{ marginBottom: '20px' }} className="btn btn-primary" onClick={handlePlayAgain}>Play Again</button>
-              </div>
-            </div>
+<Link to="/home" className="link-button">Home</Link>
+</div>
+<button className="styled-button" onClick={handlePlayAgain}>Play Again</button>
+          </div>
           ) : (
             <div className="control-panel">
               <button className="btn btn-warning" onClick={handleShuffle}>Shuffle</button>

@@ -311,11 +311,16 @@ const GameBoardMovie = () => {
 
   return (
     <div className="app-container">
-      <div style={{ textAlign: 'center', margin: '20px' }}>
+      {/* <div style={{ textAlign: 'center', margin: '20px' }}>
         <Button variant="link" onClick={handleShow} style={{ color: 'white' }}>
           <h3>How To Play</h3>
         </Button>
-      </div>
+      </div> */}
+      <div style={{ textAlign: 'center', margin: '20px' }}>
+  <button onClick={handleShow} className="how-to-play-button">
+    <h3>How To Play</h3>
+  </button>
+</div>
       <div className="confetti-container">
         {showConfetti && <Confetti />}
       </div>
@@ -419,21 +424,6 @@ const GameBoardMovie = () => {
             ))}
           </div>
         ) : (
-          // <div>
-          //   <h2>Correct Answers:</h2>
-          //   <div className='correctAnswers'>
-          //     {Object.keys(lossWords).map((actor, index) => (
-          //       <div key={index}>
-          //         <h3>{actor}:</h3>
-          //         <ul>
-          //           {lossWords[actor].map((movie, idx) => (
-          //             <li key={idx}>{movie}</li>
-          //           ))}
-          //         </ul>
-          //       </div>
-          //     ))}
-          //   </div>
-          // </div>
           <div className="correct-answers-container">
           <h2>Correct Answers:</h2>
           <div className="correct-answers">
@@ -454,9 +444,12 @@ const GameBoardMovie = () => {
         <div className={`${submittedWords.length === 16 || mistakes === 5 ? "control-panel sticky-footer" : "control-panel sticky-footer"}`}>
           {submittedWords.length === 16 || mistakes === 5 ? (
             <div>
-              <div><Link to="/home" style={{ color: 'white' }}>Home</Link></div>
+
               <div className="control-panel">
-                <button style={{ marginBottom: '20px' }} className="btn btn-primary" onClick={handlePlayAgain}>Play Again</button>
+                <div>
+    <Link to="/home" className="link-button">Home</Link>
+</div>
+<button className="styled-button" onClick={handlePlayAgain}>Play Again</button>
               </div>
             </div>
           ) : (

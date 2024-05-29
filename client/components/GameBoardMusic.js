@@ -280,9 +280,9 @@ const GameBoardMusic = () => {
   return (
     <div className="music-container">
       <div style={{ textAlign: 'center', margin: '20px' }}>
-        <Button variant="link" onClick={handleShow}>
+      <button onClick={handleShow} className="how-to-play-button">
           <h3 style={{ color: 'white' }}>How To Play</h3>
-        </Button>
+        </button>
       </div>
       <div className="confetti-container">
         {showConfetti && <Confetti />}
@@ -387,21 +387,6 @@ const GameBoardMusic = () => {
             ))}
           </div>
         ) : (
-          // <div>
-          //   <h2>Correct Answers:</h2>
-          //   <div className='correctAnswers'>
-          //   {Object.keys(lossWords).map((artist, index) => (
-          //     <div key={index}>
-          //       <h3>{artist}:</h3>
-          //       <ul>
-          //         {lossWords[artist].map((album, idx) => (
-          //           <ul key={idx}>{album}</ul>
-          //         ))}
-          //       </ul>
-          //     </div>
-          //   ))}
-          // </div>
-          // </div>
           <div className="correct-answers-container">
           <h2>Correct Answers:</h2>
           <div className="correct-answers">
@@ -421,12 +406,12 @@ const GameBoardMusic = () => {
 
         <div className={`${submittedWords.length === 16 || mistakes === 5 ? "control-panel sticky-footer" : "control-panel sticky-footer"}`}>
           {submittedWords.length === 16 || mistakes === 5 ? (
-            <div>
-              <div><Link to="/home" style={{ color: 'white' }}>Home</Link></div>
-              <div className="control-panel">
-                <button style={{ marginBottom: '20px' }} className="btn btn-primary" onClick={handlePlayAgain}>Play Again</button>
-              </div>
-            </div>
+          <div className="control-panel">
+          <div>
+<Link to="/home" className="link-button">Home</Link>
+</div>
+<button className="styled-button" onClick={handlePlayAgain}>Play Again</button>
+        </div>
           ) : (
             <div className="control-panel">
               <button className="btn btn-warning" onClick={handleShuffle}>Shuffle</button>

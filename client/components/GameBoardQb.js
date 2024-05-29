@@ -312,9 +312,9 @@ const GameBoardQb = () => {
   return (
        <div className="qb-container">
     <div style={{ textAlign: 'center', margin: '20px' }}>
-        <Button variant="link" onClick={handleShow}>
-          <h3 style={{ color: 'black' }}>How To Play</h3>
-        </Button>
+    <button onClick={handleShow} className="how-to-play-button">
+          <h3 >How To Play</h3>
+        </button>
       </div>
       <div className="confetti-container">
   {showConfetti && <Confetti />}
@@ -431,8 +431,11 @@ const GameBoardQb = () => {
 
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>
     {submittedWords.length === 16 || mistakes == 5 ?  <div className="control-panel">
-          <button style={{marginBottom: '20px'}} className="btn btn-primary" onClick={handlePlayAgain}>Play Again</button>
-        </div> : <div className="control-panel">
+                <div>
+    <Link to="/home" className="link-button">Home</Link>
+</div>
+<button className="styled-button" onClick={handlePlayAgain}>Play Again</button>
+              </div>: <div className="control-panel">
         <button className="btn btn-warning" onClick={handleShuffle}>Shuffle</button>
         <button className="btn btn-info" onClick={handleDeselectAll}>Deselect all</button>
         <button className="btn btn-success" onClick={handleSubmit}>Submit</button>
