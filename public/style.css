@@ -104,8 +104,8 @@ form div {
   cursor: pointer;
   font-weight: bold;
   background-color: white;
-  border: 3px solid grey; /* Cool color border for word cards */
-  border-radius: 10px;
+  border: 3px solid #00bfff;
+    border-radius: 10px;
   padding: 20px; /* Increase padding for better visual appeal */
   margin: 10px; /* Increase margin for better spacing */
   text-align: center;;
@@ -116,11 +116,18 @@ form div {
   align-items: center;
 }
 
+.word-card:hover {
+  background-color: #e6f7ff; /* Lighter blue for a subtle highlight effect */
+  color: #333; /* Darker text color for better contrast */
+  border-color: darkgray; /* Darker blue for the border */
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.5); /* Intensify the shadow to make it pop more */
+}
+
 .word-card2 {
   cursor: pointer;
   font-weight: bold;
   background-color: lightgray;
-  border: 3px solid grey; /* Cool color border for word cards */
+  border: 3px solid #00bfff;
   border-radius: 10px;
   padding: 20px; /* Increase padding for better visual appeal */
   margin: 10px; /* Increase margin for better spacing */
@@ -551,12 +558,31 @@ text-align: center;
   font-size: 16px; /* Larger font size for readability */
 }
 
+.btn {
+  background-color: #FFA500; /* Orange */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.match-button:hover {
+  background-color: #FF8C00; /* Darker orange for hover */
+}
+
 .match-button {
   cursor: pointer; /* Cursor indicates button can be clicked */
-  background-color: #007BFF; /* A nice blue color for the button */
-  color: black; /* White text on the button */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
+  background-color: #FFA500;  background-color: #FFA500; /* Orange */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
 }
 
 .match-select {
@@ -1000,6 +1026,7 @@ h2 {
   background-color: #f8f9fa; /* Light grey background for a clean look */
   padding: 20px;
   border-radius: 10px;
+  border: 10px solid #00bfff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   max-width: 1200px; /* Ensures the container is not overly wide on larger screens */
   margin: 20px auto; /* Centers the container with margin on all sides */
@@ -1057,6 +1084,7 @@ h2 {
 .user-card-heading {
   margin: 10px 0;
 }
+
 
 
 
