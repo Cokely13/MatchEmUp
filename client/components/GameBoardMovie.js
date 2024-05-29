@@ -419,21 +419,36 @@ const GameBoardMovie = () => {
             ))}
           </div>
         ) : (
-          <div>
-            <h2>Correct Answers:</h2>
-            <div className='correctAnswers'>
-              {Object.keys(lossWords).map((actor, index) => (
-                <div key={index}>
-                  <h3>{actor}:</h3>
-                  <ul>
-                    {lossWords[actor].map((movie, idx) => (
-                      <li key={idx}>{movie}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+          // <div>
+          //   <h2>Correct Answers:</h2>
+          //   <div className='correctAnswers'>
+          //     {Object.keys(lossWords).map((actor, index) => (
+          //       <div key={index}>
+          //         <h3>{actor}:</h3>
+          //         <ul>
+          //           {lossWords[actor].map((movie, idx) => (
+          //             <li key={idx}>{movie}</li>
+          //           ))}
+          //         </ul>
+          //       </div>
+          //     ))}
+          //   </div>
+          // </div>
+          <div className="correct-answers-container">
+          <h2>Correct Answers:</h2>
+          <div className="correct-answers">
+            {Object.keys(lossWords).map((actor, index) => (
+              <div key={index} className="answer-block">
+                <h3>{actor}:</h3>
+                <ul>
+                  {lossWords[actor].map((movie, idx) => (
+                    <li key={idx}>{movie}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+        </div>
         )}
 
         <div className={`${submittedWords.length === 16 || mistakes === 5 ? "control-panel sticky-footer" : "control-panel sticky-footer"}`}>

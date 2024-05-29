@@ -412,21 +412,21 @@ const GameBoardQb = () => {
       ))}
     </div>
          ) : (
-          <div>
-            <h2>Correct Answers:</h2>
-            <div className='correctAnswers'>
-              {Object.keys(lossWords).map((quarterback, index) => (
-                <div key={index}>
-                  <h3>{quarterback}:</h3>
-                  <ul>
-                    {lossWords[quarterback].map((receiver, idx) => (
-                      <li key={idx}>{receiver}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
+          <div className="correct-answers-container">
+  <h2>Correct Answers:</h2>
+  <div className="correct-answers">
+    {Object.keys(lossWords).map((quarterback, index) => (
+      <div key={index} className="answer-block">
+        <h3>{quarterback}:</h3>
+        <ul>
+          {lossWords[quarterback].map((receiver, idx) => (
+            <li key={idx}>{receiver}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</div>
         )}
 
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>

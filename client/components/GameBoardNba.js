@@ -397,21 +397,36 @@ const GameBoardNba = () => {
             ))}
           </div>
         ) : (
-          <div>
-            <h2>Correct Answers:</h2>
-            <div className='correctAnswers'>
-              {Object.keys(lossWords).map((franchise, index) => (
-                <div key={index}>
-                  <h3>{franchise}:</h3>
-                  <ul>
-                    {lossWords[franchise].map((player, idx) => (
-                      <li key={idx}>{player}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+          // <div>
+          //   <h2>Correct Answers:</h2>
+          //   <div className='correctAnswers'>
+          //     {Object.keys(lossWords).map((franchise, index) => (
+          //       <div key={index}>
+          //         <h3>{franchise}:</h3>
+          //         <ul>
+          //           {lossWords[franchise].map((player, idx) => (
+          //             <li key={idx}>{player}</li>
+          //           ))}
+          //         </ul>
+          //       </div>
+          //     ))}
+          //   </div>
+          // </div>
+          <div className="correct-answers-container">
+          <h2>Correct Answers:</h2>
+          <div className="correct-answers">
+            {Object.keys(lossWords).map((franchise, index) => (
+              <div key={index} className="answer-block">
+                <h3>{franchise}:</h3>
+                <ul>
+                  {lossWords[franchise].map((player, idx) => (
+                    <li key={idx}>{player}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+        </div>
         )}
 
         <div className={`${submittedWords.length === 16 || mistakes === 5 ? "control-panel sticky-footer" : "control-panel sticky-footer"}`}>

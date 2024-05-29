@@ -421,21 +421,21 @@ const GameBoardState = () => {
       ))}
     </div>
     ) : (
-          <div>
-            <h2>Correct Answers:</h2>
-            <div className='correctAnswers' style={{color: "black"}}>
-              {Object.keys(lossWords).map((state, index) => (
-                <div key={index}>
-                  <h3>{state}:</h3>
-                  <ul>
-                    {lossWords[state].map((city, idx) => (
-                      <li key={idx}>{city}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
+          <div className="correct-answers-container">
+  <h2>Correct Answers:</h2>
+  <div className="correct-answers">
+    {Object.keys(lossWords).map((state, index) => (
+      <div key={index} className="answer-block">
+        <h3>{state}:</h3>
+        <ul>
+          {lossWords[state].map((city, idx) => (
+            <li key={idx}>{city}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</div>
         )}
 
     <div className={`${submittedWords.length === 16 || mistakes == 5 ? "control-panel  sticky-footer" : "control-panel sticky-footer"}`}>

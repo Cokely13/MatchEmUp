@@ -387,21 +387,36 @@ const GameBoardMusic = () => {
             ))}
           </div>
         ) : (
-          <div>
-            <h2>Correct Answers:</h2>
-            <div className='correctAnswers'>
+          // <div>
+          //   <h2>Correct Answers:</h2>
+          //   <div className='correctAnswers'>
+          //   {Object.keys(lossWords).map((artist, index) => (
+          //     <div key={index}>
+          //       <h3>{artist}:</h3>
+          //       <ul>
+          //         {lossWords[artist].map((album, idx) => (
+          //           <ul key={idx}>{album}</ul>
+          //         ))}
+          //       </ul>
+          //     </div>
+          //   ))}
+          // </div>
+          // </div>
+          <div className="correct-answers-container">
+          <h2>Correct Answers:</h2>
+          <div className="correct-answers">
             {Object.keys(lossWords).map((artist, index) => (
-              <div key={index}>
+              <div key={index} className="answer-block">
                 <h3>{artist}:</h3>
                 <ul>
                   {lossWords[artist].map((album, idx) => (
-                    <ul key={idx}>{album}</ul>
+                    <li key={idx}>{album}</li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-          </div>
+        </div>
         )}
 
         <div className={`${submittedWords.length === 16 || mistakes === 5 ? "control-panel sticky-footer" : "control-panel sticky-footer"}`}>
