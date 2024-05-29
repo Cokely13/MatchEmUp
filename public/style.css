@@ -15,6 +15,27 @@ nav a {
   margin: 1em;
 }
 
+nav {
+  background-color: #282c34; /* Dark background for the navbar */
+  padding: 10px 20px; /* Padding for some breathing room */
+  text-align: center; /* Center-align the links */
+}
+
+.navbar-link {
+  color: #ffffff; /* Light text for contrast */
+  margin: 0 15px; /* Margin between links */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
+  font-size: 1.2em; /* Slightly larger font size */
+  text-decoration: none; /* No underline */
+  transition: color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+}
+
+.navbar-link:hover, .navbar-link:focus {
+  color: #00bfff; /* Deep Sky Blue color on hover */
+  transform: translateY(-2px); /* Slight raise effect on hover */
+  text-decoration: none; /* Ensuring no underline appears on hover */
+}
+
 form div {
   margin: 1em;
   display: inline-block;
@@ -294,6 +315,7 @@ text-align: center;
 .title {
   font-size: 4rem;  /* Larger font size for prominence */
   /* color: #1e90ff;   */
+  /* color: #00bfff; */
   color: #00bfff;
   text-transform: uppercase;
   letter-spacing: 3px;  /* Increased spacing for a more airy, premium look */
@@ -435,6 +457,7 @@ text-align: center;
   background-color: white; */
   border: 10px solid #00bfff;  /* Navy Blue border for contrast */
   background-color: #e6f7ff;
+  border-radius: 10px;
   display: flex;
   justify-content: space-around; /* Distributes space between and around content items */
   align-items: flex-start; /* Aligns items to be flush with the start */
@@ -460,6 +483,7 @@ text-align: center;
 
 .photo-column img {
   border: 10px solid #00bfff;
+  border-radius: 10px;
   object-fit: cover; /* Keeps aspect ratio intact while filling the area */
   margin-bottom: 15%; /* Space between images */
   width: 100%;
@@ -593,19 +617,23 @@ text-align: center;
 }
 
 .leaderboard {
-  flex-direction: column;  /* Stack buttons vertically */
-  align-items: center;     /* Center-align the buttons */
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  background-color: lightgrey;
+  background-color: #f8f9fa; /* Lighter gray for a cleaner look */
   padding: 20px;
   max-width: 800px;
   margin: auto;
-  border: 2px solid Black;
+  border-radius: 10px;
+  border: 10px solid #00bfff; /* Deep Sky Blue border matching the navbar */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
 }
 
 .leaderboard h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #000080; /* Navy blue for headings */
+  font-size: 2.5em; /* Larger for emphasis */
 }
 
 .leaderboard select {
@@ -613,56 +641,57 @@ text-align: center;
   margin-right: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
-  border: 2px solid Black;
+  border: 1px solid #00bfff; /* Deep Sky Blue border */
+  background-color: white;
+  color: #000080; /* Navy blue text for options */
+  font-weight: bold;
 }
 
 .leaderboard .table {
   width: 100%;
   border-collapse: collapse;
-  /* border-radius: 5px; */
-  border: 10px solid Black;
+  border: 3px solid #00bfff; /* Lighter border to match the theme */
   background-color: white;
 }
 
 .leaderboard th, .leaderboard td {
   padding: 10px;
-  border: 1px solid Black;
+  border: 1px solid #00bfff; /* Deep Sky Blue border inside the table */
+  color: #333; /* Dark gray for text */
+  font-size: 1.2em; /* Slightly larger font size */
 }
 
 .leaderboard th {
-  color: black;
+  background-color: #e6f7ff; /* Pale blue background for header */
+  color: #000080; /* Navy blue text for contrast */
 }
 
-.leaderboard a {
-  text-decoration: none;
-  color: #fff;
-  background: #007bff;
-  padding: 10px 15px;
-  border-radius: 5px;
+
+
+.leaderboard a:hover {
+  color: #00bfff;  /* Change to Deep Sky Blue on hover */
+  background-color: transparent; /* Keeps the background the same */
 }
 
-.leaderboard .header-row {
-  font-size: 30px;
-  background: rgb(150, 150, 150);
-}
-
-.leaderboard .data-row {
-  font-size: 20px;
-}
 
 
 
 .streak-display {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #f8f9fa;
+  top: 60px;
+  right: 60px;
+  background-color: #f8f9fa; /* Light grey background */
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   text-align: right;
   z-index: 1000;  /* Ensures it stays on top of other content */
-  border: 2px solid Black;
+  border: 5px solid #00bfff; /* Solid border with Deep Sky Blue */
+  color: #333; /* Dark grey for text, ensuring good contrast */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean, modern font */
+  font-size: 1.2em; /* Larger font size for better visibility */
+  font-weight: bold; /* Bold font weight for emphasis */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Subtle text shadow for depth */
 }
 
 @media (max-width: 600px) {
@@ -966,16 +995,18 @@ h2 {
   margin-bottom: 20px;
 }
 
+
+
 .leaderboard-image-container {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
-  border: 3px solid black; /* Cool color border for word cards */
-  /* border-radius: 10px; */
+  border: 3px solid #00bfff; /* Deep Sky Blue for consistency with the theme */
   margin-bottom: 20px;
 }
+
 
 
 .preview-image-container {

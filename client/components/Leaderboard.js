@@ -104,8 +104,9 @@ const Leaderboard = () => {
           {sortedRecord.map(user => (
             <tr key={user.id}>
               <td >{user.image && (
+                <div style={{marginBottom: "20px"}}>
         <div className="leaderboard-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
-      )}<Link to={`/users/${user.id}`} >{user.username}</Link></td>
+      <Link to={`/users/${user.id}`} >{user.username}</Link></div>)}</td>
               <td >{user.recordStreak}</td>
               <td >{user.currentStreak}</td>
             </tr>
