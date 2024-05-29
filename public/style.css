@@ -994,15 +994,68 @@ h2 {
   margin-bottom: 20px;
 }
 
+
+
+.user-page-container {
+  background-color: #f8f9fa; /* Light grey background for a clean look */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  max-width: 1200px; /* Ensures the container is not overly wide on larger screens */
+  margin: 20px auto; /* Centers the container with margin on all sides */
+}
+
+.user-page-heading {
+  color: #000080; /* Navy blue for a consistent header color */
+  text-align: center;
+  font-size: 2.5em; /* Larger font size for prominence */
+  font-weight: bold; /* Ensures the text is bold */
+  text-decoration: none; /* Removes underline from heading */
+}
+
+.user-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Distributes space around items */
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.user-card {
+  background-color: #ffffff; /* White background for each card */
+  border: 3px solid #00bfff; /* Deep Sky Blue border matching other elements */
+  border-radius: 10px;
+  width: 300px; /* Fixed width for each card */
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Shadow for depth */
+  text-align: center;
+  transition: transform 0.3s; /* Smooth transition for hover effect */
+}
+
+.user-card:hover {
+  transform: translateY(-5px); /* Slight raise effect on hover */
+}
+
+
 .user-image-container {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
+  margin: 20px auto; /* Centers the image within the card */
   background-size: cover;
   background-position: center;
-  margin: auto;
-  border: 5px solid #00bfff; /* Deep Sky Blue to match other borders */
-  margin-bottom: 20px;
+  border: 5px solid #00bfff; /* Changes border color to Deep Sky Blue */
+  padding: 20px;
+}
+
+.user-link {
+  text-decoration: none; /* No underline for the link */
+  color: #007bff; /* Bootstrap primary blue for the link */
+  font-weight: bold;
+}
+
+.user-card-heading {
+  margin: 10px 0;
 }
 
 
