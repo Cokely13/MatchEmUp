@@ -448,7 +448,7 @@ const GameBoardQb = () => {
               Mistakes remaining: {footballIcons.slice(0, 5 - mistakes)}
             </h1>
           )}
-         {mistakes !== 5 ? <button className="btn btn-danger give-up-button" onClick={handleLoss}>Give Up</button> : <div></div>}
+        {mistakes == 5 || submittedWords.length === 16  ?  <div></div> : <button className="btn btn-danger give-up-button" onClick={handleLoss}>Give Up</button>}
           </div>
         </div>
       </div>

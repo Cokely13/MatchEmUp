@@ -25,8 +25,8 @@ async function seedAll() {
     await musicseed();
     console.log('Music data seeded!');
 
-    // await stateseed();
-    // console.log('State data seeded!');
+    await stateseed();
+    console.log('State data seeded!');
 
     await movieseed();
     console.log('Movie data seeded!');
