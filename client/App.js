@@ -26,7 +26,6 @@ const App = ({ isLoggedIn, isGuest, userId, recordStreak, currentStreak}) => {
 
 const mapStateToProps = (state) => {
 
-  // console.log("CHECK", state)
   return {
   isLoggedIn: !!state.auth.id,
   isGuest: state.auth.isGuest,
