@@ -4,7 +4,7 @@ import { fetchUsers } from '../store/allUsersStore';
 import { Link } from 'react-router-dom';
 
 const categories = ['All', 'Shows', 'State', 'Music', 'Qb', 'Nba', 'Movies'];
-const sortingOptions = ['Wins', 'Losses', 'Win Percentage'];
+const sortingOptions = ['Wins', 'Losses', 'Win Percentage', 'Record Streak', 'Current Streak'];
 
 const Leaderboard = () => {
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ const Leaderboard = () => {
     let bPercentage = calculateWinPercentage(bWins, bLosses);
 
 
+
     switch (sortingCriteria) {
       case 'Wins':
         return bWins - aWins;
@@ -43,6 +44,10 @@ const Leaderboard = () => {
         return bLosses - aLosses;
       case 'Win Percentage':
         return bPercentage - aPercentage;
+        case 'Record Streak':
+          return b.recordStreak - a.recordStreak;
+        case 'Current Streak':
+          return b.currentStreak - a.currentStreak;
       default:
         return bWins - aWins;
     }
@@ -52,34 +57,99 @@ const Leaderboard = () => {
     setSortingCriteria(e.target.value);
   };
 
-  return (
-    <div className="leaderboard" >
-      <h1>Leaderboard</h1>
-      <div>
-        <div>
-          <select className='' onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}>
-            {categories.map(category => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
-          <select className='select' onChange={handleSortingChange} value={sortingCriteria} >
-            {sortingOptions.map(option => (
-              <option key={option} value={option}>{option}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-      <table className="table" >
-        <thead>
-          <tr >
-            <th >Name</th>
-            <th >Wins ({selectedCategory})</th>
-            <th >Losses ({selectedCategory})</th>
-            <th >Win %</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedUsers.map(user => (
+  // return (
+  //   <div className="leaderboard" >
+  //     <h1>Leaderboard</h1>
+  //     <div>
+  //       <div>
+  //         <select className='' onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}>
+  //           {categories.map(category => (
+  //             <option key={category} value={category}>{category}</option>
+  //           ))}
+  //         </select>
+  //         <select className='select' onChange={handleSortingChange} value={sortingCriteria} >
+  //           {sortingOptions.map(option => (
+  //             <option key={option} value={option}>{option}</option>
+  //           ))}
+  //         </select>
+  //       </div>
+  //     </div>
+  //     <table className="table" >
+  //       <thead>
+  //         <tr >
+  //           <th >Name</th>
+  //           <th >Wins ({selectedCategory})</th>
+  //           <th >Losses ({selectedCategory})</th>
+  //           <th >Win %</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //         {sortedUsers.map(user => (
+  //           <tr key={user.id}>
+  //             <td >{user.image && (
+  //        <div style={{marginBottom: "20px"}}>
+  //       <div className="leaderboard-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
+  //     <Link to={`/users/${user.id}`}  >{user.username}</Link></div>)}</td>
+  //             <td >{countCategory(user.wins, selectedCategory)}</td>
+  //             <td >{countCategory(user.losses, selectedCategory)}</td>
+  //             <td >{calculateWinPercentage(countCategory(user.wins, selectedCategory), countCategory(user.losses, selectedCategory))}%</td>
+  //           </tr>
+  //         ))}
+  //       </tbody>
+  //     </table>
+  //     <table className="table" >
+  //       <thead>
+  //         <tr >
+  //           <th >Name</th>
+  //           <th >Record Streak</th>
+  //           <th >Current Streak</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>
+  //         {sortedRecord.map(user => (
+  //           <tr key={user.id}>
+  //             <td >{user.image && (
+  //               <div style={{marginBottom: "20px"}}>
+  //       <div className="leaderboard-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
+  //     <Link to={`/users/${user.id}`} >{user.username}</Link></div>)}</td>
+  //             <td >{user.recordStreak}</td>
+  //             <td >{user.currentStreak}</td>
+  //           </tr>
+  //         ))}
+  //       </tbody>
+  //     </table>
+  //   </div>
+  // );
+   return (
+  <div className="leaderboard">
+  <h1>Leaderboard</h1>
+  <div>
+    <select onChange={(e) => setSelectedCategory(e.target.value)} value={selectedCategory}>
+      {categories.map(category => (
+        <option key={category} value={category}>{category}</option>
+      ))}
+    </select>
+    <select onChange={handleSortingChange} value={sortingCriteria}>
+      {sortingOptions.map(option => (
+        <option key={option} value={option}>{option}</option>
+      ))}
+    </select>
+  </div>
+  <div className="tables-container"> {/* Wrapper for tables */}
+    <div className="table-wrapper">
+      <table className="table">
+      <thead>
+           <tr >
+             <th >Name</th>
+             <th >Wins ({selectedCategory})</th>
+             <th >Losses ({selectedCategory})</th>
+             <th >Win %</th>
+             <th >Record Streak</th>
+             <th >Current Streak</th>
+           </tr>
+         </thead>
+         <tbody>
+           {sortedUsers.map(user => (
             <tr key={user.id}>
               <td >{user.image && (
          <div style={{marginBottom: "20px"}}>
@@ -88,25 +158,6 @@ const Leaderboard = () => {
               <td >{countCategory(user.wins, selectedCategory)}</td>
               <td >{countCategory(user.losses, selectedCategory)}</td>
               <td >{calculateWinPercentage(countCategory(user.wins, selectedCategory), countCategory(user.losses, selectedCategory))}%</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <table className="table" >
-        <thead>
-          <tr >
-            <th >Name</th>
-            <th >Record Streak</th>
-            <th >Current Streak</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedRecord.map(user => (
-            <tr key={user.id}>
-              <td >{user.image && (
-                <div style={{marginBottom: "20px"}}>
-        <div className="leaderboard-image-container" style={{ backgroundImage: `url('${user.image}')` }} />
-      <Link to={`/users/${user.id}`} >{user.username}</Link></div>)}</td>
               <td >{user.recordStreak}</td>
               <td >{user.currentStreak}</td>
             </tr>
@@ -114,7 +165,9 @@ const Leaderboard = () => {
         </tbody>
       </table>
     </div>
-  );
+  </div>
+</div>
+   )
 };
 
 export default Leaderboard;
