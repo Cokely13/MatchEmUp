@@ -96,6 +96,8 @@ function Profile() {
   <div><b>Total Plays:</b><span style={{ fontWeight: 'bold', color: 'black' }}> {user.wins.length + user.losses.length}</span> </div>
   <div><b>Wins:</b><span style={{ fontWeight: 'bold', color: 'black' }}> {user.wins.length}</span> </div>
   <div><b>Losses:</b><span style={{ fontWeight: 'bold', color: 'black' }}>  {user.losses.length}</span> </div>
+  <div><b>Current Streak:</b><span style={{ fontWeight: 'bold', color: 'black' }}>  {user.currentStreak}</span> </div>
+  <div><b>Record Streak:</b><span style={{ fontWeight: 'bold', color: 'black' }}>  {user.recordStreak}</span> </div>
   <button className="details-toggle" onClick={handleDetailsToggle}>
     {details ? 'Hide Details' : 'Show Details'}
   </button>
