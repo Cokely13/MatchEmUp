@@ -110,6 +110,8 @@ const GameBoardMusic = () => {
       dispatch(createLoss(loss));
     }
 
+    setMistakes(5)
+
     const groupedWords = gameWords.reduce((acc, word) => {
       const artistName = allArtists.find(artist => artist.albums.some(album => album.title === word.name)).name;
       if (!acc[artistName]) {
@@ -419,11 +421,21 @@ const GameBoardMusic = () => {
               <button className="btn btn-success" onClick={handleSubmit}>Submit</button>
             </div>
           )}
+        <div className="mistake-and-giveup-container">
           {submittedWords.length === 16 || mistakes === 5 ? <div></div> : (
             <h1 className="mistakes">
               Mistakes remaining: {musicIcons.slice(0, 5 - mistakes)}
             </h1>
           )}
+         <div className="mistake-and-giveup-container">
+          {submittedWords.length === 16 || mistakes === 5 ? <div></div> : (
+            <h1 className="mistakes">
+              Mistakes remaining: {basketballIcons.slice(0, 5 - mistakes)}
+            </h1>
+          )}
+         {mistakes !== 5 ? <button className="btn btn-danger give-up-button" onClick={handleLoss}>Give Up</button> : <div></div>}
+          </div>
+        </div>
         </div>
       </div>
       <RecordModal show={showRecordModal} onHide={() => setShowRecordModal(false)} />

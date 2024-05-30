@@ -106,6 +106,8 @@ const GameBoardMovie = () => {
         currentStreak: 0
       };
 
+      setMistakes(5)
+
       dispatch(updateSingleUser(updatedUser));
       dispatch(createLoss(loss));
     }

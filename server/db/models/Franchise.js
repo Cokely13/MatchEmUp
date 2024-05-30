@@ -7,10 +7,10 @@ const Franchise = db.define('franchise', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  year: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
+  // year: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  // },
   imagePath: {
     type: Sequelize.STRING,
     defaultValue: "/Generic.png"

@@ -47,7 +47,7 @@ form div {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     padding: 20px;
-    margin-bottom: 150px;
+    margin-bottom: 250px;
   }
 
   .submitted-words {
@@ -1265,11 +1265,12 @@ input[type="file"] {
 }
 
 .correct-answers-container {
-  border: 10px solid #00bfff; /* Deep Sky Blue border */
-  background-color: white;
+  border: 5px solid #00bfff; /* Deep Sky Blue border, thinner for subtlety */
+  background-color: #e6f7ff; /* Light blue background for a soft look */
   border-radius: 10px;
   padding: 20px;
-  margin: 20px;
+  margin: 20px 0; /* Vertical margin adjustment */
+  margin-bottom: 150px;
   display: flex;
   flex-direction: column;
   align-items: center; /* Centers the title and the content vertically */
@@ -1278,7 +1279,7 @@ input[type="file"] {
 .correct-answers {
   width: 100%;
   display: flex;
-  justify-content: center; /* Center horizontally */
+  justify-content: space-evenly; /* Evenly spaces child blocks for better distribution */
   flex-wrap: wrap;
 }
 
@@ -1286,6 +1287,10 @@ input[type="file"] {
   margin: 10px;
   flex-basis: 30%; /* Adjust this value based on desired width of each block */
   text-align: center; /* Center the text within each block */
+  padding: 10px; /* Padding inside each block */
+  border: 2px solid #007bff; /* Slightly darker blue for definition */
+  border-radius: 5px; /* Rounded corners for blocks */
+  background-color: white; /* White background for each block for contrast */
 }
 
 .answer-block ul {
@@ -1294,7 +1299,8 @@ input[type="file"] {
 }
 
 .correct-answers h2, .correct-answers h3 {
-  color: black; /* Ensures text is black */
+  color: #0056b3; /* Darker blue for headers for better readability */
+  margin-bottom: 10px; /* Adds space below headers */
 }
 
 .how-to-play-button {
@@ -1350,11 +1356,16 @@ input[type="file"] {
 }
 
 
+.mistake-and-giveup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  // Centers the children horizontally
+  margin-top: 20px;  // Adds some space above the container for visual separation
+}
 
-
-
-
-------------
+.give-up-button {
+  margin-top: 10px;  // Adds space between the mistakes message and the button
+}
 
 .leaderboard {
   flex-direction: column;

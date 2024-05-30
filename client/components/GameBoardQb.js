@@ -113,6 +113,8 @@ const GameBoardQb = () => {
           currentStreak: 0
         };
 
+        setMistakes(5)
+
         // Update user streak in the database or through your API
         dispatch(updateSingleUser(updatedUser));
         // Dispatch the createLoss action
@@ -440,10 +442,15 @@ const GameBoardQb = () => {
         <button className="btn btn-info" onClick={handleDeselectAll}>Deselect all</button>
         <button className="btn btn-success" onClick={handleSubmit}>Submit</button>
       </div>}
-      {submittedWords.length === 16 || mistakes == 5 ?
-      <div></div> : <h1 className="mistakes">
-      Mistakes remaining: {footballIcons.slice(0, 5 - mistakes)} </h1>}
-      </div>
+      <div className="mistake-and-giveup-container">
+          {submittedWords.length === 16 || mistakes === 5 ? <div></div> : (
+            <h1 className="mistakes">
+              Mistakes remaining: {footballIcons.slice(0, 5 - mistakes)}
+            </h1>
+          )}
+         {mistakes !== 5 ? <button className="btn btn-danger give-up-button" onClick={handleLoss}>Give Up</button> : <div></div>}
+          </div>
+        </div>
       </div>
     </div>
     <RecordModal show={showRecordModal} onHide={() => setShowRecordModal(false)} />

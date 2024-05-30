@@ -18,10 +18,11 @@ import { createLoss } from '../store/allLossesStore';
 import RecordModal from './RecordModal';
 
 const WordCard = ({ word, onSelect, isSelected, image }) => {
+  const displayedWord = word.slice(0, -6);
   return (
     <div className={`word-card ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(word)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
       {image && <img src={image} alt={word} style={{ width: '100%', height: 'auto', marginBottom: '10px' }} />}
-      <div>{word}</div>
+      <div>{displayedWord}</div>
     </div>
   );
 };
@@ -112,6 +113,8 @@ const GameBoardNba = () => {
               currentStreak: 0
             };
 
+            setMistakes(5)
+
             // Update user streak in the database or through your API
             dispatch(updateSingleUser(updatedUser));
             // Dispatch the createLoss action
@@ -161,6 +164,9 @@ const GameBoardNba = () => {
             imagePath: player.imagePath
           })));
         };
+
+
+
 
         useEffect(() => {
           if (allFranchises.length > 0) {
@@ -429,12 +435,16 @@ const GameBoardNba = () => {
               <button className="btn btn-success" onClick={handleSubmit}>Submit</button>
             </div>
           )}
+          <div className="mistake-and-giveup-container">
           {submittedWords.length === 16 || mistakes === 5 ? <div></div> : (
             <h1 className="mistakes">
               Mistakes remaining: {basketballIcons.slice(0, 5 - mistakes)}
             </h1>
           )}
+         {mistakes !== 5 ? <button className="btn btn-danger give-up-button" onClick={handleLoss}>Give Up</button> : <div></div>}
+          </div>
         </div>
+
       </div>
       <RecordModal show={showRecordModal} onHide={() => setShowRecordModal(false)} />
       <WinModal show={showWinModal} onHide={() => setShowWinModal(false)} />
