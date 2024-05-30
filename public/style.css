@@ -704,6 +704,7 @@ text-align: center;
   border: 1px solid #00bfff; /* Deep Sky Blue border inside the table */
   color: #333; /* Dark gray for text */
   font-size: 1.2em; /* Slightly larger font size */
+  vertical-align: middle;
 }
 
 .leaderboard th {
